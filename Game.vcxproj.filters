@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Renderer">
+      <UniqueIdentifier>{321e9f53-fa2f-4499-8e55-d920fabfdc91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{0262a84d-a488-48c1-a5d4-27e7c728cea0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools">
+      <UniqueIdentifier>{be0f6b7b-0f21-475d-9c6c-c6a083662eca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{157dce9e-54b1-4739-9704-f91bd431c456}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\stdafx.cpp" />
+    <ClCompile Include="src\game\game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\timer.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\ui.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\main.hpp" />
+    <ClInclude Include="src\stdafx.hpp" />
+    <ClInclude Include="src\game\game.hpp">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\timer.hpp">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\ui.hpp">
+      <Filter>UI</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

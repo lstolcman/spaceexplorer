@@ -1,0 +1,14 @@
+# Directories
+ipch/
+Debug/
+Release/
+design/
+3rd/
+
+
+# Files
+*.sdf
+*.opensdf
+*.suo
+
+
