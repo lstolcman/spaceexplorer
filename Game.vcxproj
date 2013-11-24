@@ -75,19 +75,28 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\game\game.cpp" />
+    <ClCompile Include="src\game\player.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\renderer\renderer.cpp" />
     <ClCompile Include="src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\tools\math.cpp" />
     <ClCompile Include="src\tools\timer.cpp" />
+    <ClCompile Include="src\ui\input.cpp" />
     <ClCompile Include="src\ui\ui.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game\game.hpp" />
+    <ClInclude Include="src\game\gcommon.hpp" />
+    <ClInclude Include="src\game\player.hpp" />
     <ClInclude Include="src\main.hpp" />
+    <ClInclude Include="src\renderer\renderer.hpp" />
     <ClInclude Include="src\stdafx.hpp" />
+    <ClInclude Include="src\tools\math.hpp" />
     <ClInclude Include="src\tools\timer.hpp" />
+    <ClInclude Include="src\ui\input.hpp" />
     <ClInclude Include="src\ui\ui.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

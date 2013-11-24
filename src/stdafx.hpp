@@ -10,13 +10,13 @@
 
 #define FREEGLUT_STATIC
 
-
 #include <GL/freeglut.h>
 
 #include <iostream>
 #include <string>
 #include <sstream>
 #include <valarray>
+
 
 //#include <regex>
 

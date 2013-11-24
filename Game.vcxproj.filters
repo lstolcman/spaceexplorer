@@ -26,6 +26,18 @@
     <ClCompile Include="src\ui\ui.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="src\renderer\renderer.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\input.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\player.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\math.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\main.hpp" />
@@ -38,6 +50,21 @@
     </ClInclude>
     <ClInclude Include="src\ui\ui.hpp">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\renderer.hpp">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\input.hpp">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\player.hpp">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\math.hpp">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\gcommon.hpp">
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

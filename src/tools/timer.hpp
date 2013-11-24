@@ -16,8 +16,8 @@ public:
 
 
 private:
-	bool                isStopped;
-	unsigned long long  timer_start, timer_end;
+	bool				isStopped;
+	unsigned long long	timer_start, timer_end;
 
 
 };
