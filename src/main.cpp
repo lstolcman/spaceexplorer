@@ -1,7 +1,7 @@
 #include "stdafx.hpp"
 #include "main.hpp"
 
-
+#include "tools/math.hpp"
 
 
 
@@ -12,5 +12,6 @@ int main(int argc, char *argv[])
 
 	Game.Init(argc, argv);
 
+	std::cin.get();
 	return 0;
 }

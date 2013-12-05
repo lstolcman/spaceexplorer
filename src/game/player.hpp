@@ -5,16 +5,18 @@
 class CPlayer
 {
 private:
-	SPlayer player;
-	float	mouseSensitivity;
+	
+
 	bool	free3DMovement;
 	bool	captureMouse;
+	SPlayer player;
 
 public:
+	
 	CPlayer();
 	~CPlayer();
 
-	void cameraMove(Direction, int, int);
-	SPlayer playerCoordinates(void);
+	void playerMove(SPlayer input);
+	SPlayer* playerCoordinates(void);
 
 };

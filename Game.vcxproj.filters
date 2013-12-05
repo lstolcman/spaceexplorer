@@ -38,6 +38,12 @@
     <ClCompile Include="src\tools\math.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
+    <ClCompile Include="src\tools\vector.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\quaternion.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\main.hpp" />
@@ -65,6 +71,12 @@
     </ClInclude>
     <ClInclude Include="src\game\gcommon.hpp">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\vector.hpp">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\quaternion.hpp">
+      <Filter>Tools</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

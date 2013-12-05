@@ -1,8 +1,9 @@
 #pragma once
 
+#include "vector.hpp"
+#include "quaternion.hpp"
 
 
-struct vec3
-{
-	float x, y, z;
-};
+
+
+

@@ -18,13 +18,12 @@ CGame *CGame::instance = NULL;
 CGame::CGame(void)
 {
 	CGame::instance = this;
-	timexx.start();
 
 	input		= new CInput;
 	player		= new CPlayer;
-	renderer	= new CRenderer;
+	renderer	= new CRenderer(player->playerCoordinates());
 
-	renderer->playerGetCoordinates(player->playerCoordinates());
+//	renderer->playerCoordinates(player->playerCoordinates());
 }
 
 
@@ -41,28 +40,60 @@ void CGame::Init(int argc, char **argv)
 {
 	glutInit(&argc, argv);
 	glutInitWindowSize(640, 360);
+	glutInitWindowPosition(400, 300);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-	glutCreateWindow("Game");
+	glutCreateWindow("Space Explorer");
 
 
 	glutDisplayFunc(callbackRender);
+	//glutIdleFunc(callbackRedisplay); //http://forum.warsztat.gd/index.php?topic=4703.0
 	glutReshapeFunc(callbackReshape);
 
 
-	glutMouseFunc(callbackMouseButtonPress);
+	//glutMouseFunc(callbackMouseButtonPress);
 	glutMotionFunc(callbackMouseMove);
+	glutPassiveMotionFunc(callbackMouseMove);
 
 	glutKeyboardFunc(callbackKeyPress);
 	glutKeyboardUpFunc(callbackKeyUp);
 	glutSpecialFunc(callbackSpecialKeyPress);
 	glutSpecialUpFunc(callbackSpecialKeyUp);
-	glutSetWindowTitle("dfgdfgs");
+
+	glutTimerFunc(17, callbackCaptureMouse, 0);
+
 	//glutTimerFunc(1000, callbackDrawFPS, 0);
 	//glutTimerFunc(15, callbackRedisplay, 0);
-	//glutIdleFunc(callbackRedisplay);
-	glEnable(GL_DEPTH_TEST);
+	
+
 	//glutRedisplayFunc(callbackRedisplay);
-	glutMainLoop();
+	//glutFullScreen();
+
+	glEnable(GL_DEPTH_TEST);
+
+	glEnable(GL_CULL_FACE); // W³¹czenie cullingu - rysowania tylko jednej strony wielok¹tów
+	glCullFace(GL_BACK); // Okreœlenie, któr¹ stronê wielok¹tów chcemy ukrywaæ
+	glFrontFace(GL_CCW); // Okreœlenie, jaki kierunek definicji wierzcho³ków oznacza przód wielok¹tu (GL_CCW - przeciwnie do ruchu wskazówek zegara, GL_CW - zgodnie)
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
+
+	float gl_amb[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, gl_amb);
+
+
+
+
+	// Ustawienie obs³ugi myszy
+	glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2); // Przesuniêcie kursora na œrodek ekranu
+
+	instance->input->inputState.mouse.x = glutGet(GLUT_WINDOW_WIDTH) / 2;
+	instance->input->inputState.mouse.y = glutGet(GLUT_WINDOW_HEIGHT) / 2;
+	glutSetCursor(GLUT_CURSOR_NONE); // Ukrycie kursora
+
+
+
+	glutMainLoop();	
 }
 
 
@@ -73,9 +104,7 @@ void CGame::Update(void)
 
 void CGame::Render(void)
 {
-
-	renderer->drawScene();
-
+	renderer->drawScene();//instance->player->player);
 }
 
 
@@ -101,29 +130,6 @@ void CGame::Reshape(int width, int height)
 }
 
 
-/*
-void CGame::drawFPS(int id)
-{
-    //std::cout << "elapsedmsL:"<< instance->timexx.getElapsedMilliseconds()<<"\r";
-    if (instance->timexx.getElapsedMilliseconds() > 1000)
-    {
-
-        std::stringstream title;
-        title
-            << "FPS: " << static_cast<int>(instance->frame - instance->frameold)
-            << "   frames:" << instance->frame;
-        std::cout
-            << "old:" << instance->frameold
-            << " new:" << instance->frame
-            << " minus:" << instance->frame - instance->frameold
-            << "\r";
-        instance->frameold = instance->frame;
-        glutSetWindowTitle(title.str().c_str());
-        instance->timexx.start();
-    }
-}
-*/
-
 void CGame::callbackReshape(int width, int height)
 {
 	instance->Reshape(width, height);
@@ -132,7 +138,7 @@ void CGame::callbackReshape(int width, int height)
 
 void CGame::callbackDrawFPS(int id)
 {
-//	instance->drawFPS(id);
+	//	instance->drawFPS(id);
 }
 
 void CGame::callbackRedisplay(void)
@@ -175,3 +181,17 @@ void CGame::callbackSpecialKeyUp(int keyid, int x, int y)
 {
 	instance->input->specialKeyUp(keyid, x, y);
 }
+
+void CGame::callbackCaptureMouse(int id)
+{
+
+	glutTimerFunc(17, callbackCaptureMouse, 0);
+	instance->input->movement(instance->player->playerCoordinates());
+	//instance->renderer->playerCoordinates(instance->player->playerCoordinates());
+	
+}
+
+
+
+
+

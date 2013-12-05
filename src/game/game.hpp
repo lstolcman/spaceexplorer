@@ -13,7 +13,6 @@ private:
 	//unsigned long		frame, frameold;
 	unsigned long long	t1, t2;
 	static CGame		*instance;
-	CTimer				timexx;
 	CInput				*input;
 	CPlayer				*player;
 	CRenderer			*renderer;
@@ -34,17 +33,20 @@ private:
 	static void     callbackKeyUp(unsigned char, int, int);
 	static void     callbackSpecialKeyPress(int, int, int);
 	static void     callbackSpecialKeyUp(int, int, int);
+	static void		callbackCaptureMouse(int);
 
-	//static void     drawFPS(int);
+	void			Update(void);
+	void			Render(void);
+	void			Reshape(int width, int height);
+	void			captureMouse(int);
+
 
 public:
 	CGame(void);
 	~CGame(void);
 
 	void    Init(int, char **);
-	void    Update(void);
-	void    Render(void);
-	void    Reshape(int width, int height);
+
 
 };
 

@@ -1,6 +1,5 @@
 #pragma once
-
-
+#include "../game/gcommon.hpp"
 
 //additional mouse state definitions
 #define KEY_F1			GLUT_KEY_F1
@@ -29,47 +28,28 @@
 
 class CInput
 {
-//Fields:
+	//Fields:
 private:
-	enum KeyState
-	{
-		UP					= GLUT_UP,
-		DOWN				= GLUT_DOWN,
-		WHEELSCROLLUP		= 3,    // wheel scroll up
-		WHEELSCROLLDOWN		= 4,    // wheel scroll down
-		HOLDWHEELSCROLLUP	= 35,   // hold wheel and scroll up
-		HOLDWHEELSCROLLDOWN = 36    // hold wheel and scroll down
-	};
+	float	mouseSensitivity;
+	bool	captureMouse;
 
-	enum MouseKey
-	{
-		LEFT_BUTTON		= GLUT_LEFT_BUTTON,
-		MIDDLE_BUTTON	= GLUT_MIDDLE_BUTTON,
-		RIGHT_BUTTON	= GLUT_RIGHT_BUTTON,
 
-	};
+public:
 
-	struct
+
+	//Members:
+private:
+
+public:
+	struct //Input
 	{
-		struct
-		{
-			MouseKey button;
-			KeyState state;
-			int x;
-			int y;
-		} mouse;
+		Mouse mouse;
 		KeyState keys[256];
 		KeyState specialKeys[256];
 	} inputState;
 
+	float pitchD;
 
-public:
-
-
-//Members:
-private:
-
-public:
 	CInput();
 	~CInput();
 
@@ -85,4 +65,18 @@ public:
 	bool        isSpecialKeyDown(int);
 	bool        isMouseButtonDown(int);
 	void		onTimer(int);
+	void		movement(SPlayer*);
+
+
+
+	GLfloat m_MaxPitchRate;
+	GLfloat m_MaxHeadingRate;
+	GLfloat m_HeadingDegrees;
+	GLfloat m_PitchDegrees;
+	GLfloat m_MaxForwardVelocity;
+	GLfloat m_ForwardVelocity;
+	vec3 m_DirectionVector;
+	vec3 m_Position;
+
+
 };
