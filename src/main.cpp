@@ -12,6 +12,6 @@ int main(int argc, char *argv[])
 
 	Game.Init(argc, argv);
 
-	std::cin.get();
+	//std::cin.get();
 	return 0;
 }

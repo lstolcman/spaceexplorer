@@ -79,7 +79,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\game\game.cpp" />
-    <ClCompile Include="src\game\player.cpp" />
+    <ClCompile Include="src\game\camera.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\renderer\renderer.cpp" />
     <ClCompile Include="src\stdafx.cpp">
@@ -96,7 +96,7 @@
   <ItemGroup>
     <ClInclude Include="src\game\game.hpp" />
     <ClInclude Include="src\game\gcommon.hpp" />
-    <ClInclude Include="src\game\player.hpp" />
+    <ClInclude Include="src\game\camera.hpp" />
     <ClInclude Include="src\main.hpp" />
     <ClInclude Include="src\renderer\renderer.hpp" />
     <ClInclude Include="src\stdafx.hpp" />

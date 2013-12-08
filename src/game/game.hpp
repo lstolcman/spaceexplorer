@@ -3,7 +3,7 @@
 #include "../ui/ui.hpp"
 #include "../ui/input.hpp"
 #include "../renderer/renderer.hpp"
-#include "player.hpp"
+#include "camera.hpp"
 #include "gcommon.hpp"
 
 class CGame
@@ -11,11 +11,11 @@ class CGame
 // Fields:
 private:
 	//unsigned long		frame, frameold;
-	unsigned long long	t1, t2;
-	static CGame		*instance;
-	CInput				*input;
-	CPlayer				*player;
-	CRenderer			*renderer;
+	unsigned long long t1, t2;
+	static CGame       *instance;
+	CInput             *input;
+	CCamera            *camera;
+	CRenderer          *renderer;
 
 
 public:
@@ -33,12 +33,12 @@ private:
 	static void     callbackKeyUp(unsigned char, int, int);
 	static void     callbackSpecialKeyPress(int, int, int);
 	static void     callbackSpecialKeyUp(int, int, int);
-	static void		callbackCaptureMouse(int);
+	static void     callbackCaptureInput(int);
 
-	void			Update(void);
-	void			Render(void);
-	void			Reshape(int width, int height);
-	void			captureMouse(int);
+	void            Update(void);
+	void            Render(void);
+	void            Reshape(int width, int height);
+	void            captureMouse(int);
 
 
 public:

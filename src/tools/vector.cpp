@@ -7,7 +7,7 @@
 
 float vec3::length() const
 {
-	return sqrt(this->x*this->x + this->y*this->y + this->z*this->z);
+	return sqrt(this->x * this->x + this->y * this->y + this->z * this->z);
 }
 
 void vec3::normalize(void)
@@ -21,14 +21,14 @@ void vec3::normalize(void)
 
 
 
-void vec3::operator = (const vec3 &a)
+void vec3::operator =(const vec3 &a)
 {
 	this->x = a.x;
 	this->y = a.y;
 	this->z = a.z;
 }
 
-bool operator == (const vec3 &a, const vec3 &b)
+bool operator ==(const vec3 &a, const vec3 &b)
 {
 	if (a.x == b.x && a.y == b.y && a.z == b.z)
 	{
@@ -37,28 +37,28 @@ bool operator == (const vec3 &a, const vec3 &b)
 	return false;
 }
 
-void vec3::operator += (const vec3 &a)
+void vec3::operator +=(const vec3 &a)
 {
 	this->x += a.x;
 	this->y += a.y;
 	this->z += a.z;
 }
 
-void vec3::operator -= (const vec3 &a)
+void vec3::operator -=(const vec3 &a)
 {
 	this->x -= a.x;
 	this->y -= a.y;
 	this->z -= a.z;
 }
 
-void vec3::operator *= (const vec3 &a)
+void vec3::operator *=(const vec3 &a)
 {
 	this->x *= a.x;
 	this->y *= a.y;
 	this->z *= a.z;
 }
 
-void vec3::operator /= (const vec3 &a)
+void vec3::operator /=(const vec3 &a)
 {
 	this->x /= a.x;
 	this->y /= a.y;
@@ -67,7 +67,7 @@ void vec3::operator /= (const vec3 &a)
 
 
 
-vec3 operator + (vec3 &a, vec3 &b)
+vec3 operator +(vec3 &a, vec3 &b)
 {
 	vec3 tmp;
 
@@ -78,7 +78,7 @@ vec3 operator + (vec3 &a, vec3 &b)
 	return tmp;
 }
 
-vec3 operator - (vec3 &a, vec3 &b)
+vec3 operator -(vec3 &a, vec3 &b)
 {
 	vec3 tmp;
 
@@ -90,7 +90,7 @@ vec3 operator - (vec3 &a, vec3 &b)
 }
 
 
-vec3 operator * (vec3 &a, vec3 &b)
+vec3 operator *(vec3 &a, vec3 &b)
 {
 	vec3 tmp;
 
@@ -103,7 +103,7 @@ vec3 operator * (vec3 &a, vec3 &b)
 
 
 
-vec3 operator / (vec3 &a, vec3 &b)
+vec3 operator /(vec3 &a, vec3 &b)
 {
 	vec3 tmp;
 
@@ -122,9 +122,9 @@ vec3 crossProduct(vec3 &a, vec3 &b)
 {
 	vec3 tmp;
 
-	tmp.x = a.y*b.z - a.z*b.y;
-	tmp.y = a.z*b.x - a.x*b.z;
-	tmp.z = a.x*b.y - a.y*b.x;
+	tmp.x = a.y * b.z - a.z * b.y;
+	tmp.y = a.z * b.x - a.x * b.z;
+	tmp.z = a.x * b.y - a.y * b.x;
 
 	return tmp;
 }

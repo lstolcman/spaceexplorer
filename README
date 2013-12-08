@@ -1,1 +1,1 @@
-project needs to include compiled freeglut-2.8.1 libraries to ./src/tools/3rd/
+project needs to include compiled freeglut-2.8.1 libraries to ./3rd/

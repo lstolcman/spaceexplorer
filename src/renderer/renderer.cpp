@@ -3,12 +3,12 @@
 
 
 
-CRenderer::CRenderer(SPlayer *player)
+CRenderer::CRenderer(CCamera *player)
 {
 	this->player = player;
 	time.start();
-	frame		= 0;
-	frame_old	= 0;
+	frame     = 0;
+	frame_old = 0;
 }
 
 CRenderer::~CRenderer()
@@ -16,12 +16,6 @@ CRenderer::~CRenderer()
 
 }
 
-void CRenderer::lookAt(GLdouble eyeX, GLdouble eyeY, GLdouble eyeZ,
-					   GLdouble centerX, GLdouble centerY, GLdouble centerZ,
-					   GLdouble upX, GLdouble upY, GLdouble upZ)
-{
-	gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upZ, upZ);
-}
 
 void CRenderer::setDisplayMatrices(void)
 {
@@ -43,7 +37,7 @@ void CRenderer::setupLights(void)
 
 
 
-void CRenderer::drawScene()//SPlayer player)
+void CRenderer::drawScene()
 {
 	drawFPS();
 
@@ -60,10 +54,10 @@ void CRenderer::drawScene()//SPlayer player)
 	glLoadIdentity();
 
 	gluLookAt(
-		player->pos.x, player->pos.y, player->pos.z,
-		player->pos.x + player->dir.x, player->pos.y + player->dir.y, player->pos.z + player->dir.z,
-		0.0f, 1.0f, 0.0f
-		);
+	    player->pos.x, player->pos.y, player->pos.z,
+	    player->pos.x + player->view.x, player->pos.y + player->view.y, player->pos.z + player->view.z,
+	    player->up.x, player->up.y, player->up.z
+	    );
 
 
 	setupLights();
@@ -94,17 +88,17 @@ void CRenderer::drawScene()//SPlayer player)
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, m_dif);
 		glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);
 
-		glNormal3f( 0.0f,  1.0f,  0.0f);
-		glVertex3f(-5.0f,  0.0f, -5.0f);
+		glNormal3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(-5.0f, 0.0f, -5.0f);
 
-		glNormal3f( 0.0f,  1.0f,  0.0f);
-		glVertex3f(-5.0f,  0.0f,  5.0f);
+		glNormal3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(-5.0f, 0.0f, 5.0f);
 
-		glNormal3f( 0.0f,  1.0f,  0.0f);
-		glVertex3f( 5.0f,  0.0f,  5.0f);
+		glNormal3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(5.0f, 0.0f, 5.0f);
 
-		glNormal3f( 0.0f,  1.0f,  0.0f);
-		glVertex3f( 15.0f,  0.0f, -10.0f);
+		glNormal3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(15.0f, 0.0f, -10.0f);
 	}
 	glEnd();
 
@@ -132,28 +126,12 @@ void CRenderer::drawScene()//SPlayer player)
 
 void CRenderer::drawFPS()
 {
-	//std::cout << "elapsedmsL:"<< instance->timexx.getElapsedMilliseconds()<<"\r";
 	if (time.getElapsedMilliseconds() > 1000)
 	{
-
 		std::stringstream title;
 		title << "FPS: " << static_cast<int>(frame - frame_old) << "   frames:" << frame;
-		//std::cout << "old:" << frame_old << " new:" << frame << " minus:" << frame - frame_old << "\r";
 		frame_old = frame;
 		glutSetWindowTitle(title.str().c_str());
 		time.start();
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

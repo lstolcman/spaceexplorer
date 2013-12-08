@@ -19,20 +19,17 @@ CGame::CGame(void)
 {
 	CGame::instance = this;
 
-	input		= new CInput;
-	player		= new CPlayer;
-	renderer	= new CRenderer(player->playerCoordinates());
-
-//	renderer->playerCoordinates(player->playerCoordinates());
+	camera   = new CCamera;
+	input    = new CInput(camera);
+	renderer = new CRenderer(camera);
 }
 
 
 CGame::~CGame(void)
 {
 	delete renderer;
-	delete player;
+	delete camera;
 	delete input;
-
 }
 
 
@@ -59,11 +56,11 @@ void CGame::Init(int argc, char **argv)
 	glutSpecialFunc(callbackSpecialKeyPress);
 	glutSpecialUpFunc(callbackSpecialKeyUp);
 
-	glutTimerFunc(17, callbackCaptureMouse, 0);
+	glutTimerFunc(17, callbackCaptureInput, 0);
 
 	//glutTimerFunc(1000, callbackDrawFPS, 0);
 	//glutTimerFunc(15, callbackRedisplay, 0);
-	
+
 
 	//glutRedisplayFunc(callbackRedisplay);
 	//glutFullScreen();
@@ -93,7 +90,7 @@ void CGame::Init(int argc, char **argv)
 
 
 
-	glutMainLoop();	
+	glutMainLoop();
 }
 
 
@@ -104,7 +101,7 @@ void CGame::Update(void)
 
 void CGame::Render(void)
 {
-	renderer->drawScene();//instance->player->player);
+	renderer->drawScene(); //instance->player->player);
 }
 
 
@@ -126,7 +123,7 @@ void CGame::Reshape(int width, int height)
 
 	// Chcemy uzyc kamery perspektywicznej o kacie widzenia 60 stopni
 	// i zasiegu renderowania 0.01-100.0 jednostek.
-	gluPerspective(50.0f, (float) width / height, 0.01f, 100.0f);
+	gluPerspective(50.0f, (float)width / height, 0.01f, 100.0f);
 }
 
 
@@ -182,16 +179,13 @@ void CGame::callbackSpecialKeyUp(int keyid, int x, int y)
 	instance->input->specialKeyUp(keyid, x, y);
 }
 
-void CGame::callbackCaptureMouse(int id)
+void CGame::callbackCaptureInput(int id)
 {
 
-	glutTimerFunc(17, callbackCaptureMouse, 0);
-	instance->input->movement(instance->player->playerCoordinates());
-	//instance->renderer->playerCoordinates(instance->player->playerCoordinates());
-	
+	if (instance->input->checkInput())
+	{
+		instance->camera->cameraMove();
+	}
+	glutTimerFunc(17, callbackCaptureInput, 0);
+
 }
-
-
-
-
-

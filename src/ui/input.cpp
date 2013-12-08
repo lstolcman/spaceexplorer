@@ -2,20 +2,19 @@
 #include "input.hpp"
 
 
-
-
-CInput::CInput()
+CInput::CInput(CCamera *player)
 {
 	//init state - nothing pressed
 
 	for (int i = 0; i < 256; i++)
 	{
-		inputState.keys[i] = KEYUP;
+		inputState.keys[i]        = KEYUP;
 		inputState.specialKeys[i] = KEYUP;
 	}
 	inputState.mouse.state = KEYUP;
-	mouseSensitivity = 0.2;
-	captureMouse = true;
+	mouseSensitivity       = 0.2;
+	captureMouse           = true;
+	this->player           = player;
 
 }
 
@@ -28,9 +27,9 @@ CInput::~CInput()
 void CInput::mouseButtonPress(int button, int state, int x, int y)
 {
 	inputState.mouse.button = (MouseKey)button;
-	inputState.mouse.state = (KeyState)state;
-	inputState.mouse.x = x;
-	inputState.mouse.y = y;
+	inputState.mouse.state  = (KeyState)state;
+	inputState.mouse.x      = x;
+	inputState.mouse.y      = y;
 
 #ifdef _DEBUG
 	std::cout << "mouseButtonPress: " << x << "x" << y;
@@ -40,7 +39,8 @@ void CInput::mouseButtonPress(int button, int state, int x, int y)
 		std::cout << " s: UP"; break;
 	case KEYDOWN:
 		std::cout << " s: DOWN"; break;
-	};
+	}
+	;
 	switch (button)
 	{
 	case LEFT_BUTTON:
@@ -57,7 +57,8 @@ void CInput::mouseButtonPress(int button, int state, int x, int y)
 		std::cout << " s: HOLD WHEEL SCROLL UP"; break;
 	case HOLDWHEELSCROLLDOWN:
 		std::cout << " s: HOLD WHEEL SCROLL DOWN"; break;
-	};
+	}
+	;
 	std::cout << "\t\t\r";
 #endif
 
@@ -70,7 +71,7 @@ void CInput::mouseMove(int x, int y)
 	inputState.mouse.y = y;
 
 	/*
-#ifdef _DEBUG
+	#ifdef _DEBUG
 	std::cout << "mouseMove: " << x << "x" << y;
 	switch (inputState.mouse.state)
 	{
@@ -105,7 +106,7 @@ void CInput::mouseMove(int x, int y)
 void CInput::keyDown(unsigned char keyid, int x, int y)
 {
 	/*
-#ifdef _DEBUG
+	#ifdef _DEBUG
 	std::cout << "keyDown " << keyid << "(" << (int)keyid << ") " << x << "x" << y << "\t\t\t\r";
 	#endif
 	*/
@@ -129,34 +130,18 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 			glutSetCursor(GLUT_CURSOR_NONE);
 		}
 		break;
+
+	case 'l':
+	case 'L':
+		// "Odklejenie" kamery od pod³ogi
+		player->free3DMovement = !player->free3DMovement;
 	}
-	/*if (keyid == KEY_ESC)
-	{
-	glutLeaveMainLoop();
-	}*/
-	/*if (keyid == 'm' || keyid == 'M')   // W³¹czenie/wy³¹czenie przechwytywania kursora myszy - "uwalnia" mysz
-	{
-	if (captureMouse)
-	{
-	captureMouse = false;
-	glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
-	}
-	else
-	{
-	captureMouse = true;
-	glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2);
-	glutSetCursor(GLUT_CURSOR_NONE);
-	}
-	}*/
-	/*if (key == 'l' || key == 'L') { // "Odklejenie" kamery od pod³ogi
-	free3DMovement = !free3DMovement;
-	}*/
 }
 
 void CInput::keyUp(unsigned char keyid, int x, int y)
 {
 	/*
-#ifdef _DEBUG
+	#ifdef _DEBUG
 	std::cout << "keyUp " << keyid << "(" << (int)keyid << ") " << x << "x" << y << "\t\t\t\r";
 	#endif
 	*/
@@ -167,7 +152,7 @@ void CInput::keyUp(unsigned char keyid, int x, int y)
 void CInput::keyPress(unsigned char keyid, int x, int y)
 {
 	/*
-#ifdef _DEBUG
+	#ifdef _DEBUG
 	std::cout << "keyPress " << keyid << "(" << (int)keyid << ") " << x << "x" << y << "\t\t\t\r";
 	#endif
 	*/
@@ -197,7 +182,7 @@ bool CInput::isKeyDown(int keyid)
 void CInput::specialKeyDown(int keyid, int x, int y)
 {
 	/*
-#ifdef _DEBUG
+	#ifdef _DEBUG
 	std::cout << "specialKeyDown " << keyid << "(" << (int)keyid << ") " << x << "x" << y << "\t\t\t\r";
 	#endif
 	*/
@@ -212,7 +197,7 @@ void CInput::specialKeyDown(int keyid, int x, int y)
 void CInput::specialKeyUp(int keyid, int x, int y)
 {
 	/*
-#ifdef _DEBUG
+	#ifdef _DEBUG
 	std::cout << "specialKeyUp " << keyid << "(" << (int)keyid << ") " << x << "x" << y << "\t\t\t\r";
 	#endif
 	*/
@@ -222,7 +207,7 @@ void CInput::specialKeyUp(int keyid, int x, int y)
 void CInput::specialKeyPress(int keyid, int x, int y)
 {
 	/*
-#ifdef _DEBUG
+	#ifdef _DEBUG
 	std::cout << "specialKeyPress " << keyid << "(" << (int)keyid << ") " << x << "x" << y << "\t\t\t\r";
 	#endif
 	*/
@@ -259,9 +244,9 @@ bool CInput::isMouseButtonDown(int keyid)
 }
 
 
-void CInput::movement(SPlayer *player)
+bool CInput::checkInput()
 {
-#pragma region Ruch kamery
+	#pragma region Ruch kamery
 
 
 	//std::cout
@@ -270,6 +255,7 @@ void CInput::movement(SPlayer *player)
 	bool free3DMovement = true;
 	if (captureMouse)
 	{
+
 		player->velRY = -mouseSensitivity * (glutGet(GLUT_WINDOW_WIDTH) / 2 - inputState.mouse.x);
 		player->velRX = mouseSensitivity * (glutGet(GLUT_WINDOW_HEIGHT) / 2 - inputState.mouse.y);
 		glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2);
@@ -344,9 +330,9 @@ void CInput::movement(SPlayer *player)
 	m_DirectionVector.z *= m_ForwardVelocity;
 
 	// Increment our position by the vector
-	player->dir.x += m_DirectionVector.x;
-	player->dir.y += m_DirectionVector.y;
-	player->dir.z += m_DirectionVector.z;
+	player->view.x += m_DirectionVector.x;
+	player->view.y += m_DirectionVector.y;
+	player->view.z += m_DirectionVector.z;
 
 	// Translate to our new position.
 	glTranslatef(-m_Position.x, -m_Position.y, m_Position.z);
@@ -357,59 +343,7 @@ void CInput::movement(SPlayer *player)
 
 
 
-	//Obrót kamery (wsp. sferyczne):
+	#pragma endregion
 
-
-	float T = acos(player->dir.y);
-	float G = atan2(player->dir.z, player->dir.x);
-	T -= player->velRX * .03f;
-	G += player->velRY * .03f;
-
-	player->dir.x = sin(T) * cos(G);
-	player->dir.y = cos(T);
-	player->dir.z = sin(T) * sin(G);
-
-	std::cout << std::setprecision(3) << "B"
-		<< player->pos.x << "x" << player->pos.y << "x" << player->pos.z << " "
-		<< player->dir.x << "x" << player->dir.y << "x" << player->dir.z << "\tvelRX:" << player->velRX << "\tvelRY:" << player->velRY << "\t\r";
-
-
-
-
-	// Wektor prostopad³y:
-	vec3 per;
-	per.x = -player->dir.z;
-	per.y = 0;
-	per.z = player->dir.x;
-
-	// Ruch przod/tyl:
-
-	player->pos.x += player->dir.x * player->velM * .1f;
-	if (!free3DMovement) {
-		player->pos.y += player->dir.y * player->velM * .1f;
-	}
-	else {
-		player->pos.y = 1.0f;
-	}
-	player->pos.z += player->dir.z * player->velM * .1f;
-
-	// Ruch na boki:
-	player->pos.x += per.x * player->velS * .1f;
-	if (!free3DMovement) {
-		player->pos.y += player->dir.y * player->velM * .1f;
-	}
-	else {
-		player->pos.y = 1.0f;
-	}
-	player->pos.z += per.z * player->velS * .1f;
-	// Inercja:
-
-	player->velRX /= 2.2;
-	player->velRY /= 2.2;
-	player->velM /= 2.2;
-	player->velS /= 2.2;
-
-
-
-#pragma endregion
+	return true;
 }
