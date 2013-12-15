@@ -45,9 +45,15 @@ void CCamera::cameraMove(void)
 	T -= velRX * .03f;
 	G += velRY * .03f;
 
-	view.x = sin(T) * cos(G);
-	view.y = cos(T);
-	view.z = sin(T) * sin(G);
+	if (T < 3.14 && T > 0.01)
+	{
+
+		view.x = sin(T) * cos(G);
+		view.y = cos(T);
+		view.z = sin(T) * sin(G);
+	}
+
+
 
 	std::cout << std::setprecision(3) << "B"
 	          << pos.x << "x" << pos.y << "x" << pos.z << " "

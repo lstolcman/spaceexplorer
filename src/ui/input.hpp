@@ -49,7 +49,7 @@ public:
 		KeyState specialKeys[256];
 	} inputState;
 
-	CCamera *player;
+	CCamera *camera;
 
 	CInput(CCamera *);
 	~CInput();

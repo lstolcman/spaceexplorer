@@ -2,7 +2,7 @@
 #include "input.hpp"
 
 
-CInput::CInput(CCamera *player)
+CInput::CInput(CCamera *camera)
 {
 	//init state - nothing pressed
 
@@ -14,7 +14,7 @@ CInput::CInput(CCamera *player)
 	inputState.mouse.state = KEYUP;
 	mouseSensitivity       = 0.2;
 	captureMouse           = true;
-	this->player           = player;
+	this->camera           = camera;
 
 }
 
@@ -134,7 +134,7 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 	case 'l':
 	case 'L':
 		// "Odklejenie" kamery od pod³ogi
-		player->free3DMovement = !player->free3DMovement;
+		camera->free3DMovement = !camera->free3DMovement;
 	}
 }
 
@@ -250,48 +250,48 @@ bool CInput::checkInput()
 
 
 	//std::cout
-	//	<< player.pos.x << "x" << player.pos.y << "x" << player.pos.z << " "
-	//	<< player.dir.x << "x" << player.dir.y << "x" << player.dir.z << "\n";
+	//	<< camera.pos.x << "x" << camera.pos.y << "x" << camera.pos.z << " "
+	//	<< camera.dir.x << "x" << camera.dir.y << "x" << camera.dir.z << "\n";
 	bool free3DMovement = true;
 	if (captureMouse)
 	{
 
-		player->velRY = -mouseSensitivity * (glutGet(GLUT_WINDOW_WIDTH) / 2 - inputState.mouse.x);
-		player->velRX = mouseSensitivity * (glutGet(GLUT_WINDOW_HEIGHT) / 2 - inputState.mouse.y);
+		camera->velRY = -mouseSensitivity * (glutGet(GLUT_WINDOW_WIDTH) / 2 - inputState.mouse.x);
+		camera->velRX = mouseSensitivity * (glutGet(GLUT_WINDOW_HEIGHT) / 2 - inputState.mouse.y);
 		glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2);
 	}
 
 	if (inputState.keys['w'] == KEYDOWN)
 	{
-		player->velM = player->speed;
+		camera->velM = camera->speed;
 	}
 	if (inputState.keys['s'] == KEYDOWN)
 	{
-		player->velM = -player->speed;
+		camera->velM = -camera->speed;
 	}
 	if (inputState.keys['a'] == KEYDOWN)
 	{
-		player->velS = -player->speed;
+		camera->velS = -camera->speed;
 	}
 	if (inputState.keys['d'] == KEYDOWN)
 	{
-		player->velS = player->speed;
+		camera->velS = camera->speed;
 	}
 	if (inputState.keys['q'] == KEYDOWN)
 	{
-		player->velRY = -player->speed;
+		camera->velRY = -camera->speed;
 	}
 	if (inputState.keys['e'] == KEYDOWN)
 	{
-		player->velRY = player->speed;
+		camera->velRY = camera->speed;
 	}
 	if (inputState.keys['f'] == KEYDOWN)
 	{
-		player->velRX = -player->speed;
+		camera->velRX = -camera->speed;
 	}
 	if (inputState.keys['c'] == KEYDOWN)
 	{
-		player->velRX = player->speed;
+		camera->velRX = camera->speed;
 	}
 
 
@@ -330,9 +330,9 @@ bool CInput::checkInput()
 	m_DirectionVector.z *= m_ForwardVelocity;
 
 	// Increment our position by the vector
-	player->view.x += m_DirectionVector.x;
-	player->view.y += m_DirectionVector.y;
-	player->view.z += m_DirectionVector.z;
+	camera->view.x += m_DirectionVector.x;
+	camera->view.y += m_DirectionVector.y;
+	camera->view.z += m_DirectionVector.z;
 
 	// Translate to our new position.
 	glTranslatef(-m_Position.x, -m_Position.y, m_Position.z);
