@@ -19,14 +19,16 @@ public:
 	float velM;
 	float velS;
 
+	float angleX;
+	float angleY;
+	float angleZ;
 
 
 	CCamera();
 	~CCamera();
 
 	void cameraMove(void);
-	void changeSpeed(float speed);
-	void changePitch(float degrees);
-	void changeRoll(float degrees);
-
+	void rotX(float);
+	void rotY(float);
+	void rotZ(float);
 };

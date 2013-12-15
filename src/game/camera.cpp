@@ -27,6 +27,11 @@ CCamera::CCamera()
 	velRY = 0.0f;
 	velS  = 0.0f;
 
+
+	angleX = 0.0;
+	angleY = 0.0;
+	angleZ = 0.0;
+
 }
 
 
@@ -45,6 +50,10 @@ void CCamera::cameraMove(void)
 	T -= velRX * .03f;
 	G += velRY * .03f;
 
+	angleX = T;
+	angleY = G;
+
+
 	if (T < 3.14 && T > 0.01)
 	{
 
@@ -55,9 +64,9 @@ void CCamera::cameraMove(void)
 
 
 
-	std::cout << std::setprecision(3) << "B"
+	std::cout << std::setprecision(3) << "B" << T << " " << G << " "
 	          << pos.x << "x" << pos.y << "x" << pos.z << " "
-	          << view.x << "x" << view.y << "x" << view.z << "\tvelRX:" << velRX << "\tvelRY:" << velRY << "\t\r";
+	          << view.x << "x" << view.y << "x" << view.z << "velRX:" << velRX << "velRY:" << velRY << "\t\r";
 
 
 
@@ -71,7 +80,7 @@ void CCamera::cameraMove(void)
 	// Ruch przod/tyl:
 
 	pos.x += view.x * velM * .1f;
-	if (!free3DMovement)
+	if (free3DMovement)
 	{
 		pos.y += view.y * velM * .1f;
 	}
@@ -83,7 +92,7 @@ void CCamera::cameraMove(void)
 
 	// Ruch na boki:
 	pos.x += per.x * velS * .1f;
-	if (!free3DMovement)
+	if (free3DMovement)
 	{
 		pos.y += view.y * velM * .1f;
 	}
@@ -104,19 +113,31 @@ void CCamera::cameraMove(void)
 }
 
 
-void changeSpeed(float speed)
+
+
+
+
+
+
+void rotX(float)
 {
 
 }
 
 
-void changePitch(float degrees)
+void rotY(float)
 {
 
 }
 
 
-void changeRoll(float degrees)
+void rotZ(float)
 {
 
 }
+
+
+
+
+
+

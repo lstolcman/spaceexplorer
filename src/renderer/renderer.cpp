@@ -63,7 +63,6 @@ void CRenderer::drawScene()
 	setupLights();
 
 	// Przesuniecie swiata (przeciwienstwo przesuniecia kamery).
-	//glTranslatef(0.0f, 0.0f, -20.0f);
 
 	// Obrot kamery - aby zatrzymac ja w miejscu, nalezy zakomentowac.
 	//glRotatef(frame / 2, 0.0f, 1.0f, 0.0f);
@@ -72,16 +71,16 @@ void CRenderer::drawScene()
 	// Rysowanie obiektow na scenie.
 
 	glPushMatrix();
-
-	glScalef(2, 2, 2);
-	glColor3d(40, 34, 52);
-	glutSolidSphere(11, 20, 20);
-	glTranslatef(2, 0, 10);
+	glTranslatef(player->view.x + player->pos.x, player->view.y + player->pos.y, player->view.z + player->pos.z);
+	glRotatef(-((player->angleY * 180) / PI), 0, 1, 0);
+	glRotatef(-((player->angleX * 180) / PI), 0, 0, 1);
+	glutWireCube(0.1);
+	glTranslatef(-player->view.x - player->pos.x, -player->view.y - player->pos.y , -player->view.z - player->pos.z);
 	glPopMatrix();
 
 
-	
-	#pragma region Szescian
+
+#pragma region Szescian
 
 	glPushMatrix();
 
@@ -98,90 +97,90 @@ void CRenderer::drawScene()
 	glBegin(GL_QUADS);
 
 	// Przod
-	glNormal3f( 0.0f,  0.0f,  1.0f);
-	glVertex3f( 1.0f,  1.0f,  1.0f);
+	glNormal3f(0.0f, 0.0f, 1.0f);
+	glVertex3f(1.0f, 1.0f, 1.0f);
 
-	glNormal3f( 0.0f,  0.0f,  1.0f);
-	glVertex3f(-1.0f,  1.0f,  1.0f);
+	glNormal3f(0.0f, 0.0f, 1.0f);
+	glVertex3f(-1.0f, 1.0f, 1.0f);
 
-	glNormal3f( 0.0f,  0.0f,  1.0f);
-	glVertex3f(-1.0f, -1.0f,  1.0f);
+	glNormal3f(0.0f, 0.0f, 1.0f);
+	glVertex3f(-1.0f, -1.0f, 1.0f);
 
-	glNormal3f( 0.0f,  0.0f,  1.0f);
-	glVertex3f( 1.0f, -1.0f,  1.0f);
+	glNormal3f(0.0f, 0.0f, 1.0f);
+	glVertex3f(1.0f, -1.0f, 1.0f);
 
 	// Tyl
-	glNormal3f( 0.0f,  0.0f, -1.0f);
-	glVertex3f(-1.0f,  1.0f, -1.0f);
+	glNormal3f(0.0f, 0.0f, -1.0f);
+	glVertex3f(-1.0f, 1.0f, -1.0f);
 
-	glNormal3f( 0.0f,  0.0f, -1.0f);
-	glVertex3f( 1.0f,  1.0f, -1.0f);
+	glNormal3f(0.0f, 0.0f, -1.0f);
+	glVertex3f(1.0f, 1.0f, -1.0f);
 
-	glNormal3f( 0.0f,  0.0f, -1.0f);
-	glVertex3f( 1.0f, -1.0f, -1.0f);
+	glNormal3f(0.0f, 0.0f, -1.0f);
+	glVertex3f(1.0f, -1.0f, -1.0f);
 
-	glNormal3f( 0.0f,  0.0f, -1.0f);
+	glNormal3f(0.0f, 0.0f, -1.0f);
 	glVertex3f(-1.0f, -1.0f, -1.0f);
 
 	// Lewa
-	glNormal3f(-1.0f,  0.0f,  0.0f);
-	glVertex3f(-1.0f,  1.0f,  1.0f);
+	glNormal3f(-1.0f, 0.0f, 0.0f);
+	glVertex3f(-1.0f, 1.0f, 1.0f);
 
-	glNormal3f(-1.0f,  0.0f,  0.0f);
-	glVertex3f(-1.0f,  1.0f, -1.0f);
+	glNormal3f(-1.0f, 0.0f, 0.0f);
+	glVertex3f(-1.0f, 1.0f, -1.0f);
 
-	glNormal3f(-1.0f,  0.0f,  0.0f);
+	glNormal3f(-1.0f, 0.0f, 0.0f);
 	glVertex3f(-1.0f, -1.0f, -1.0f);
 
-	glNormal3f(-1.0f,  0.0f,  0.0f);
-	glVertex3f(-1.0f, -1.0f,  1.0f);
+	glNormal3f(-1.0f, 0.0f, 0.0f);
+	glVertex3f(-1.0f, -1.0f, 1.0f);
 
 	// Prawa
-	glNormal3f( 1.0f,  0.0f,  0.0f);
-	glVertex3f( 1.0f,  1.0f, -1.0f);
+	glNormal3f(1.0f, 0.0f, 0.0f);
+	glVertex3f(1.0f, 1.0f, -1.0f);
 
-	glNormal3f( 1.0f,  0.0f,  0.0f);
-	glVertex3f( 1.0f,  1.0f,  1.0f);
+	glNormal3f(1.0f, 0.0f, 0.0f);
+	glVertex3f(1.0f, 1.0f, 1.0f);
 
-	glNormal3f( 1.0f,  0.0f,  0.0f);
-	glVertex3f( 1.0f, -1.0f,  1.0f);
+	glNormal3f(1.0f, 0.0f, 0.0f);
+	glVertex3f(1.0f, -1.0f, 1.0f);
 
-	glNormal3f( 1.0f,  0.0f,  0.0f);
-	glVertex3f( 1.0f, -1.0f, -1.0f);
+	glNormal3f(1.0f, 0.0f, 0.0f);
+	glVertex3f(1.0f, -1.0f, -1.0f);
 
 	// Gora
-	glNormal3f( 0.0f,  1.0f,  0.0f);
-	glVertex3f( 1.0f,  1.0f,  1.0f);
+	glNormal3f(0.0f, 1.0f, 0.0f);
+	glVertex3f(1.0f, 1.0f, 1.0f);
 
-	glNormal3f( 0.0f,  1.0f,  0.0f);
-	glVertex3f( 1.0f,  1.0f, -1.0f);
+	glNormal3f(0.0f, 1.0f, 0.0f);
+	glVertex3f(1.0f, 1.0f, -1.0f);
 
-	glNormal3f( 0.0f,  1.0f,  0.0f);
-	glVertex3f(-1.0f,  1.0f, -1.0f);
+	glNormal3f(0.0f, 1.0f, 0.0f);
+	glVertex3f(-1.0f, 1.0f, -1.0f);
 
-	glNormal3f( 0.0f,  1.0f,  0.0f);
-	glVertex3f(-1.0f,  1.0f,  1.0f);
+	glNormal3f(0.0f, 1.0f, 0.0f);
+	glVertex3f(-1.0f, 1.0f, 1.0f);
 
 	// Dol
-	glNormal3f( 0.0f, -1.0f,  0.0f);
-	glVertex3f( 1.0f, -1.0f, -1.0f);
+	glNormal3f(0.0f, -1.0f, 0.0f);
+	glVertex3f(1.0f, -1.0f, -1.0f);
 
-	glNormal3f( 0.0f, -1.0f,  0.0f);
-	glVertex3f( 1.0f, -1.0f,  1.0f);
+	glNormal3f(0.0f, -1.0f, 0.0f);
+	glVertex3f(1.0f, -1.0f, 1.0f);
 
-	glNormal3f( 0.0f, -1.0f,  0.0f);
-	glVertex3f(-1.0f, -1.0f,  1.0f);
+	glNormal3f(0.0f, -1.0f, 0.0f);
+	glVertex3f(-1.0f, -1.0f, 1.0f);
 
-	glNormal3f( 0.0f, -1.0f,  0.0f);
+	glNormal3f(0.0f, -1.0f, 0.0f);
 	glVertex3f(-1.0f, -1.0f, -1.0f);
 
 	glEnd();
 
 	glPopMatrix();
 
-	#pragma endregion
+#pragma endregion
 
-	#pragma region Walec
+#pragma region Walec
 
 	glPushMatrix();
 
@@ -200,12 +199,12 @@ void CRenderer::drawScene()
 	// Powierzchnia boczna
 	glBegin(GL_QUAD_STRIP);
 	for (int i = 0; i <= Np; ++i) {
-	float x = sin(2.0f * PI * ((float) i / Np));
-	float z = cos(2.0f * PI * ((float) i / Np));
-	glNormal3f(x, 0.0f, z);
-	glVertex3f(x, 1.0f, z);
-	glNormal3f(x, 0.0f, z);
-	glVertex3f(x, -1.0f, z);
+		float x = sin(2.0f * PI * ((float)i / Np));
+		float z = cos(2.0f * PI * ((float)i / Np));
+		glNormal3f(x, 0.0f, z);
+		glVertex3f(x, 1.0f, z);
+		glNormal3f(x, 0.0f, z);
+		glVertex3f(x, -1.0f, z);
 	}
 	glEnd();
 
@@ -214,10 +213,10 @@ void CRenderer::drawScene()
 	glNormal3f(0.0f, 1.0f, 0.0f);
 	glVertex3f(0.0f, 1.0f, 0.0f);
 	for (int i = 0; i <= Np; ++i) {
-	float x = sin(2.0f * PI * ((float) i / Np));
-	float z = cos(2.0f * PI * ((float) i / Np));
-	glNormal3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(x, 1.0f, z);
+		float x = sin(2.0f * PI * ((float)i / Np));
+		float z = cos(2.0f * PI * ((float)i / Np));
+		glNormal3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(x, 1.0f, z);
 	}
 	glEnd();
 
@@ -226,16 +225,16 @@ void CRenderer::drawScene()
 	glNormal3f(0.0f, -1.0f, 0.0f);
 	glVertex3f(0.0f, -1.0f, 0.0f);
 	for (int i = Np; i >= 0; --i) {
-	float x = sin(2.0f * PI * ((float) i / Np));
-	float z = cos(2.0f * PI * ((float) i / Np));
-	glNormal3f(0.0f, -1.0f, 0.0f);
-	glVertex3f(x, -1.0f, z);
+		float x = sin(2.0f * PI * ((float)i / Np));
+		float z = cos(2.0f * PI * ((float)i / Np));
+		glNormal3f(0.0f, -1.0f, 0.0f);
+		glVertex3f(x, -1.0f, z);
 	}
 	glEnd();
 
 	glPopMatrix();
 
-	#pragma endregion
+#pragma endregion
 
 #pragma region Sciany
 
@@ -395,7 +394,6 @@ void CRenderer::drawScene()
 	glEnd();
 	glPopMatrix();
 
-	glTranslated(2, -2, 2);
 	// Zamien front-buffer z back-bufferem (double buffering).
 	glutSwapBuffers();
 
