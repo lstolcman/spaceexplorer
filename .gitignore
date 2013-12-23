@@ -4,6 +4,9 @@ Debug/
 Release/
 design/
 3rd/
+resources/
+src/latex
+src/html
 
 
 # Files

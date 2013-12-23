@@ -104,9 +104,9 @@ void CRenderer::drawScene()
 	glPushMatrix();
 	glLineWidth(0.1);
 	glTranslatef(2.7, 2.7, -1.3);
-	float m_amb[] = { 1.0f, 1.0f, 0.0f };
-	float m_dif[] = { 1.0f, 1.0f, 0.0f };
-	float m_spe[] = { 1.0f, 1.0f, 0.0f };
+	float m_amb[] = { 0.6f, 0.6f, 0.0f };
+	float m_dif[] = { 0.8f, 0.8f, 0.0f };
+	float m_spe[] = { 1.0f, 1.0f, 1.0f };
 	glMaterialfv(GL_FRONT, GL_AMBIENT, m_amb);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, m_dif);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);
