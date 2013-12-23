@@ -8,20 +8,28 @@
 
 class CGame
 {
-// Fields:
+	// Fields:
 private:
 	//unsigned long		frame, frameold;
 	unsigned long long t1, t2;
 	static CGame       *instance;
-	CInput             *input;
-	CCamera            *camera;
-	CRenderer          *renderer;
+	struct
+	{
+		CInput             *input;
+		CCamera            *camera;
+		CRenderer          *renderer;
+	} handlers;
+
+	struct
+	{
+		SCamera				*camera;
+	} data;
 
 
 public:
 
 
-//Members:
+	//Members:
 private:
 	static void     callbackRender(void);
 	static void     callbackReshape(int, int);

@@ -19,17 +19,20 @@ CGame::CGame(void)
 {
 	CGame::instance = this;
 
-	camera   = new CCamera;
-	input    = new CInput(camera);
-	renderer = new CRenderer(camera);
+	data.camera = new SCamera;
+	handlers.camera   = new CCamera(data.camera);
+	handlers.input    = new CInput(data.camera);
+	handlers.renderer = new CRenderer(data.camera);
 }
 
 
 CGame::~CGame(void)
 {
-	delete renderer;
-	delete camera;
-	delete input;
+	delete handlers.renderer;
+	delete handlers.camera;
+	delete handlers.input;
+
+	delete data.camera;
 }
 
 
@@ -77,12 +80,12 @@ void CGame::Init(int argc, char **argv)
 
 
 
-
+	
 	// Ustawienie obs³ugi myszy
 	glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2); // Przesuniêcie kursora na œrodek ekranu
 
-	instance->input->inputState.mouse.x = glutGet(GLUT_WINDOW_WIDTH) / 2;
-	instance->input->inputState.mouse.y = glutGet(GLUT_WINDOW_HEIGHT) / 2;
+	instance->handlers.input->inputState.mouse.x = glutGet(GLUT_WINDOW_WIDTH) / 2;
+	instance->handlers.input->inputState.mouse.y = glutGet(GLUT_WINDOW_HEIGHT) / 2;
 	glutSetCursor(GLUT_CURSOR_NONE); // Ukrycie kursora
 
 
@@ -97,7 +100,7 @@ void CGame::Update(void)
 
 void CGame::Render(void)
 {
-	renderer->drawScene(); //instance->player->player);
+	handlers.renderer->drawScene(); //instance->player->player);
 }
 
 
@@ -142,45 +145,45 @@ void CGame::callbackRedisplay(void)
 
 void CGame::callbackMouseButtonPress(int button, int state, int x, int y)
 {
-	instance->input->mouseButtonPress(button, state, x, y);
+	instance->handlers.input->mouseButtonPress(button, state, x, y);
 }
 
 
 void CGame::callbackMouseMove(int x, int y)
 {
-	instance->input->mouseMove(x, y);
+	instance->handlers.input->mouseMove(x, y);
 }
 
 
 void CGame::callbackKeyPress(unsigned char keyid, int x, int y)
 {
-	instance->input->keyPress(keyid, x, y);
+	instance->handlers.input->keyPress(keyid, x, y);
 }
 
 
 void CGame::callbackKeyUp(unsigned char keyid, int x, int y)
 {
-	instance->input->keyUp(keyid, x, y);
+	instance->handlers.input->keyUp(keyid, x, y);
 }
 
 
 void CGame::callbackSpecialKeyPress(int keyid, int x, int y)
 {
-	instance->input->specialKeyPress(keyid, x, y);
+	instance->handlers.input->specialKeyPress(keyid, x, y);
 }
 
 
 void CGame::callbackSpecialKeyUp(int keyid, int x, int y)
 {
-	instance->input->specialKeyUp(keyid, x, y);
+	instance->handlers.input->specialKeyUp(keyid, x, y);
 }
 
 void CGame::callbackCaptureInput(int id)
 {
 
-	if (instance->input->checkInput())
+	if (instance->handlers.input->checkInput())
 	{
-		instance->camera->cameraMove();
+		instance->handlers.camera->cameraMove();
 	}
 	glutTimerFunc(17, callbackCaptureInput, 0);
 

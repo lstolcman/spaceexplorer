@@ -49,9 +49,9 @@ public:
 		KeyState specialKeys[256];
 	} inputState;
 
-	CCamera *camera;
+	SCamera *camera;
 
-	CInput(CCamera *);
+	CInput(SCamera*);
 	~CInput();
 
 	void        mouseButtonPress(int, int, int, int);

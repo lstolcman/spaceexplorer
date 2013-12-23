@@ -3,38 +3,38 @@
 
 
 
-CCamera::CCamera()
+CCamera::CCamera(SCamera *camera)
 {
-	free3DMovement = true;
-	captureMouse   = true;
+	this->camera = camera;
+	
+	camera->free3DMovement = true;
+	camera->captureMouse   = true;
 
-	speed = 0.3f;
+	camera->speed = 0.3f;
 
-	pos.x = 0.0f;
-	pos.y = 2.0f;
-	pos.z = 0.0f;
+	camera->pos.x = 0.0f;
+	camera->pos.y = 2.0f;
+	camera->pos.z = 0.0f;
 
-	view.x = 1.0f;
-	view.y = 0.0f;
-	view.z = 0.0f;
+	camera->view.x = 1.0f;
+	camera->view.y = 0.0f;
+	camera->view.z = 0.0f;
 
-	up.x = 0.0f;
-	up.y = 1.0f;
-	up.z = 0.0f;
+	camera->up.x = 0.0f;
+	camera->up.y = 1.0f;
+	camera->up.z = 0.0f;
 
-	velM  = 0.0f;
-	velRX = 0.0f;
-	velRY = 0.0f;
-	velS  = 0.0f;
-
-
-	angleX = 0.0;
-	angleY = 0.0;
-	angleZ = 0.0;
+	camera->velM = 0.0f;
+	camera->velRX = 0.0f;
+	camera->velRY = 0.0f;
+	camera->velS = 0.0f;
 
 
+	camera->angleX = 0.0;
+	camera->angleY = 0.0;
+	camera->angleZ = 0.0;
 
-	latarka = false;
+	camera->latarka = false;
 
 }
 
@@ -49,67 +49,68 @@ void CCamera::cameraMove(void)
 {
 
 	//Obrót kamery (wsp. sferyczne):
-	angleX = acos(view.y);
-	angleY = atan2(view.z, view.x);
-	angleX -= velRX * .03f;
-	angleY += velRY * .03f;
+	camera->angleX = acos(camera->view.y);
+	camera->angleY = atan2(camera->view.z, camera->view.x);
+	camera->angleX -= camera->velRX * .03f;
+	camera->angleY += camera->velRY * .03f;
 
 
 
-	if (angleX < 3.14 && angleX > 0.01)
+	if (camera->angleX < 3.14 && 	camera->angleX > 0.01)
 	{
 
-		view.x = sin(angleX) * cos(angleY);
-		view.y = cos(angleX);
-		view.z = sin(angleX) * sin(angleY);
+		camera->view.x = sin(camera->angleX) * cos(camera->angleY);
+		camera->view.y = cos(camera->angleX);
+		camera->view.z = sin(camera->angleX) * sin(camera->angleY);
 	}
 
 
 
 	std::cout << std::setprecision(3)// << "B" << angleX << " " << angleY << " "
-	          << pos.x << "x" << pos.y << "x" << pos.z << " "
-	          << view.x << "x" << view.y << "x" << view.z << "velRX:" << velRX << "velRY:" << velRY << "\t\r";
+		<< camera->pos.x << "x" << camera->pos.y << "x" << camera->pos.z << " "
+		<< camera->view.x << "x" << camera->view.y << "x" << camera->view.z
+		<< "velRX:" << camera->velRX << "velRY:" << camera->velRY << "\t\r";
 
 
 
 
 	// Wektor prostopad³y:
 	vec3 per;
-	per.x = -view.z;
+	per.x = -camera->view.z;
 	per.y = 0;
-	per.z = view.x;
+	per.z = camera->view.x;
 
 	// Ruch przod/tyl:
 
-	pos.x += view.x * velM * .1f;
-	if (free3DMovement)
+	camera->pos.x += camera->view.x * 	camera->velM * .1f;
+	if (camera->free3DMovement)
 	{
-		pos.y += view.y * velM * .1f;
+		camera->pos.y += camera->view.y * camera->velM * .1f;
 	}
 	else
 	{
-		pos.y = 1.0f;
+		camera->pos.y = 1.0f;
 	}
-	pos.z += view.z * velM * .1f;
+	camera->pos.z += camera->view.z * camera->velM * .1f;
 
 	// Ruch na boki:
-	pos.x += per.x * velS * .1f;
-	if (free3DMovement)
+	camera->pos.x += per.x * camera->velS * .1f;
+	if (camera->free3DMovement)
 	{
-		pos.y += view.y * velM * .1f;
+		camera->pos.y += camera->view.y * camera->velM * .1f;
 	}
 	else
 	{
-		pos.y = 1.0f;
+		camera->pos.y = 1.0f;
 	}
-	pos.z += per.z * velS * .1f;
+	camera->pos.z += per.z * 	camera->velS * .1f;
 	// Inercja:
 
 
-	velRX /= 2.2;
-	velRY /= 2.2;
-	velM  /= 2.2;
-	velS  /= 2.2;
+	camera->velRX /= 2.2;
+	camera->velRY /= 2.2;
+	camera->velM /= 2.2;
+	camera->velS /= 2.2;
 
 
 }

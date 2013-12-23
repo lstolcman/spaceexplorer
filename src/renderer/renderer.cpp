@@ -3,7 +3,7 @@
 
 
 
-CRenderer::CRenderer(CCamera *camera)
+CRenderer::CRenderer(SCamera *camera)
 {
 	this->camera = camera;
 	time.start();

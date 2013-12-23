@@ -2,7 +2,7 @@
 #include "input.hpp"
 
 
-CInput::CInput(CCamera *camera)
+CInput::CInput(SCamera *camera)
 {
 	//init state - nothing pressed
 

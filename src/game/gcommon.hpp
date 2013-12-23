@@ -52,6 +52,28 @@ struct Mouse
 
 
 
+struct SCamera
+{
+
+	bool  free3DMovement;
+	bool  captureMouse;
+	vec3  pos;
+	vec3  view;
+	vec3  up;
+	float speed;
+
+	float velRX;
+	float velRY;
+
+	float velM;
+	float velS;
+
+	bool latarka;
+
+	float angleX;
+	float angleY;
+	float angleZ;
+};
 
 
 
