@@ -26,19 +26,31 @@ void CRenderer::setDisplayMatrices(void)
 void CRenderer::setupLights(void)
 {
 	//oswietlenie ambient - wszystkie wierzcho³ki - wy³¹czone
-	float globAmbient[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	float globAmbient[4] = { 0.1f, 0.1f, 0.1f, 1.0f };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globAmbient);
-
-	glEnable(GL_LIGHT0);
+	
+	if (camera->latarka)
+		glEnable(GL_LIGHT0);
+	else
+		glDisable(GL_LIGHT0);
 	float l0_amb[] = { 0.2f, 0.2f, 0.2f, 1.0f };
 	float l0_dif[] = { 0.4f, 0.4f, 0.4f, 1.0f };
-	float l0_spe[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	//float l0_pos[] = { camera->pos.x, camera->pos.y, camera->pos.z, 1.0f };
-	float l0_pos[] = { 2.7f, 2.7f, -1.3f, 1.0f };
+	float l0_spe[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	//float l0_pos[] = { 2.7f, 2.7f, -1.3f, 1.0f };
+	//float l0_dir[] = { -0.9f, -0.3f, 1.3f};
+	float l0_pos[] = { camera->pos.x, camera->pos.y, camera->pos.z, 1.0f };
+	float l0_dir[] = { camera->view.x, camera->view.y, camera->view.z };
 	glLightfv(GL_LIGHT0, GL_AMBIENT, l0_amb);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, l0_dif);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, l0_spe);
 	glLightfv(GL_LIGHT0, GL_POSITION, l0_pos);
+	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, l0_dir);
+	glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 20.0f);
+
+
+
+
+
 }
 
 

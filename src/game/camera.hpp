@@ -19,6 +19,8 @@ public:
 	float velM;
 	float velS;
 
+	bool latarka;
+
 	float angleX;
 	float angleY;
 	float angleZ;

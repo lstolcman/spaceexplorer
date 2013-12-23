@@ -32,6 +32,10 @@ CCamera::CCamera()
 	angleY = 0.0;
 	angleZ = 0.0;
 
+
+
+	latarka = false;
+
 }
 
 

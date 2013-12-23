@@ -135,6 +135,13 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 	case 'L':
 		// "Odklejenie" kamery od pod³ogi
 		camera->free3DMovement = !camera->free3DMovement;
+		break;
+
+	case 'p':
+	case 'P':
+			camera->latarka = !camera->latarka;
+		break;
+
 	}
 }
 
