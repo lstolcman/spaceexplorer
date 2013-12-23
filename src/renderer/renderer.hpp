@@ -9,7 +9,7 @@ class CRenderer
 private:
 	unsigned long frame, frame_old;
 	CTimer        time, time_old;
-	CCamera       *player;
+	CCamera       *camera;
 
 	void            drawFPS(void);
 	void            setDisplayMatrices(void);

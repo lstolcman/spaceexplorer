@@ -3,9 +3,9 @@
 
 
 
-CRenderer::CRenderer(CCamera *player)
+CRenderer::CRenderer(CCamera *camera)
 {
-	this->player = player;
+	this->camera = camera;
 	time.start();
 	frame = 0;
 	frame_old = 0;
@@ -25,20 +25,20 @@ void CRenderer::setDisplayMatrices(void)
 
 void CRenderer::setupLights(void)
 {
-	glEnable(GL_LIGHT0);
-	//glEnable(GL_LIGHT1);
 	//oswietlenie ambient - wszystkie wierzcho³ki - wy³¹czone
-	float l0_amb[] = { 0.0f, 0.0f, 0.0f };
-	glLightfv(GL_LIGHT0, GL_AMBIENT, l0_amb);
-	glDisable(GL_LIGHT0);
-	/*float l0_dif[] = { 0.6f, 0.6f, 0.6f };
-	float l0_spe[] = { 1.0f, 1.0f, 1.0f };
-	float l0_pos[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	//float l0_pos[] = { player->pos.x, player->pos.y, player->pos.z, 1.0f };
+	float globAmbient[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globAmbient);
+
+	glEnable(GL_LIGHT0);
+	float l0_amb[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+	float l0_dif[] = { 0.4f, 0.4f, 0.4f, 1.0f };
+	float l0_spe[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	//float l0_pos[] = { camera->pos.x, camera->pos.y, camera->pos.z, 1.0f };
+	float l0_pos[] = { 2.7f, 2.7f, -1.3f, 1.0f };
 	glLightfv(GL_LIGHT0, GL_AMBIENT, l0_amb);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, l0_dif);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, l0_spe);
-	glLightfv(GL_LIGHT0, GL_POSITION, l0_pos);*/
+	glLightfv(GL_LIGHT0, GL_POSITION, l0_pos);
 }
 
 
@@ -60,9 +60,9 @@ void CRenderer::drawScene()
 	glLoadIdentity();
 
 	gluLookAt(
-		player->pos.x, player->pos.y, player->pos.z,
-		player->pos.x + player->view.x, player->pos.y + player->view.y, player->pos.z + player->view.z,
-		player->up.x, player->up.y, player->up.z
+		camera->pos.x, camera->pos.y, camera->pos.z,
+		camera->pos.x + camera->view.x, camera->pos.y + camera->view.y, camera->pos.z + camera->view.z,
+		camera->up.x, camera->up.y, camera->up.z
 		);
 
 
@@ -80,13 +80,26 @@ void CRenderer::drawScene()
 	/* 3rd CAMERA */
 	/*
 	glPushMatrix();
-	glTranslatef(player->view.x + player->pos.x, player->view.y + player->pos.y, player->view.z + player->pos.z);
-	glRotatef(-((player->angleY * 180) / PI), 0, 1, 0);
-	glRotatef(-((player->angleX * 180) / PI), 0, 0, 1);
+	glTranslatef(camera->view.x + camera->pos.x, camera->view.y + camera->pos.y, camera->view.z + camera->pos.z);
+	glRotatef(-((camera->angleY * 180) / PI), 0, 1, 0);
+	glRotatef(-((camera->angleX * 180) / PI), 0, 0, 1);
 	glutWireCube(0.2);
-	glTranslatef(-player->view.x - player->pos.x, -player->view.y - player->pos.y , -player->view.z - player->pos.z);
+	glTranslatef(-camera->view.x - camera->pos.x, -camera->view.y - camera->pos.y , -camera->view.z - camera->pos.z);
 	glPopMatrix();
 	*/
+
+
+	glPushMatrix();
+	glLineWidth(0.1);
+	glTranslatef(2.7, 2.7, -1.3);
+	float m_amb[] = { 1.0f, 1.0f, 0.0f };
+	float m_dif[] = { 1.0f, 1.0f, 0.0f };
+	float m_spe[] = { 1.0f, 1.0f, 0.0f };
+	glMaterialfv(GL_FRONT, GL_AMBIENT, m_amb);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, m_dif);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);
+	glutSolidSphere(0.2, 12, 8);
+	glPopMatrix();
 
 
 #pragma region Szescian
@@ -188,6 +201,8 @@ void CRenderer::drawScene()
 	glPopMatrix();
 
 #pragma endregion
+
+
 
 #pragma region Walec
 
@@ -396,9 +411,9 @@ void CRenderer::drawScene()
 	glLineWidth(5);
 	glBegin(GL_LINES);
 	//glColor3f(1.0f, 1.0f, 0.0f);
-	glVertex3f(player->pos.x + player->view.x, player->pos.y + player->view.y, player->pos.z + player->view.z);
-	glVertex3f(player->pos.x + player->view.x, player->pos.y + player->view.y, player->pos.z + player->view.z);
-	//glVertex3f(player->pos.x, player->pos.y, player->pos.z);
+	glVertex3f(camera->pos.x + camera->view.x, camera->pos.y + camera->view.y, camera->pos.z + camera->view.z);
+	glVertex3f(camera->pos.x + camera->view.x, camera->pos.y + camera->view.y, camera->pos.z + camera->view.z);
+	//glVertex3f(camera->pos.x, camera->pos.y, camera->pos.z);
 	//glVertex3f(0, 0, 0);
 	glEnd();
 	glPopMatrix();

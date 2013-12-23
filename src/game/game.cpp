@@ -86,7 +86,6 @@ void CGame::Init(int argc, char **argv)
 	glutSetCursor(GLUT_CURSOR_NONE); // Ukrycie kursora
 
 
-
 	glutMainLoop();
 }
 
