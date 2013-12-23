@@ -25,14 +25,20 @@ void CRenderer::setDisplayMatrices(void)
 
 void CRenderer::setupLights(void)
 {
-	float l0_amb[] = { 0.2f, 0.2f, 0.2f };
-	float l0_dif[] = { 0.6f, 0.6f, 0.6f };
+	glEnable(GL_LIGHT0);
+	//glEnable(GL_LIGHT1);
+	//oswietlenie ambient - wszystkie wierzcho³ki - wy³¹czone
+	float l0_amb[] = { 0.0f, 0.0f, 0.0f };
+	glLightfv(GL_LIGHT0, GL_AMBIENT, l0_amb);
+	glDisable(GL_LIGHT0);
+	/*float l0_dif[] = { 0.6f, 0.6f, 0.6f };
 	float l0_spe[] = { 1.0f, 1.0f, 1.0f };
-	float l0_pos[] = { 1.0f, 5.0f, 4.0f, 1.0f };
+	float l0_pos[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	//float l0_pos[] = { player->pos.x, player->pos.y, player->pos.z, 1.0f };
 	glLightfv(GL_LIGHT0, GL_AMBIENT, l0_amb);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, l0_dif);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, l0_spe);
-	glLightfv(GL_LIGHT0, GL_POSITION, l0_pos);
+	glLightfv(GL_LIGHT0, GL_POSITION, l0_pos);*/
 }
 
 
@@ -70,14 +76,17 @@ void CRenderer::drawScene()
 
 	// Rysowanie obiektow na scenie.
 
+
+	/* 3rd CAMERA */
+	/*
 	glPushMatrix();
 	glTranslatef(player->view.x + player->pos.x, player->view.y + player->pos.y, player->view.z + player->pos.z);
 	glRotatef(-((player->angleY * 180) / PI), 0, 1, 0);
 	glRotatef(-((player->angleX * 180) / PI), 0, 0, 1);
-	glutWireCube(0.1);
+	glutWireCube(0.2);
 	glTranslatef(-player->view.x - player->pos.x, -player->view.y - player->pos.y , -player->view.z - player->pos.z);
 	glPopMatrix();
-
+	*/
 
 
 #pragma region Szescian

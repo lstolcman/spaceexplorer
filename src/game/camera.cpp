@@ -45,26 +45,24 @@ void CCamera::cameraMove(void)
 {
 
 	//Obrót kamery (wsp. sferyczne):
-	float T = acos(view.y);
-	float G = atan2(view.z, view.x);
-	T -= velRX * .03f;
-	G += velRY * .03f;
-
-	angleX = T;
-	angleY = G;
+	angleX = acos(view.y);
+	angleY = atan2(view.z, view.x);
+	angleX -= velRX * .03f;
+	angleY += velRY * .03f;
 
 
-	if (T < 3.14 && T > 0.01)
+
+	if (angleX < 3.14 && angleX > 0.01)
 	{
 
-		view.x = sin(T) * cos(G);
-		view.y = cos(T);
-		view.z = sin(T) * sin(G);
+		view.x = sin(angleX) * cos(angleY);
+		view.y = cos(angleX);
+		view.z = sin(angleX) * sin(angleY);
 	}
 
 
 
-	std::cout << std::setprecision(3) << "B" << T << " " << G << " "
+	std::cout << std::setprecision(3)// << "B" << angleX << " " << angleY << " "
 	          << pos.x << "x" << pos.y << "x" << pos.z << " "
 	          << view.x << "x" << view.y << "x" << view.z << "velRX:" << velRX << "velRY:" << velRY << "\t\r";
 
