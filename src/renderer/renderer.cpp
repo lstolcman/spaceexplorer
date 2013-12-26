@@ -9,12 +9,27 @@ CRenderer::CRenderer(SCamera *camera)
 	time.start();
 	frame = 0;
 	frame_old = 0;
+
+	loadTextures();
 }
 
 CRenderer::~CRenderer()
 {
 
 }
+
+
+bool CRenderer::loadTextures(void)
+{
+	skybox.front.Load("resources/1_front5.bmp", GL_NEAREST, GL_NEAREST);
+	skybox.back.Load("resources/1_back6.bmp", GL_NEAREST, GL_NEAREST);
+	skybox.right.Load("resources/1_right1.bmp", GL_NEAREST, GL_NEAREST);
+	skybox.left.Load("resources/1_left2.bmp", GL_NEAREST, GL_NEAREST);
+	skybox.top.Load("resources/1_top3.bmp", GL_NEAREST, GL_NEAREST);
+	skybox.bottom.Load("resources/1_bottom4.bmp", GL_NEAREST, GL_NEAREST);
+	return true;
+}
+
 
 
 void CRenderer::drawFPS()
@@ -54,27 +69,40 @@ void CRenderer::setDisplayMatrices(void)
 void CRenderer::setupLights(void)
 {
 	//oswietlenie ambient - wszystkie wierzcho³ki - wy³¹czone
-	float globAmbient[4] = { 0.1f, 0.1f, 0.1f, 1.0f };
+	float globAmbient[4] = { 1.1f, 1.1f, 1.1f, 1.0f };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globAmbient);
-	
-	if (camera->latarka)
+
+	/*if (camera->latarka)
 		glEnable(GL_LIGHT0);
-	else
+		else
 		glDisable(GL_LIGHT0);
-	float l0_amb[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-	float l0_dif[] = { 0.4f, 0.4f, 0.4f, 1.0f };
-	float l0_spe[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-	//float l0_pos[] = { 2.7f, 2.7f, -1.3f, 1.0f };
-	//float l0_dir[] = { -0.9f, -0.3f, 1.3f};
-	float l0_pos[] = { camera->pos.x, camera->pos.y, camera->pos.z, 1.0f };
-	float l0_dir[] = { camera->view.x, camera->view.y, camera->view.z };
+		float l0_amb[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+		float l0_dif[] = { 0.4f, 0.4f, 0.4f, 1.0f };
+		float l0_spe[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+		//float l0_pos[] = { 2.7f, 2.7f, -1.3f, 1.0f };
+		//float l0_dir[] = { -0.9f, -0.3f, 1.3f};
+		float l0_pos[] = { camera->pos.x, camera->pos.y, camera->pos.z, 1.0f };
+		float l0_dir[] = { camera->view.x, camera->view.y, camera->view.z };
+		glLightfv(GL_LIGHT0, GL_AMBIENT, l0_amb);
+		glLightfv(GL_LIGHT0, GL_DIFFUSE, l0_dif);
+		glLightfv(GL_LIGHT0, GL_SPECULAR, l0_spe);
+		glLightfv(GL_LIGHT0, GL_POSITION, l0_pos);
+		glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, l0_dir);
+		glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 20.0f);*/
+
+
+
+	glEnable(GL_LIGHT0);
+#pragma region Swiatlo
+	float l0_amb[] = { 0.2f, 0.2f, 0.2f };
+	float l0_dif[] = { 0.6f, 0.6f, 0.6f };
+	float l0_spe[] = { 0.2f, 0.2f, 0.2f };
+	float l0_pos[] = { 1.0f, 2.0f, 2.0f, 1.0f };
 	glLightfv(GL_LIGHT0, GL_AMBIENT, l0_amb);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, l0_dif);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, l0_spe);
 	glLightfv(GL_LIGHT0, GL_POSITION, l0_pos);
-	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, l0_dir);
-	glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 20.0f);
-
+#pragma endregion
 
 
 
@@ -84,153 +112,190 @@ void CRenderer::setupLights(void)
 
 void CRenderer::drawSky(void)
 {
-	#pragma region Sciany
+	// W³¹czamy teksturowanie
+	glEnable(GL_TEXTURE_2D);
+	// Ustawienie sposobu teksturowania - GL_MODULATE sprawia, ¿e œwiat³o ma wp³yw na teksturê; GL_DECAL i GL_REPLACE rysuj¹ teksturê tak jak jest
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
-	glBegin(GL_QUADS);
+	glPushMatrix();
+	glScaled(5, 5, 5);
+
+	float m_amb[] = { 0.7f, 0.7f, 0.7f, 1.0f };
+	float m_dif[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	float m_spe[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	glMaterialfv(GL_FRONT, GL_AMBIENT, m_amb);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, m_dif);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);
 
 #pragma region Przednia sciana
 	{
-		float m_amb[] = { 1.0f, 1.0f, 1.0f };
-		float m_dif[] = { 1.0f, 1.0f, 1.0f };
-		float m_spe[] = { 0.0f, 0.0f, 0.0f };
-		glMaterialfv(GL_FRONT, GL_AMBIENT, m_amb);
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, m_dif);
-		glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);
+		glBindTexture(GL_TEXTURE_2D, skybox.front());
+		glPushMatrix();
+		glBegin(GL_QUADS);
 
+		glTexCoord2f(0.0f, 0.0f);
 		glNormal3f(0.0f, 0.0f, 1.0f);
-		glVertex3f(-5.0f, 5.0f, -5.0f);
+		glVertex3f(-1.0f, -1.0f, -1.0f);
 
+		glTexCoord2f(1.0f, 0.0f);
 		glNormal3f(0.0f, 0.0f, 1.0f);
-		glVertex3f(-5.0f, 0.0f, -5.0f);
+		glVertex3f(1.0f, -1.0f, -1.0f);
 
+		glTexCoord2f(1.0f, 1.0f);
 		glNormal3f(0.0f, 0.0f, 1.0f);
-		glVertex3f(5.0f, 0.0f, -5.0f);
+		glVertex3f(1.0f, 1.0f, -1.0f);
 
+		glTexCoord2f(0.0f, 1.0f);
 		glNormal3f(0.0f, 0.0f, 1.0f);
-		glVertex3f(5.0f, 5.0f, -5.0f);
+		glVertex3f(-1.0f, 1.0f, -1.0f);
+		glEnd();
+		glPopMatrix();
 	}
 #pragma endregion
 
-#pragma region Lewa sciana
-	{
-		float m_amb[] = { 1.0f, 0.0f, 0.0f };
-		float m_dif[] = { 1.0f, 0.0f, 0.0f };
-		float m_spe[] = { 0.0f, 0.0f, 0.0f };
-		glMaterialfv(GL_FRONT, GL_AMBIENT, m_amb);
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, m_dif);
-		glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);
-
-		glNormal3f(1.0f, 0.0f, 0.0f);
-		glVertex3f(-5.0f, 0.0f, -5.0f);
-
-		glNormal3f(1.0f, 0.0f, 0.0f);
-		glVertex3f(-5.0f, 5.0f, -5.0f);
-
-		glNormal3f(1.0f, 0.0f, 0.0f);
-		glVertex3f(-5.0f, 5.0f, 5.0f);
-
-		glNormal3f(1.0f, 0.0f, 0.0f);
-		glVertex3f(-5.0f, 0.0f, 5.0f);
-	}
-#pragma endregion
-
-#pragma region Prawa sciana
-	{
-		float m_amb[] = { 0.0f, 1.0f, 0.0f };
-		float m_dif[] = { 0.0f, 1.0f, 0.0f };
-		float m_spe[] = { 0.0f, 0.0f, 0.0f };
-		glMaterialfv(GL_FRONT, GL_AMBIENT, m_amb);
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, m_dif);
-		glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);
-
-		glNormal3f(-1.0f, 0.0f, 0.0f);
-		glVertex3f(5.0f, 5.0f, -5.0f);
-
-		glNormal3f(-1.0f, 0.0f, 0.0f);
-		glVertex3f(5.0f, 0.0f, -5.0f);
-
-		glNormal3f(-1.0f, 0.0f, 0.0f);
-		glVertex3f(5.0f, 0.0f, 5.0f);
-
-		glNormal3f(-1.0f, 0.0f, 0.0f);
-		glVertex3f(5.0f, 5.0f, 5.0f);
-	}
-#pragma endregion
 
 #pragma region Tylna sciana
 	{
-		float m_amb[] = { 1.0f, 1.0f, 1.0f };
-		float m_dif[] = { 1.0f, 1.0f, 1.0f };
-		float m_spe[] = { 0.0f, 0.0f, 0.0f };
-		glMaterialfv(GL_FRONT, GL_AMBIENT, m_amb);
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, m_dif);
-		glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);
+		glBindTexture(GL_TEXTURE_2D, skybox.back());
+		glPushMatrix();
+		glBegin(GL_QUADS);
 
+		glTexCoord2f(1.0f, 0.0f);
 		glNormal3f(0.0f, 0.0f, -1.0f);
-		glVertex3f(-5.0f, 0.0f, 5.0f);
+		glVertex3f(-1.0f, -1.0f, 1.0f);
 
+		glTexCoord2f(1.0f, 1.0f);
 		glNormal3f(0.0f, 0.0f, -1.0f);
-		glVertex3f(-5.0f, 5.0f, 5.0f);
+		glVertex3f(-1.0f, 1.0f, 1.0f);
 
+		glTexCoord2f(0.0f, 1.0f);
 		glNormal3f(0.0f, 0.0f, -1.0f);
-		glVertex3f(5.0f, 5.0f, 5.0f);
+		glVertex3f(1.0f, 1.0f, 1.0f);
 
+		glTexCoord2f(0.0f, 0.0f);
 		glNormal3f(0.0f, 0.0f, -1.0f);
-		glVertex3f(5.0f, 0.0f, 5.0f);
+		glVertex3f(1.0f, -1.0f, 1.0f);
+
+		glEnd();
+		glPopMatrix();
 	}
 #pragma endregion
+
+
+#pragma region Lewa sciana
+	{
+		glBindTexture(GL_TEXTURE_2D, skybox.left());
+		glPushMatrix();
+		glBegin(GL_QUADS);
+
+		glTexCoord2f(1.0f, 0.0f);
+		glNormal3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(-1.0f, -1.0f, -1.0f);
+
+		glTexCoord2f(1.0f, 1.0f);
+		glNormal3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(-1.0f, 1.0f, -1.0f);
+
+		glTexCoord2f(0.0f, 1.0f);
+		glNormal3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(-1.0f, 1.0f, 1.0f);
+
+		glTexCoord2f(0.0f, 0.0f);
+		glNormal3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(-1.0f, -1.0f, 1.0f);
+
+		glEnd();
+		glPopMatrix();
+	}
+#pragma endregion
+
+
+#pragma region Prawa sciana
+	{
+		glBindTexture(GL_TEXTURE_2D, skybox.right());
+		glPushMatrix();
+		glBegin(GL_QUADS);
+
+		glTexCoord2f(0.0f, 1.0f);
+		glNormal3f(-1.0f, 0.0f, 0.0f);
+		glVertex3f(1.0f, 1.0f, -1.0f);
+
+		glTexCoord2f(0.0f, 0.0f);
+		glNormal3f(-1.0f, 0.0f, 0.0f);
+		glVertex3f(1.0f, -1.0f, -1.0f);
+
+		glTexCoord2f(1.0f, 0.0f);
+		glNormal3f(-1.0f, 0.0f, 0.0f);
+		glVertex3f(1.0f, -1.0f, 1.0f);
+
+		glTexCoord2f(1.0f, 1.0f);
+		glNormal3f(-1.0f, 0.0f, 0.0f);
+		glVertex3f(1.0f, 1.0f, 1.0f);
+
+		glEnd();
+		glPopMatrix();
+	}
+#pragma endregion
+
 
 #pragma region Podloga
 	{
-		float m_amb[] = { 1.0f, 1.0f, 1.0f };
-		float m_dif[] = { 1.0f, 1.0f, 1.0f };
-		float m_spe[] = { 0.0f, 0.0f, 0.0f };
-		glMaterialfv(GL_FRONT, GL_AMBIENT, m_amb);
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, m_dif);
-		glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);
+		glBindTexture(GL_TEXTURE_2D, skybox.bottom());
+		glPushMatrix();
+		glBegin(GL_QUADS);
 
+		glTexCoord2f(0.0f, 1.0f);
 		glNormal3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(-5.0f, 0.0f, -5.0f);
+		glVertex3f(-1.0f, -1.0f, -1.0f);
 
+		glTexCoord2f(0.0f, 0.0f);
 		glNormal3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(-5.0f, 0.0f, 5.0f);
+		glVertex3f(-1.0f, -1.0f, 1.0f);
 
+		glTexCoord2f(1.0f, 0.0f);
 		glNormal3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(5.0f, 0.0f, 5.0f);
+		glVertex3f(1.0f, -1.0f, 1.0f);
 
+		glTexCoord2f(1.0f, 1.0f);
 		glNormal3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(5.0f, 0.0f, -5.0f);
+		glVertex3f(1.0f, -1.0f, -1.0f);
+
+		glEnd();
+		glPopMatrix();
 	}
 #pragma endregion
+
 
 #pragma region Sufit
 	{
-		float m_amb[] = { 1.0f, 1.0f, 1.0f };
-		float m_dif[] = { 1.0f, 1.0f, 1.0f };
-		float m_spe[] = { 0.0f, 0.0f, 0.0f };
-		glMaterialfv(GL_FRONT, GL_AMBIENT, m_amb);
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, m_dif);
-		glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);
+		glBindTexture(GL_TEXTURE_2D, skybox.top());
+		glPushMatrix();
+		glBegin(GL_QUADS);
 
+		glTexCoord2f(0.0f, 1.0f);
 		glNormal3f(0.0f, -1.0f, 0.0f);
-		glVertex3f(-5.0f, 5.0f, 5.0f);
+		glVertex3f(-1.0f, 1.0f, 1.0f);
 
+		glTexCoord2f(0.0f, 0.0f);
 		glNormal3f(0.0f, -1.0f, 0.0f);
-		glVertex3f(-5.0f, 5.0f, -5.0f);
+		glVertex3f(-1.0f, 1.0f, -1.0f);
 
+		glTexCoord2f(1.0f, 0.0f);
 		glNormal3f(0.0f, -1.0f, 0.0f);
-		glVertex3f(5.0f, 5.0f, -5.0f);
+		glVertex3f(1.0f, 1.0f, -1.0f);
 
+		glTexCoord2f(1.0f, 1.0f);
 		glNormal3f(0.0f, -1.0f, 0.0f);
-		glVertex3f(5.0f, 5.0f, 5.0f);
+		glVertex3f(1.0f, 1.0f, 1.0f);
+
+		glEnd();
+		glPopMatrix();
 	}
 #pragma endregion
 
-	glEnd();
 
-#pragma endregion
-
-
+	glPopMatrix();
+	glDisable(GL_TEXTURE_2D);
 }
 
 
@@ -437,19 +502,6 @@ void CRenderer::drawScene()
 
 #pragma endregion
 
-	glScalef(10, 10, 10);
-
-
-	glPushMatrix();
-	glLineWidth(5);
-	glBegin(GL_LINES);
-	//glColor3f(1.0f, 1.0f, 0.0f);
-	glVertex3f(camera->pos.x + camera->view.x, camera->pos.y + camera->view.y, camera->pos.z + camera->view.z);
-	glVertex3f(camera->pos.x + camera->view.x, camera->pos.y + camera->view.y, camera->pos.z + camera->view.z);
-	//glVertex3f(camera->pos.x, camera->pos.y, camera->pos.z);
-	//glVertex3f(0, 0, 0);
-	glEnd();
-	glPopMatrix();
 
 	// Zamien front-buffer z back-bufferem (double buffering).
 	glutSwapBuffers();

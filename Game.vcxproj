@@ -82,6 +82,7 @@
     <ClCompile Include="src\game\camera.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\renderer\renderer.cpp" />
+    <ClCompile Include="src\renderer\texture.cpp" />
     <ClCompile Include="src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -100,6 +101,7 @@
     <ClInclude Include="src\game\camera.hpp" />
     <ClInclude Include="src\main.hpp" />
     <ClInclude Include="src\renderer\renderer.hpp" />
+    <ClInclude Include="src\renderer\texture.hpp" />
     <ClInclude Include="src\stdafx.hpp" />
     <ClInclude Include="src\tools\bitmap.hpp" />
     <ClInclude Include="src\tools\math.hpp" />
@@ -108,6 +110,14 @@
     <ClInclude Include="src\tools\vector.hpp" />
     <ClInclude Include="src\ui\input.hpp" />
     <ClInclude Include="src\ui\ui.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\1_back6.bmp" />
+    <Image Include="resources\1_bottom4.bmp" />
+    <Image Include="resources\1_front5.bmp" />
+    <Image Include="resources\1_left2.bmp" />
+    <Image Include="resources\1_right1.bmp" />
+    <Image Include="resources\1_top3.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

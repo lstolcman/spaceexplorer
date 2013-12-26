@@ -45,20 +45,6 @@ void CGame::Init(int argc, char **argv)
 	glutCreateWindow("Space Explorer");
 
 
-	glutDisplayFunc(callbackRender);
-	//glutIdleFunc(callbackRedisplay); //http://forum.warsztat.gd/index.php?topic=4703.0
-	glutReshapeFunc(callbackReshape);
-
-
-	//glutMouseFunc(callbackMouseButtonPress);
-	glutMotionFunc(callbackMouseMove);
-	glutPassiveMotionFunc(callbackMouseMove);
-
-	glutKeyboardFunc(callbackKeyPress);
-	glutKeyboardUpFunc(callbackKeyUp);
-	glutSpecialFunc(callbackSpecialKeyPress);
-	glutSpecialUpFunc(callbackSpecialKeyUp);
-
 	glutTimerFunc(17, callbackCaptureInput, 0);
 
 	//glutTimerFunc(1000, callbackDrawFPS, 0);
@@ -72,6 +58,9 @@ void CGame::Init(int argc, char **argv)
 
 	// ustawienie jakoœci renderingu punktów
 
+	// ustawienie jakoœci renderingu wielok¹tów
+
+
 	glEnable(GL_CULL_FACE); // W³¹czenie cullingu - rysowania tylko jednej strony wielok¹tów
 	glCullFace(GL_BACK); // Okreœlenie, któr¹ stronê wielok¹tów chcemy ukrywaæ
 	glFrontFace(GL_CCW); // Okreœlenie, jaki kierunek definicji wierzcho³ków oznacza przód wielok¹tu (GL_CCW - przeciwnie do ruchu wskazówek zegara, GL_CW - zgodnie)
@@ -79,6 +68,7 @@ void CGame::Init(int argc, char **argv)
 	glEnable(GL_LIGHTING);
 
 
+	setGlutCallbacks();
 
 	
 	// Ustawienie obs³ugi myszy
@@ -88,6 +78,7 @@ void CGame::Init(int argc, char **argv)
 	instance->handlers.input->inputState.mouse.y = glutGet(GLUT_WINDOW_HEIGHT) / 2;
 	glutSetCursor(GLUT_CURSOR_NONE); // Ukrycie kursora
 
+	handlers.renderer->loadTextures();
 
 	glutMainLoop();
 }
@@ -100,14 +91,9 @@ void CGame::Update(void)
 
 void CGame::Render(void)
 {
-	handlers.renderer->drawScene(); //instance->player->player);
+	handlers.renderer->drawScene();
 }
 
-
-void CGame::callbackRender()
-{
-	instance->Render();
-}
 
 void CGame::Reshape(int width, int height)
 {
@@ -126,6 +112,33 @@ void CGame::Reshape(int width, int height)
 }
 
 
+void CGame::setGlutCallbacks(void)
+{
+
+	glutDisplayFunc(callbackRender);
+	//glutIdleFunc(callbackRedisplay); //http://forum.warsztat.gd/index.php?topic=4703.0
+	glutReshapeFunc(callbackReshape);
+
+
+	//glutMouseFunc(callbackMouseButtonPress);
+	glutMotionFunc(callbackMouseMove);
+	glutPassiveMotionFunc(callbackMouseMove);
+
+	glutKeyboardFunc(callbackKeyPress);
+	glutKeyboardUpFunc(callbackKeyUp);
+	glutSpecialFunc(callbackSpecialKeyPress);
+	glutSpecialUpFunc(callbackSpecialKeyUp);
+
+
+}
+
+
+void CGame::callbackRender()
+{
+	instance->Render();
+}
+
+
 void CGame::callbackReshape(int width, int height)
 {
 	instance->Reshape(width, height);
@@ -136,6 +149,7 @@ void CGame::callbackDrawFPS(int id)
 {
 	//	instance->drawFPS(id);
 }
+
 
 void CGame::callbackRedisplay(void)
 {
@@ -178,6 +192,7 @@ void CGame::callbackSpecialKeyUp(int keyid, int x, int y)
 	instance->handlers.input->specialKeyUp(keyid, x, y);
 }
 
+
 void CGame::callbackCaptureInput(int id)
 {
 
@@ -188,3 +203,4 @@ void CGame::callbackCaptureInput(int id)
 	glutTimerFunc(17, callbackCaptureInput, 0);
 
 }
+

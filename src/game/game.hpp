@@ -10,7 +10,6 @@ class CGame
 {
 	// Fields:
 private:
-	//unsigned long		frame, frameold;
 	unsigned long long t1, t2;
 	static CGame       *instance;
 	struct
@@ -46,7 +45,7 @@ private:
 	void            Update(void);
 	void            Render(void);
 	void            Reshape(int width, int height);
-	void            captureMouse(int);
+	void			setGlutCallbacks(void);
 
 
 public:

@@ -13,6 +13,9 @@
     <Filter Include="UI">
       <UniqueIdentifier>{157dce9e-54b1-4739-9704-f91bd431c456}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{cee4e22f-9534-41c0-81e5-308e485f7d75}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
@@ -46,6 +49,9 @@
     </ClCompile>
     <ClCompile Include="src\tools\bitmap.cpp">
       <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderer\texture.cpp">
+      <Filter>Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -84,5 +90,28 @@
     <ClInclude Include="src\tools\bitmap.hpp">
       <Filter>Tools</Filter>
     </ClInclude>
+    <ClInclude Include="src\renderer\texture.hpp">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\1_back6.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="resources\1_bottom4.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="resources\1_front5.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="resources\1_left2.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="resources\1_right1.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="resources\1_top3.bmp">
+      <Filter>Resources</Filter>
+    </Image>
   </ItemGroup>
 </Project>
