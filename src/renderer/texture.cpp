@@ -34,6 +34,9 @@ GLuint CTexture::Load(std::string file, int magFilter, int minFilter)
 	// "Bindowanie" tekstury o nowoutworzonym id
 	glBindTexture(GL_TEXTURE_2D, handle);
 
+
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	// Okreœlenie parametrów filtracji dla tekstury
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter); // Filtracja, gdy tekstura jest powiêkszana
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter); // Filtracja, gdy tekstura jest pomniejszana

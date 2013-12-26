@@ -12,7 +12,7 @@ CCamera::CCamera(SCamera *camera)
 	camera->speed = 0.3f;
 
 	camera->pos.x = 0.0f;
-	camera->pos.y = 2.0f;
+	camera->pos.y = 0.0f;
 	camera->pos.z = 0.0f;
 
 	camera->view.x = 1.0f;

@@ -21,12 +21,12 @@ CRenderer::~CRenderer()
 
 bool CRenderer::loadTextures(void)
 {
-	skybox.front.Load("resources/1_front5.bmp", GL_NEAREST, GL_NEAREST);
-	skybox.back.Load("resources/1_back6.bmp", GL_NEAREST, GL_NEAREST);
-	skybox.right.Load("resources/1_right1.bmp", GL_NEAREST, GL_NEAREST);
-	skybox.left.Load("resources/1_left2.bmp", GL_NEAREST, GL_NEAREST);
-	skybox.top.Load("resources/1_top3.bmp", GL_NEAREST, GL_NEAREST);
-	skybox.bottom.Load("resources/1_bottom4.bmp", GL_NEAREST, GL_NEAREST);
+	skybox.front.Load("resources/s_front5.bmp", GL_NEAREST, GL_NEAREST);
+	skybox.back.Load("resources/s_back6.bmp", GL_NEAREST, GL_NEAREST);
+	skybox.right.Load("resources/s_right1.bmp", GL_NEAREST, GL_NEAREST);
+	skybox.left.Load("resources/s_left2.bmp", GL_NEAREST, GL_NEAREST);
+	skybox.top.Load("resources/s_top3.bmp", GL_NEAREST, GL_NEAREST);
+	skybox.bottom.Load("resources/s_bottom4.bmp", GL_NEAREST, GL_NEAREST);
 	return true;
 }
 
@@ -112,13 +112,24 @@ void CRenderer::setupLights(void)
 
 void CRenderer::drawSky(void)
 {
+	// Store the current matrix
+	glPushMatrix();
+
+	// Enable/Disable features
+
+	// Just in case we set all vertices to white.
+	glColor4f(1, 1, 1, 1);
+
+
 	// W³¹czamy teksturowanie
 	glEnable(GL_TEXTURE_2D);
-	// Ustawienie sposobu teksturowania - GL_MODULATE sprawia, ¿e œwiat³o ma wp³yw na teksturê; GL_DECAL i GL_REPLACE rysuj¹ teksturê tak jak jest
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
-	glPushMatrix();
-	glScaled(5, 5, 5);
+	// Ustawienie sposobu teksturowania - GL_MODULATE sprawia, ¿e œwiat³o ma wp³yw na teksturê; GL_DECAL i GL_REPLACE rysuj¹ teksturê tak jak jest
+	//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
+
+	glTranslatef(camera->pos.x, camera->pos.y, camera->pos.z);
+	glScaled(50, 50, 50);
 
 	float m_amb[] = { 0.7f, 0.7f, 0.7f, 1.0f };
 	float m_dif[] = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -294,6 +305,7 @@ void CRenderer::drawSky(void)
 #pragma endregion
 
 
+	// Restore enable bits and matrix
 	glPopMatrix();
 	glDisable(GL_TEXTURE_2D);
 }
