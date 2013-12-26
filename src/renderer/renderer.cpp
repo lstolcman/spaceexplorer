@@ -10,7 +10,6 @@ CRenderer::CRenderer(SCamera *camera)
 	frame = 0;
 	frame_old = 0;
 
-	loadTextures();
 }
 
 CRenderer::~CRenderer()
@@ -321,6 +320,7 @@ void CRenderer::drawScene()
 
 	drawSky();
 
+	glScaled(0.1, 0.1, 0.1);
 
 	// Przesuniecie swiata (przeciwienstwo przesuniecia kamery).
 

@@ -45,7 +45,6 @@ void CGame::Init(int argc, char **argv)
 	glutCreateWindow("Space Explorer");
 
 
-	glutTimerFunc(17, callbackCaptureInput, 0);
 
 	//glutTimerFunc(1000, callbackDrawFPS, 0);
 	//glutTimerFunc(15, callbackRedisplay, 0);
@@ -68,18 +67,11 @@ void CGame::Init(int argc, char **argv)
 	glEnable(GL_LIGHTING);
 
 
+	setMouse();
+	loadTextures();
+
 	setGlutCallbacks();
-
-	
-	// Ustawienie obs³ugi myszy
-	glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2); // Przesuniêcie kursora na œrodek ekranu
-
-	instance->handlers.input->inputState.mouse.x = glutGet(GLUT_WINDOW_WIDTH) / 2;
-	instance->handlers.input->inputState.mouse.y = glutGet(GLUT_WINDOW_HEIGHT) / 2;
-	glutSetCursor(GLUT_CURSOR_NONE); // Ukrycie kursora
-
-	handlers.renderer->loadTextures();
-
+	glutTimerFunc(17, callbackCaptureInput, 0);
 	glutMainLoop();
 }
 
@@ -131,6 +123,27 @@ void CGame::setGlutCallbacks(void)
 
 
 }
+
+
+void CGame::loadTextures(void)
+{
+	handlers.renderer->loadTextures();
+}
+
+
+void CGame::setMouse(void)
+{
+	// Ustawienie obs³ugi myszy
+	glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2); // Przesuniêcie kursora na œrodek ekranu
+
+	instance->handlers.input->inputState.mouse.x = glutGet(GLUT_WINDOW_WIDTH) / 2;
+	instance->handlers.input->inputState.mouse.y = glutGet(GLUT_WINDOW_HEIGHT) / 2;
+	glutSetCursor(GLUT_CURSOR_NONE); // Ukrycie kursora
+}
+
+
+
+
 
 
 void CGame::callbackRender()

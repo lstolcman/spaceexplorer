@@ -46,6 +46,8 @@ private:
 	void            Render(void);
 	void            Reshape(int width, int height);
 	void			setGlutCallbacks(void);
+	void			loadTextures(void);
+	void			setMouse(void);
 
 
 public:
