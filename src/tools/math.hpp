@@ -1,5 +1,5 @@
 #pragma once
-#define PI 3.1415
+#define PI 3.1415f
 
 
 #include "vector.hpp"

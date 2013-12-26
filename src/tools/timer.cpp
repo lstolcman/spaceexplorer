@@ -38,7 +38,7 @@ unsigned CTimer::getElapsedMilliseconds()
 
 float CTimer::getElapsedSeconds()
 {
-	return getElapsedMilliseconds() / 1000.0;
+	return getElapsedMilliseconds() / 1000.0f;
 }
 
 

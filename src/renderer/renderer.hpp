@@ -14,6 +14,7 @@ private:
 	void            drawFPS(void);
 	void            setDisplayMatrices(void);
 	void            setupLights(void);
+	void            drawSky(void);
 
 
 public:
@@ -21,10 +22,6 @@ public:
 	~CRenderer();
 
 	void            drawScene();
-	/*void            lookAt(GLdouble eyeX, GLdouble eyeY, GLdouble eyeZ,
-	                       GLdouble centerX, GLdouble centerY, GLdouble centerZ,
-	                       GLdouble upX, GLdouble upY, GLdouble upZ);*/
-
 
 
 };

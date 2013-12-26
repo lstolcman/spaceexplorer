@@ -7,7 +7,6 @@ CCamera::CCamera(SCamera *camera)
 {
 	this->camera = camera;
 	
-	camera->free3DMovement = true;
 	camera->captureMouse   = true;
 
 	camera->speed = 0.3f;
@@ -30,11 +29,11 @@ CCamera::CCamera(SCamera *camera)
 	camera->velS = 0.0f;
 
 
-	camera->angleX = 0.0;
-	camera->angleY = 0.0;
-	camera->angleZ = 0.0;
+	camera->angleX = 0.0f;
+	camera->angleY = 0.0f;
+	camera->angleZ = 0.0f;
 
-	camera->latarka = false;
+	camera->latarka = true;
 
 }
 
@@ -83,42 +82,23 @@ void CCamera::cameraMove(void)
 	// Ruch przod/tyl:
 
 	camera->pos.x += camera->view.x * 	camera->velM * .1f;
-	if (camera->free3DMovement)
-	{
 		camera->pos.y += camera->view.y * camera->velM * .1f;
-	}
-	else
-	{
-		camera->pos.y = 1.0f;
-	}
 	camera->pos.z += camera->view.z * camera->velM * .1f;
 
 	// Ruch na boki:
 	camera->pos.x += per.x * camera->velS * .1f;
-	if (camera->free3DMovement)
-	{
 		camera->pos.y += camera->view.y * camera->velM * .1f;
-	}
-	else
-	{
-		camera->pos.y = 1.0f;
-	}
 	camera->pos.z += per.z * 	camera->velS * .1f;
 	// Inercja:
 
 
-	camera->velRX /= 2.2;
-	camera->velRY /= 2.2;
-	camera->velM /= 2.2;
-	camera->velS /= 2.2;
+	camera->velRX /= 2.2f;
+	camera->velRY /= 2.2f;
+	camera->velM /= 2.2f;
+	camera->velS /= 2.2f;
 
 
 }
-
-
-
-
-
 
 
 

@@ -12,7 +12,7 @@ CInput::CInput(SCamera *camera)
 		inputState.specialKeys[i] = KEYUP;
 	}
 	inputState.mouse.state = KEYUP;
-	mouseSensitivity       = 0.2;
+	mouseSensitivity       = 0.2f;
 	captureMouse           = true;
 	this->camera           = camera;
 
@@ -129,12 +129,6 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 			glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2);
 			glutSetCursor(GLUT_CURSOR_NONE);
 		}
-		break;
-
-	case 'l':
-	case 'L':
-		// "Odklejenie" kamery od pod³ogi
-		camera->free3DMovement = !camera->free3DMovement;
 		break;
 
 	case 'p':
@@ -300,54 +294,6 @@ bool CInput::checkInput()
 	{
 		camera->velRX = camera->speed;
 	}
-
-
-
-	/*
-
-	GLfloat Matrix[16];
-	CQuaternion q;
-
-	// Make the Quaternions that will represent our rotations
-	m_qPitch.CreateFromAxisAngle(1.0f, 0.0f, 0.0f, m_PitchDegrees);
-	m_qHeading.CreateFromAxisAngle(0.0f, 1.0f, 0.0f, m_HeadingDegrees);
-
-	// Combine the pitch and heading rotations and store the results in q
-	q = m_qPitch * m_qHeading;
-	q.CreateMatrix(Matrix);
-
-	// Let OpenGL set our new prespective on the world!
-	glMultMatrixf(Matrix);
-
-	// Create a matrix from the pitch Quaternion and get the j vector
-	// for our direction.
-	m_qPitch.CreateMatrix(Matrix);
-	m_DirectionVector.y = Matrix[9];
-
-	// Combine the heading and pitch rotations and make a matrix to get
-	// the i and j vectors for our direction.
-	q = m_qHeading * m_qPitch;
-	q.CreateMatrix(Matrix);
-	m_DirectionVector.x = Matrix[8];
-	m_DirectionVector.z = Matrix[10];
-
-	// Scale the direction by our speed.
-	m_DirectionVector.x *= m_ForwardVelocity;
-	m_DirectionVector.y *= m_ForwardVelocity;
-	m_DirectionVector.z *= m_ForwardVelocity;
-
-	// Increment our position by the vector
-	camera->view.x += m_DirectionVector.x;
-	camera->view.y += m_DirectionVector.y;
-	camera->view.z += m_DirectionVector.z;
-
-	// Translate to our new position.
-	glTranslatef(-m_Position.x, -m_Position.y, m_Position.z);
-
-
-	*/
-
-
 
 
 	#pragma endregion

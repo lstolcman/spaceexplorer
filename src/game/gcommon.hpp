@@ -55,7 +55,7 @@ struct Mouse
 struct SCamera
 {
 
-	bool  free3DMovement;
+	//bool  free3DMovement;
 	bool  captureMouse;
 	vec3  pos;
 	vec3  view;

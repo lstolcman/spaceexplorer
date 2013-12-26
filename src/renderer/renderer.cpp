@@ -17,8 +17,36 @@ CRenderer::~CRenderer()
 }
 
 
+void CRenderer::drawFPS()
+{
+	if (time.getElapsedMilliseconds() > 1000)
+	{
+		std::stringstream title;
+		title << "FPS: " << static_cast<int>(frame - frame_old) << "   frames:" << frame;
+		frame_old = frame;
+		glutSetWindowTitle(title.str().c_str());
+		time.start();
+	}
+}
+
+
 void CRenderer::setDisplayMatrices(void)
 {
+	// Wyczysc zawartosc bufora koloru i glebokosci.
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	// Wybor macierzy, ktora od tej pory bedziemy modyfikowac
+	// - macierz Modelu/Widoku.
+	glMatrixMode(GL_MODELVIEW);
+
+	// Zaladowanie macierzy jednostkowej.
+	glLoadIdentity();
+
+	gluLookAt(
+		camera->pos.x, camera->pos.y, camera->pos.z,
+		camera->pos.x + camera->view.x, camera->pos.y + camera->view.y, camera->pos.z + camera->view.z,
+		camera->up.x, camera->up.y, camera->up.z
+		);
 
 }
 
@@ -54,31 +82,168 @@ void CRenderer::setupLights(void)
 }
 
 
+void CRenderer::drawSky(void)
+{
+	#pragma region Sciany
+
+	glBegin(GL_QUADS);
+
+#pragma region Przednia sciana
+	{
+		float m_amb[] = { 1.0f, 1.0f, 1.0f };
+		float m_dif[] = { 1.0f, 1.0f, 1.0f };
+		float m_spe[] = { 0.0f, 0.0f, 0.0f };
+		glMaterialfv(GL_FRONT, GL_AMBIENT, m_amb);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, m_dif);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);
+
+		glNormal3f(0.0f, 0.0f, 1.0f);
+		glVertex3f(-5.0f, 5.0f, -5.0f);
+
+		glNormal3f(0.0f, 0.0f, 1.0f);
+		glVertex3f(-5.0f, 0.0f, -5.0f);
+
+		glNormal3f(0.0f, 0.0f, 1.0f);
+		glVertex3f(5.0f, 0.0f, -5.0f);
+
+		glNormal3f(0.0f, 0.0f, 1.0f);
+		glVertex3f(5.0f, 5.0f, -5.0f);
+	}
+#pragma endregion
+
+#pragma region Lewa sciana
+	{
+		float m_amb[] = { 1.0f, 0.0f, 0.0f };
+		float m_dif[] = { 1.0f, 0.0f, 0.0f };
+		float m_spe[] = { 0.0f, 0.0f, 0.0f };
+		glMaterialfv(GL_FRONT, GL_AMBIENT, m_amb);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, m_dif);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);
+
+		glNormal3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(-5.0f, 0.0f, -5.0f);
+
+		glNormal3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(-5.0f, 5.0f, -5.0f);
+
+		glNormal3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(-5.0f, 5.0f, 5.0f);
+
+		glNormal3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(-5.0f, 0.0f, 5.0f);
+	}
+#pragma endregion
+
+#pragma region Prawa sciana
+	{
+		float m_amb[] = { 0.0f, 1.0f, 0.0f };
+		float m_dif[] = { 0.0f, 1.0f, 0.0f };
+		float m_spe[] = { 0.0f, 0.0f, 0.0f };
+		glMaterialfv(GL_FRONT, GL_AMBIENT, m_amb);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, m_dif);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);
+
+		glNormal3f(-1.0f, 0.0f, 0.0f);
+		glVertex3f(5.0f, 5.0f, -5.0f);
+
+		glNormal3f(-1.0f, 0.0f, 0.0f);
+		glVertex3f(5.0f, 0.0f, -5.0f);
+
+		glNormal3f(-1.0f, 0.0f, 0.0f);
+		glVertex3f(5.0f, 0.0f, 5.0f);
+
+		glNormal3f(-1.0f, 0.0f, 0.0f);
+		glVertex3f(5.0f, 5.0f, 5.0f);
+	}
+#pragma endregion
+
+#pragma region Tylna sciana
+	{
+		float m_amb[] = { 1.0f, 1.0f, 1.0f };
+		float m_dif[] = { 1.0f, 1.0f, 1.0f };
+		float m_spe[] = { 0.0f, 0.0f, 0.0f };
+		glMaterialfv(GL_FRONT, GL_AMBIENT, m_amb);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, m_dif);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);
+
+		glNormal3f(0.0f, 0.0f, -1.0f);
+		glVertex3f(-5.0f, 0.0f, 5.0f);
+
+		glNormal3f(0.0f, 0.0f, -1.0f);
+		glVertex3f(-5.0f, 5.0f, 5.0f);
+
+		glNormal3f(0.0f, 0.0f, -1.0f);
+		glVertex3f(5.0f, 5.0f, 5.0f);
+
+		glNormal3f(0.0f, 0.0f, -1.0f);
+		glVertex3f(5.0f, 0.0f, 5.0f);
+	}
+#pragma endregion
+
+#pragma region Podloga
+	{
+		float m_amb[] = { 1.0f, 1.0f, 1.0f };
+		float m_dif[] = { 1.0f, 1.0f, 1.0f };
+		float m_spe[] = { 0.0f, 0.0f, 0.0f };
+		glMaterialfv(GL_FRONT, GL_AMBIENT, m_amb);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, m_dif);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);
+
+		glNormal3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(-5.0f, 0.0f, -5.0f);
+
+		glNormal3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(-5.0f, 0.0f, 5.0f);
+
+		glNormal3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(5.0f, 0.0f, 5.0f);
+
+		glNormal3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(5.0f, 0.0f, -5.0f);
+	}
+#pragma endregion
+
+#pragma region Sufit
+	{
+		float m_amb[] = { 1.0f, 1.0f, 1.0f };
+		float m_dif[] = { 1.0f, 1.0f, 1.0f };
+		float m_spe[] = { 0.0f, 0.0f, 0.0f };
+		glMaterialfv(GL_FRONT, GL_AMBIENT, m_amb);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, m_dif);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);
+
+		glNormal3f(0.0f, -1.0f, 0.0f);
+		glVertex3f(-5.0f, 5.0f, 5.0f);
+
+		glNormal3f(0.0f, -1.0f, 0.0f);
+		glVertex3f(-5.0f, 5.0f, -5.0f);
+
+		glNormal3f(0.0f, -1.0f, 0.0f);
+		glVertex3f(5.0f, 5.0f, -5.0f);
+
+		glNormal3f(0.0f, -1.0f, 0.0f);
+		glVertex3f(5.0f, 5.0f, 5.0f);
+	}
+#pragma endregion
+
+	glEnd();
+
+#pragma endregion
+
+
+}
+
 
 void CRenderer::drawScene()
 {
 	drawFPS();
 
-	//setDisplayMatrices();
-
-	// Wyczysc zawartosc bufora koloru i glebokosci.
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	// Wybor macierzy, ktora od tej pory bedziemy modyfikowac
-	// - macierz Modelu/Widoku.
-	glMatrixMode(GL_MODELVIEW);
-
-	// Zaladowanie macierzy jednostkowej.
-	glLoadIdentity();
-
-	gluLookAt(
-		camera->pos.x, camera->pos.y, camera->pos.z,
-		camera->pos.x + camera->view.x, camera->pos.y + camera->view.y, camera->pos.z + camera->view.z,
-		camera->up.x, camera->up.y, camera->up.z
-		);
-
+	setDisplayMatrices();
 
 	setupLights();
+
+	drawSky();
+
 
 	// Przesuniecie swiata (przeciwienstwo przesuniecia kamery).
 
@@ -103,7 +268,7 @@ void CRenderer::drawScene()
 
 	glPushMatrix();
 	glLineWidth(0.1);
-	glTranslatef(2.7, 2.7, -1.3);
+	glTranslatef(2.7f, 2.7f, -1.3f);
 	float m_amb[] = { 0.6f, 0.6f, 0.0f };
 	float m_dif[] = { 0.8f, 0.8f, 0.0f };
 	float m_spe[] = { 1.0f, 1.0f, 1.0f };
@@ -272,151 +437,7 @@ void CRenderer::drawScene()
 
 #pragma endregion
 
-#pragma region Sciany
-
-	glBegin(GL_QUADS);
-
-#pragma region Przednia sciana
-	{
-		float m_amb[] = { 1.0f, 1.0f, 1.0f };
-		float m_dif[] = { 1.0f, 1.0f, 1.0f };
-		float m_spe[] = { 0.0f, 0.0f, 0.0f };
-		glMaterialfv(GL_FRONT, GL_AMBIENT, m_amb);
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, m_dif);
-		glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);
-
-		glNormal3f(0.0f, 0.0f, 1.0f);
-		glVertex3f(-5.0f, 5.0f, -5.0f);
-
-		glNormal3f(0.0f, 0.0f, 1.0f);
-		glVertex3f(-5.0f, 0.0f, -5.0f);
-
-		glNormal3f(0.0f, 0.0f, 1.0f);
-		glVertex3f(5.0f, 0.0f, -5.0f);
-
-		glNormal3f(0.0f, 0.0f, 1.0f);
-		glVertex3f(5.0f, 5.0f, -5.0f);
-	}
-#pragma endregion
-
-#pragma region Lewa sciana
-	{
-		float m_amb[] = { 1.0f, 0.0f, 0.0f };
-		float m_dif[] = { 1.0f, 0.0f, 0.0f };
-		float m_spe[] = { 0.0f, 0.0f, 0.0f };
-		glMaterialfv(GL_FRONT, GL_AMBIENT, m_amb);
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, m_dif);
-		glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);
-
-		glNormal3f(1.0f, 0.0f, 0.0f);
-		glVertex3f(-5.0f, 0.0f, -5.0f);
-
-		glNormal3f(1.0f, 0.0f, 0.0f);
-		glVertex3f(-5.0f, 5.0f, -5.0f);
-
-		glNormal3f(1.0f, 0.0f, 0.0f);
-		glVertex3f(-5.0f, 5.0f, 5.0f);
-
-		glNormal3f(1.0f, 0.0f, 0.0f);
-		glVertex3f(-5.0f, 0.0f, 5.0f);
-	}
-#pragma endregion
-
-#pragma region Prawa sciana
-	{
-		float m_amb[] = { 0.0f, 1.0f, 0.0f };
-		float m_dif[] = { 0.0f, 1.0f, 0.0f };
-		float m_spe[] = { 0.0f, 0.0f, 0.0f };
-		glMaterialfv(GL_FRONT, GL_AMBIENT, m_amb);
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, m_dif);
-		glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);
-
-		glNormal3f(-1.0f, 0.0f, 0.0f);
-		glVertex3f(5.0f, 5.0f, -5.0f);
-
-		glNormal3f(-1.0f, 0.0f, 0.0f);
-		glVertex3f(5.0f, 0.0f, -5.0f);
-
-		glNormal3f(-1.0f, 0.0f, 0.0f);
-		glVertex3f(5.0f, 0.0f, 5.0f);
-
-		glNormal3f(-1.0f, 0.0f, 0.0f);
-		glVertex3f(5.0f, 5.0f, 5.0f);
-	}
-#pragma endregion
-
-#pragma region Tylna sciana
-	{
-		float m_amb[] = { 1.0f, 1.0f, 1.0f };
-		float m_dif[] = { 1.0f, 1.0f, 1.0f };
-		float m_spe[] = { 0.0f, 0.0f, 0.0f };
-		glMaterialfv(GL_FRONT, GL_AMBIENT, m_amb);
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, m_dif);
-		glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);
-
-		glNormal3f(0.0f, 0.0f, -1.0f);
-		glVertex3f(-5.0f, 0.0f, 5.0f);
-
-		glNormal3f(0.0f, 0.0f, -1.0f);
-		glVertex3f(-5.0f, 5.0f, 5.0f);
-
-		glNormal3f(0.0f, 0.0f, -1.0f);
-		glVertex3f(5.0f, 5.0f, 5.0f);
-
-		glNormal3f(0.0f, 0.0f, -1.0f);
-		glVertex3f(5.0f, 0.0f, 5.0f);
-	}
-#pragma endregion
-
-#pragma region Podloga
-	{
-		float m_amb[] = { 1.0f, 1.0f, 1.0f };
-		float m_dif[] = { 1.0f, 1.0f, 1.0f };
-		float m_spe[] = { 0.0f, 0.0f, 0.0f };
-		glMaterialfv(GL_FRONT, GL_AMBIENT, m_amb);
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, m_dif);
-		glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);
-
-		glNormal3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(-5.0f, 0.0f, -5.0f);
-
-		glNormal3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(-5.0f, 0.0f, 5.0f);
-
-		glNormal3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(5.0f, 0.0f, 5.0f);
-
-		glNormal3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(5.0f, 0.0f, -5.0f);
-	}
-#pragma endregion
-
-#pragma region Sufit
-	{
-		float m_amb[] = { 1.0f, 1.0f, 1.0f };
-		float m_dif[] = { 1.0f, 1.0f, 1.0f };
-		float m_spe[] = { 0.0f, 0.0f, 0.0f };
-		glMaterialfv(GL_FRONT, GL_AMBIENT, m_amb);
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, m_dif);
-		glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);
-
-		glNormal3f(0.0f, -1.0f, 0.0f);
-		glVertex3f(-5.0f, 5.0f, 5.0f);
-
-		glNormal3f(0.0f, -1.0f, 0.0f);
-		glVertex3f(-5.0f, 5.0f, -5.0f);
-
-		glNormal3f(0.0f, -1.0f, 0.0f);
-		glVertex3f(5.0f, 5.0f, -5.0f);
-
-		glNormal3f(0.0f, -1.0f, 0.0f);
-		glVertex3f(5.0f, 5.0f, 5.0f);
-	}
-#pragma endregion
-
-	glEnd();
-
-#pragma endregion
+	glScalef(10, 10, 10);
 
 
 	glPushMatrix();
@@ -448,15 +469,3 @@ void CRenderer::drawScene()
 }
 
 
-
-void CRenderer::drawFPS()
-{
-	if (time.getElapsedMilliseconds() > 1000)
-	{
-		std::stringstream title;
-		title << "FPS: " << static_cast<int>(frame - frame_old) << "   frames:" << frame;
-		frame_old = frame;
-		glutSetWindowTitle(title.str().c_str());
-		time.start();
-	}
-}

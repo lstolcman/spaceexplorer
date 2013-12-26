@@ -7,6 +7,9 @@
 
 #pragma once
 
+/// bitmap reader 
+#define _CRT_SECURE_NO_WARNINGS
+
 
 //#define FREEGLUT_STATIC
 
