@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../game/gcommon.hpp"
+
 
 
 class CUI
@@ -7,6 +9,7 @@ class CUI
 	//Fields:
 private:
 	void*			font;
+	SData			*data;
 
 public:
 
@@ -18,7 +21,7 @@ private:
 	void			displayFPS(void);
 
 public:
-	CUI(void);
+	CUI(SData*);
 	~CUI();
 
 	void			drawUI(void);

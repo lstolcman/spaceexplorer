@@ -5,6 +5,7 @@
 
 CRenderer::CRenderer(SData *data)
 {
+	this->data = data;
 	this->camera = data->camera;
 	time.start();
 	frame = 0;
@@ -34,16 +35,16 @@ bool CRenderer::loadTextures(void)
 }
 
 
-
-void CRenderer::drawFPS()
+void CRenderer::countFPS()
 {
 	if (time.getElapsedMilliseconds() > 1000)
 	{
-		std::stringstream title;
-		title << "FPS: " << static_cast<int>(frame - frame_old) << "   frames:" << frame;
+		data->last_fps = frame - frame_old;
+		//std::stringstream title;
+		//title << "FPS: " << static_cast<int>(frame - frame_old) << "   frames:" << frame;
 		frame_old = frame;
-		glutSetWindowTitle(title.str().c_str());
-		time.start();
+		//glutSetWindowTitle(title.str().c_str());
+		time.start(); //reset timer to 0
 	}
 }
 
@@ -316,7 +317,7 @@ void CRenderer::drawSky(void)
 
 void CRenderer::drawScene()
 {
-	drawFPS();
+	countFPS();
 
 	setDisplayMatrices();
 
@@ -324,10 +325,12 @@ void CRenderer::drawScene()
 
 	drawSky();
 
+
+
 	glScaled(0.1, 0.1, 0.1);
 
-	// Przesuniecie swiata (przeciwienstwo przesuniecia kamery).
 
+	// Przesuniecie swiata (przeciwienstwo przesuniecia kamery).
 	// Obrot kamery - aby zatrzymac ja w miejscu, nalezy zakomentowac.
 	//glRotatef(frame / 2, 0.0f, 1.0f, 0.0f);
 
@@ -519,18 +522,15 @@ void CRenderer::drawScene()
 #pragma endregion
 
 
-	// Zamien front-buffer z back-bufferem (double buffering).
-	glutSwapBuffers();
-
-
-	// Jesli instrukcje w danej implementacji OpenGL byly buforowane,
-	// w tym momencie bufor zostanie oprozniony a instrukcje wykonane.
-	glFlush();
-
-
-
-	// Nakaz wyswietlic kolejna klatke.
-	glutPostRedisplay();
+	{
+		//reset light
+		float amb[] = { 1.0f, 0.0f, 0.0f };
+		float dif[] = { 0.0f, 0.0f, 0.0f };
+		float spe[] = { 0.0f, 0.0f, 0.0f };
+		glMaterialfv(GL_FRONT, GL_AMBIENT, amb);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, dif);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, spe);
+	}
 
 	// Inkrementacja licznika klatek.
 	frame += 1;

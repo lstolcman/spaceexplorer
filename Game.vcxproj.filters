@@ -16,15 +16,18 @@
     <Filter Include="Resources">
       <UniqueIdentifier>{cee4e22f-9534-41c0-81e5-308e485f7d75}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tools\Loaders">
+      <UniqueIdentifier>{b8bd1463-85a6-4c0b-8256-e1d66db1ee45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\Math">
+      <UniqueIdentifier>{a3cd66db-e644-4c1f-a9e5-1858c948ee25}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\stdafx.cpp" />
     <ClCompile Include="src\game\game.cpp">
       <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tools\timer.cpp">
-      <Filter>Tools</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\ui.cpp">
       <Filter>UI</Filter>
@@ -35,15 +38,6 @@
     <ClCompile Include="src\ui\input.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="src\tools\math.cpp">
-      <Filter>Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tools\vector.cpp">
-      <Filter>Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tools\quaternion.cpp">
-      <Filter>Tools</Filter>
-    </ClCompile>
     <ClCompile Include="src\game\camera.cpp">
       <Filter>Game</Filter>
     </ClCompile>
@@ -51,7 +45,22 @@
       <Filter>Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\tools\bitmap.cpp">
-      <Filter>Tools</Filter>
+      <Filter>Tools\Loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\math.cpp">
+      <Filter>Tools\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\quaternion.cpp">
+      <Filter>Tools\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\timer.cpp">
+      <Filter>Tools\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\vector.cpp">
+      <Filter>Tools\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\obj.cpp">
+      <Filter>Tools\Loaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -59,9 +68,6 @@
     <ClInclude Include="src\stdafx.hpp" />
     <ClInclude Include="src\game\game.hpp">
       <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="src\tools\timer.hpp">
-      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="src\ui\ui.hpp">
       <Filter>UI</Filter>
@@ -72,17 +78,8 @@
     <ClInclude Include="src\ui\input.hpp">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="src\tools\math.hpp">
-      <Filter>Tools</Filter>
-    </ClInclude>
     <ClInclude Include="src\game\gcommon.hpp">
       <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="src\tools\vector.hpp">
-      <Filter>Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="src\tools\quaternion.hpp">
-      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="src\game\camera.hpp">
       <Filter>Game</Filter>
@@ -91,7 +88,22 @@
       <Filter>Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\tools\bitmap.hpp">
-      <Filter>Tools</Filter>
+      <Filter>Tools\Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\math.hpp">
+      <Filter>Tools\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\quaternion.hpp">
+      <Filter>Tools\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\timer.hpp">
+      <Filter>Tools\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\vector.hpp">
+      <Filter>Tools\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\obj.hpp">
+      <Filter>Tools\Loaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

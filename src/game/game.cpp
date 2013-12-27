@@ -28,8 +28,13 @@ CGame::CGame(void)
 	data->window.size.x = 640;
 	data->window.size.y = 360;
 
+	data->last_fps = 0;
+	data->drawFPS = true;
+	data->drawHUD = false;
+
 	handlers.camera = new CCamera(data);
 	handlers.input = new CInput(data);
+	handlers.ui = new CUI(data);
 	handlers.renderer = new CRenderer(data);
 }
 
@@ -38,6 +43,7 @@ CGame::~CGame(void)
 {
 	delete handlers.renderer;
 	delete handlers.camera;
+	delete handlers.ui;
 	delete handlers.input;
 
 	delete data->camera;
@@ -90,6 +96,18 @@ void CGame::Update(void)
 void CGame::Render(void)
 {
 	handlers.renderer->drawScene();
+	handlers.ui->drawUI();
+
+
+	// Zamien front-buffer z back-bufferem (double buffering).
+	glutSwapBuffers();
+
+	// Jesli instrukcje w danej implementacji OpenGL byly buforowane,
+	// w tym momencie bufor zostanie oprozniony a instrukcje wykonane.
+	glFlush();
+
+	// Nakaz wyswietlic kolejna klatke.
+	glutPostRedisplay();
 }
 
 

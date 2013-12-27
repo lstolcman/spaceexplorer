@@ -145,7 +145,6 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 			glutFullScreen();
 			data->fullscreen = true;
 			captureMouse = true;
-			glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2);
 			glutSetCursor(GLUT_CURSOR_NONE);
 		}
 		break;

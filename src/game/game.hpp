@@ -19,6 +19,7 @@ private:
 		CInput			*input;
 		CCamera			*camera;
 		CRenderer		*renderer;
+		CUI				*ui;
 	} handlers;
 
 	SData				*data;

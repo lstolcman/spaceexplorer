@@ -74,6 +74,9 @@ struct SWindow
 struct SData
 {
 	bool fullscreen;
+	bool drawHUD;
+	bool drawFPS;
+	unsigned last_fps;
 
 	SCamera	*camera;
 	SWindow window;

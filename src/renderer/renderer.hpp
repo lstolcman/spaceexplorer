@@ -13,6 +13,8 @@ private:
 	unsigned long	frame, frame_old;
 	CTimer			time, time_old;
 	SCamera			*camera;
+	SData			*data;
+
 
 	// front, right, back, left, top, bottom
 	struct
@@ -25,7 +27,7 @@ private:
 		CTexture	bottom;
 	} skybox;
 
-	void            drawFPS(void);
+	void            countFPS(void);
 	void            setDisplayMatrices(void);
 	void            setupLights(void);
 	void            drawSky(void);
