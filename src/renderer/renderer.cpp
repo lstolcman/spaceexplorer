@@ -524,7 +524,7 @@ void CRenderer::drawScene()
 
 	{
 		//reset light
-		float amb[] = { 1.0f, 0.0f, 0.0f };
+		float amb[] = { 1.0f, 1.0f, 1.0f };
 		float dif[] = { 0.0f, 0.0f, 0.0f };
 		float spe[] = { 0.0f, 0.0f, 0.0f };
 		glMaterialfv(GL_FRONT, GL_AMBIENT, amb);

@@ -7,7 +7,7 @@
 CUI::CUI(SData *data)
 {
 	this->data = data;
-	font = GLUT_BITMAP_HELVETICA_18;
+	font = GLUT_BITMAP_HELVETICA_12;
 }
 
 
@@ -29,11 +29,11 @@ void CUI::drawUI(void)
 	glClear(GL_DEPTH_BUFFER_BIT);
 	glColor3f(0.1f, 0.1f, 0.1f);
 
-	//glutPrint(2, 10, glutFonts[4], its(sfps) + " fps; " + its(todrawquads) + " quads drawing; ");
-
-
 	displayHUD();
 	displayFPS();
+#ifdef _DEBUG
+	displayDebug();
+#endif
 
 
 	glMatrixMode(GL_PROJECTION);
@@ -72,6 +72,16 @@ void CUI::displayHUD(void)
 }
 
 
+void CUI::displayDebug(void)
+{
+	std::stringstream s;
+	s	<< std::fixed << std::setprecision(4)
+		<< "pos=" << data->camera->pos.x << "x" << data->camera->pos.y << "x" << data->camera->pos.z << "  "
+		<< "view=" << data->camera->view.x << "x" << data->camera->view.y << "x" << data->camera->view.z << "  "
+		<< "velRX:" << data->camera->velRX << "  velRY:" << data->camera->velRY;
+	printOnScreen(10, 36, s.str());
+}
+
 
 void CUI::displayFPS(void)
 {
@@ -79,73 +89,6 @@ void CUI::displayFPS(void)
 	s << "FPS: " << data->last_fps;
 	printOnScreen(10, 20, s.str());
 }
-
-
-
-/*
-
-
-for (int i = 0; i<text.size(); i++)
-{
-glutBitmapCharacter(font, text[i]);
-}
-
-
-void glutPrint(float x, float y, LPVOID font, string text)
-{
-glRasterPos2f(x, y);
-
-for (int i = 0; i<text.size(); i++)
-{
-glutBitmapCharacter(font, text[i]);
-}
-}
-
-Every frame in DisplayFunction in drawing HUD section(calling DrawHUD()) :
-
-void DrawHUD(void)
-{
-glMatrixMode(GL_PROJECTION);
-glPushMatrix();
-glLoadIdentity();
-glOrtho(0.0, windowWidth, windowHeight, 0.0, -1.0, 10.0);
-glMatrixMode(GL_MODELVIEW);
-glLoadIdentity();
-
-glClear(GL_DEPTH_BUFFER_BIT);
-glColor3f(0.2f, 0.2f, 0.2f);
-
-glutPrint(2, 10, glutFonts[4], its(sfps) + " fps; " + its(todrawquads) + " quads drawing; ");
-
-glMatrixMode(GL_PROJECTION);
-glPopMatrix();
-glMatrixMode(GL_MODELVIEW);
-
-}
-
-
-string its(int i)
-{
-stringstream out;
-out << i;
-return out.str();
-}*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -59,9 +59,6 @@
     <ClCompile Include="src\tools\vector.cpp">
       <Filter>Tools\Math</Filter>
     </ClCompile>
-    <ClCompile Include="src\tools\obj.cpp">
-      <Filter>Tools\Loaders</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\main.hpp" />
@@ -101,9 +98,6 @@
     </ClInclude>
     <ClInclude Include="src\tools\vector.hpp">
       <Filter>Tools\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\tools\obj.hpp">
-      <Filter>Tools\Loaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

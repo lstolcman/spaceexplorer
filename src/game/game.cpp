@@ -98,7 +98,6 @@ void CGame::Render(void)
 	handlers.renderer->drawScene();
 	handlers.ui->drawUI();
 
-
 	// Zamien front-buffer z back-bufferem (double buffering).
 	glutSwapBuffers();
 

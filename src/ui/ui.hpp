@@ -19,6 +19,7 @@ private:
 	void			printOnScreen(int, int, std::string);
 	void			displayHUD(void);
 	void			displayFPS(void);
+	void			displayDebug(void);
 
 public:
 	CUI(SData*);

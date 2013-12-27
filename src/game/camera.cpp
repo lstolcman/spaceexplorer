@@ -60,10 +60,10 @@ void CCamera::cameraMove(void)
 	}
 
 
-	std::cout << std::setprecision(3)// << "B" << angleX << " " << angleY << " "
+	/*std::cout << std::fixed << std::setprecision(4)// << "B" << angleX << " " << angleY << " "
 		<< camera->pos.x << "x" << camera->pos.y << "x" << camera->pos.z << " "
 		<< camera->view.x << "x" << camera->view.y << "x" << camera->view.z
-		<< "velRX:" << camera->velRX << "velRY:" << camera->velRY << "\t\r";
+		<< "velRX:" << camera->velRX << "velRY:" << camera->velRY << "\t\r";*/
 
 
 	// Wektor prostopad³y:
