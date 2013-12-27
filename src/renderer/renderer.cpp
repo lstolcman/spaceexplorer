@@ -20,12 +20,16 @@ CRenderer::~CRenderer()
 
 bool CRenderer::loadTextures(void)
 {
+	CTimer t;
+	t.start();
 	skybox.front.Load("resources/s_front5.bmp", GL_NEAREST, GL_NEAREST);
 	skybox.back.Load("resources/s_back6.bmp", GL_NEAREST, GL_NEAREST);
 	skybox.right.Load("resources/s_right1.bmp", GL_NEAREST, GL_NEAREST);
 	skybox.left.Load("resources/s_left2.bmp", GL_NEAREST, GL_NEAREST);
 	skybox.top.Load("resources/s_top3.bmp", GL_NEAREST, GL_NEAREST);
 	skybox.bottom.Load("resources/s_bottom4.bmp", GL_NEAREST, GL_NEAREST);
+	t.stop();
+	std::cout << "Skybox loaded, took " << t.getElapsedMilliseconds() << "ms" << std::endl;
 	return true;
 }
 

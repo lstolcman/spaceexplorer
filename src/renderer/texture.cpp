@@ -21,10 +21,10 @@ CTexture::~CTexture(void)
 
 GLuint CTexture::Load(std::string file, int magFilter, int minFilter)
 {
-	Bitmap *texture = new Bitmap;
-	if (!texture->loadBMP((char*)file.c_str()))
+	CBitmap *texture = new CBitmap;
+	if (!texture->loadBMP(file))
 	{
-		std::cout << "Error loading texture " << file << "!" << endl;
+		std::cout << "Error loading texture " << file << "!" << std::endl;
 		return -1;
 	}
 
@@ -42,13 +42,15 @@ GLuint CTexture::Load(std::string file, int magFilter, int minFilter)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter); // Filtracja, gdy tekstura jest pomniejszana
 
 	// Wys³anie tekstury do pamiêci karty graficznej zale¿nie od tego, czy chcemy korzystaæ z mipmap czy nie
-	if (minFilter == GL_LINEAR_MIPMAP_LINEAR || minFilter == GL_LINEAR_MIPMAP_NEAREST) {
+	if (minFilter == GL_LINEAR_MIPMAP_LINEAR || minFilter == GL_LINEAR_MIPMAP_NEAREST)
+	{
 		// Automatyczne zbudowanie mipmap i wys³anie tekstury do pamiêci karty graficznej
-		gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, texture->width, texture->height, GL_RGB, GL_UNSIGNED_BYTE, texture->data);
+		gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, texture->bmWidth, texture->bmHeight, GL_RGB, GL_UNSIGNED_BYTE, texture->data);
 	}
-	else {
+	else
+	{
 		// Wys³anie tekstury do pamiêci karty graficznej 
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->width, texture->height, 0, GL_RGB, GL_UNSIGNED_BYTE, texture->data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->bmWidth, texture->bmHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, texture->data);
 	}
 
 	// Zwolnienie pamiêci, usuniêcie bitmapy z pamiêci - bitmapa jest ju¿ w pamiêci karty graficznej
