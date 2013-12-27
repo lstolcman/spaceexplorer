@@ -22,7 +22,11 @@ CGame::CGame(void)
 	data = new SData;
 	data->camera = new SCamera;
 
-	data->fullscreen = true;
+	data->fullscreen = false;
+	data->window.pos.x = 400;
+	data->window.pos.y = 300;
+	data->window.size.x = 640;
+	data->window.size.y = 360;
 
 	handlers.camera = new CCamera(data);
 	handlers.input = new CInput(data);
@@ -47,19 +51,13 @@ void CGame::Init(int argc, char **argv)
 
 
 
+	glutInitWindowSize(data->window.size.x, data->window.size.y);
+	glutInitWindowPosition(data->window.pos.x, data->window.pos.y);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 	glutCreateWindow("Space Explorer");
 
 	if (data->fullscreen)
-	{
 		glutFullScreen();
-	}
-	else
-	{
-
-		glutInitWindowSize(640, 360);
-		glutInitWindowPosition(400, 300);
-	}
 
 	//glutTimerFunc(1000, callbackDrawFPS, 0);
 	//glutTimerFunc(15, callbackRedisplay, 0);
@@ -68,12 +66,6 @@ void CGame::Init(int argc, char **argv)
 	//glutRedisplayFunc(callbackRedisplay);
 
 	glEnable(GL_DEPTH_TEST);
-
-	// ustawienie jakoœci renderingu punktów
-
-	// ustawienie jakoœci renderingu wielok¹tów
-
-
 	glEnable(GL_CULL_FACE); // W³¹czenie cullingu - rysowania tylko jednej strony wielok¹tów
 	glCullFace(GL_BACK); // Okreœlenie, któr¹ stronê wielok¹tów chcemy ukrywaæ
 	glFrontFace(GL_CCW); // Okreœlenie, jaki kierunek definicji wierzcho³ków oznacza przód wielok¹tu (GL_CCW - przeciwnie do ruchu wskazówek zegara, GL_CW - zgodnie)

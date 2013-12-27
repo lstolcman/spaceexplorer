@@ -37,5 +37,12 @@ public:
 	friend vec3 operator /(vec3&, vec3&);
 };
 
-
 vec3 crossProduct(vec3&, vec3&);
+
+
+
+
+
+
+
+

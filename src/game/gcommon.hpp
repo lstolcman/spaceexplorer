@@ -74,6 +74,11 @@ struct SCamera
 };
 
 
+struct SWindow
+{
+	vec3 size;
+	vec3 pos;
+};
 
 
 struct SData
@@ -81,6 +86,7 @@ struct SData
 	bool fullscreen;
 
 	SCamera	*camera;
+	SWindow window;
 };
 
 

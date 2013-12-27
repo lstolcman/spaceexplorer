@@ -119,7 +119,7 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 		break;
 	case 'm':
 	case 'M':
-		if (captureMouse)
+		if (captureMouse && !data->fullscreen)
 		{
 			captureMouse = false;
 			glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
@@ -136,14 +136,17 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 	case 'P':
 		if (data->fullscreen)
 		{
-			glutReshapeWindow(640, 360);
-			glutPositionWindow(400, 300);
+			glutReshapeWindow(data->window.size.x, data->window.size.y);
+			glutPositionWindow(data->window.pos.x, data->window.pos.y);
 			data->fullscreen = false;
 		}
 		else
 		{
 			glutFullScreen();
 			data->fullscreen = true;
+			captureMouse = true;
+			glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2);
+			glutSetCursor(GLUT_CURSOR_NONE);
 		}
 		break;
 
