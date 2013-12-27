@@ -44,9 +44,9 @@ private:
 public:
 	struct //Input
 	{
-		Mouse mouse;
-		KeyState keys[256];
-		KeyState specialKeys[256];
+		SMouseState mouse;
+		SKeyState keys[256];
+		SKeyState specialKeys[256];
 	} inputState;
 
 	SCamera *camera;

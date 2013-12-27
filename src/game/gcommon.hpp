@@ -1,16 +1,6 @@
 #pragma once
 #include "../tools/math.hpp"
 
-enum Direction
-{
-	LEFT,
-	RIGHT,
-	UP,
-	DOWN,
-	FORWARD,
-	BACKWARD
-};
-
 struct SPlayer
 {
 	vec3 pos;
@@ -23,7 +13,7 @@ struct SPlayer
 	float velS;
 };
 
-enum KeyState
+enum SKeyState
 {
 	KEYUP = 1,    //GLUT_UP,
 	KEYDOWN = 0,    //GLUT_DOWN,
@@ -33,7 +23,7 @@ enum KeyState
 	HOLDWHEELSCROLLDOWN = 36    // hold wheel and scroll down
 };
 
-enum MouseKey
+enum SMouseKey
 {
 	LEFT_BUTTON = GLUT_LEFT_BUTTON,
 	MIDDLE_BUTTON = GLUT_MIDDLE_BUTTON,
@@ -41,10 +31,10 @@ enum MouseKey
 
 };
 
-struct Mouse
+struct SMouseState
 {
-	MouseKey button;
-	KeyState state;
+	SMouseKey button;
+	SKeyState state;
 	int x;
 	int y;
 };

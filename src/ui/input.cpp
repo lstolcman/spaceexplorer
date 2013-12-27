@@ -27,8 +27,8 @@ CInput::~CInput()
 
 void CInput::mouseButtonPress(int button, int state, int x, int y)
 {
-	inputState.mouse.button = (MouseKey)button;
-	inputState.mouse.state  = (KeyState)state;
+	inputState.mouse.button = (SMouseKey)button;
+	inputState.mouse.state  = (SKeyState)state;
 	inputState.mouse.x      = x;
 	inputState.mouse.y      = y;
 
@@ -184,7 +184,7 @@ void CInput::keyPress(unsigned char keyid, int x, int y)
 
 bool CInput::isKeyDown(int keyid)
 {
-	if (inputState.keys[keyid] == DOWN)
+	if (inputState.keys[keyid] == KEYDOWN)
 	{
 		return false;
 	}
@@ -238,7 +238,7 @@ void CInput::specialKeyPress(int keyid, int x, int y)
 
 bool CInput::isSpecialKeyDown(int keyid)
 {
-	if (inputState.specialKeys[keyid] == DOWN)
+	if (inputState.specialKeys[keyid] == KEYDOWN)
 	{
 		return false;
 	}
