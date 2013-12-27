@@ -3,9 +3,9 @@
 
 
 
-CRenderer::CRenderer(SCamera *camera)
+CRenderer::CRenderer(SData *data)
 {
-	this->camera = camera;
+	this->camera = data->camera;
 	time.start();
 	frame = 0;
 	frame_old = 0;

@@ -32,7 +32,7 @@ private:
 
 
 public:
-	CRenderer(SCamera*);
+	CRenderer(SData*);
 	~CRenderer();
 
 	bool			loadTextures(void);

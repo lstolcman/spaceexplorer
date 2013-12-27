@@ -2,7 +2,7 @@
 #include "input.hpp"
 
 
-CInput::CInput(SCamera *camera)
+CInput::CInput(SData *data)
 {
 	//init state - nothing pressed
 
@@ -12,9 +12,10 @@ CInput::CInput(SCamera *camera)
 		inputState.specialKeys[i] = KEYUP;
 	}
 	inputState.mouse.state = KEYUP;
-	mouseSensitivity       = 0.2f;
+	mouseSensitivity       = 0.1f;
 	captureMouse           = true;
-	this->camera           = camera;
+	this->camera           = data->camera;
+	this->data             = data;
 
 }
 
@@ -133,7 +134,20 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 
 	case 'p':
 	case 'P':
-			camera->latarka = !camera->latarka;
+		if (data->fullscreen)
+		{
+			glutReshapeWindow(640, 360);
+			glutPositionWindow(400, 300);
+			data->fullscreen = false;
+		}
+		else
+		{
+			glutFullScreen();
+			data->fullscreen = true;
+		}
+		break;
+
+	default:
 		break;
 
 	}
@@ -256,7 +270,6 @@ bool CInput::checkInput()
 	bool free3DMovement = true;
 	if (captureMouse)
 	{
-
 		camera->velRY = -mouseSensitivity * (glutGet(GLUT_WINDOW_WIDTH) / 2 - inputState.mouse.x);
 		camera->velRX = mouseSensitivity * (glutGet(GLUT_WINDOW_HEIGHT) / 2 - inputState.mouse.y);
 		glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2);

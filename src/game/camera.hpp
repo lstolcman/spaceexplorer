@@ -9,7 +9,7 @@ public:
 	
 
 
-	CCamera(SCamera*);
+	CCamera(SData*);
 	~CCamera();
 
 	SCamera *camera;

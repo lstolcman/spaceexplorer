@@ -50,8 +50,9 @@ public:
 	} inputState;
 
 	SCamera *camera;
+	SData *data;
 
-	CInput(SCamera*);
+	CInput(SData*);
 	~CInput();
 
 	void        mouseButtonPress(int, int, int, int);

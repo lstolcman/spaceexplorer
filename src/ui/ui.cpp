@@ -26,7 +26,7 @@ void CUI::drawUI(void)
 	glLoadIdentity();
 
 	glClear(GL_DEPTH_BUFFER_BIT);
-	glColor3f(0.2f, 0.2f, 0.2f);
+	glColor3f(0.5f, 0.5f, 0.5f);
 
 	//glutPrint(2, 10, glutFonts[4], its(sfps) + " fps; " + its(todrawquads) + " quads drawing; ");
 

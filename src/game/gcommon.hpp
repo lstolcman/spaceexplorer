@@ -25,19 +25,19 @@ struct SPlayer
 
 enum KeyState
 {
-	KEYUP               = 1,    //GLUT_UP,
-	KEYDOWN             = 0,    //GLUT_DOWN,
-	WHEELSCROLLUP       = 3,    // wheel scroll up
-	WHEELSCROLLDOWN     = 4,    // wheel scroll down
-	HOLDWHEELSCROLLUP   = 35,   // hold wheel and scroll up
+	KEYUP = 1,    //GLUT_UP,
+	KEYDOWN = 0,    //GLUT_DOWN,
+	WHEELSCROLLUP = 3,    // wheel scroll up
+	WHEELSCROLLDOWN = 4,    // wheel scroll down
+	HOLDWHEELSCROLLUP = 35,   // hold wheel and scroll up
 	HOLDWHEELSCROLLDOWN = 36    // hold wheel and scroll down
 };
 
 enum MouseKey
 {
-	LEFT_BUTTON   = GLUT_LEFT_BUTTON,
+	LEFT_BUTTON = GLUT_LEFT_BUTTON,
 	MIDDLE_BUTTON = GLUT_MIDDLE_BUTTON,
-	RIGHT_BUTTON  = GLUT_RIGHT_BUTTON,
+	RIGHT_BUTTON = GLUT_RIGHT_BUTTON,
 
 };
 
@@ -68,12 +68,19 @@ struct SCamera
 	float velM;
 	float velS;
 
-	bool latarka;
-
 	float angleX;
 	float angleY;
 	float angleZ;
 };
 
+
+
+
+struct SData
+{
+	bool fullscreen;
+
+	SCamera	*camera;
+};
 
 

@@ -19,10 +19,14 @@ CGame::CGame(void)
 {
 	CGame::instance = this;
 
-	data.camera = new SCamera;
-	handlers.camera   = new CCamera(data.camera);
-	handlers.input    = new CInput(data.camera);
-	handlers.renderer = new CRenderer(data.camera);
+	data = new SData;
+	data->camera = new SCamera;
+
+	data->fullscreen = true;
+
+	handlers.camera = new CCamera(data);
+	handlers.input = new CInput(data);
+	handlers.renderer = new CRenderer(data);
 }
 
 
@@ -32,26 +36,36 @@ CGame::~CGame(void)
 	delete handlers.camera;
 	delete handlers.input;
 
-	delete data.camera;
+	delete data->camera;
+	delete data;
 }
 
 
 void CGame::Init(int argc, char **argv)
 {
 	glutInit(&argc, argv);
-	glutInitWindowSize(640, 360);
-	glutInitWindowPosition(400, 300);
+
+
+
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 	glutCreateWindow("Space Explorer");
 
+	if (data->fullscreen)
+	{
+		glutFullScreen();
+	}
+	else
+	{
 
+		glutInitWindowSize(640, 360);
+		glutInitWindowPosition(400, 300);
+	}
 
 	//glutTimerFunc(1000, callbackDrawFPS, 0);
 	//glutTimerFunc(15, callbackRedisplay, 0);
 
 
 	//glutRedisplayFunc(callbackRedisplay);
-	//glutFullScreen();
 
 	glEnable(GL_DEPTH_TEST);
 

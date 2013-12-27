@@ -10,19 +10,18 @@ class CGame
 {
 	// Fields:
 private:
-	unsigned long long t1, t2;
-	static CGame       *instance;
-	struct
-	{
-		CInput             *input;
-		CCamera            *camera;
-		CRenderer          *renderer;
-	} handlers;
+	unsigned long long	t1, t2;
+
+	static CGame		*instance;
 
 	struct
 	{
-		SCamera				*camera;
-	} data;
+		CInput			*input;
+		CCamera			*camera;
+		CRenderer		*renderer;
+	} handlers;
+
+	SData				*data;
 
 
 public:
