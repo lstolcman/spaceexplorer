@@ -51,7 +51,7 @@ void CGame::Init(int argc, char **argv)
 
 
 	//glutRedisplayFunc(callbackRedisplay);
-	glutFullScreen();
+	//glutFullScreen();
 
 	glEnable(GL_DEPTH_TEST);
 

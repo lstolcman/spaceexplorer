@@ -47,11 +47,11 @@
     <ClCompile Include="src\game\camera.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="src\tools\bitmap.cpp">
-      <Filter>Tools</Filter>
-    </ClCompile>
     <ClCompile Include="src\renderer\texture.cpp">
       <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\bitmap.cpp">
+      <Filter>Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -87,11 +87,11 @@
     <ClInclude Include="src\game\camera.hpp">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="src\tools\bitmap.hpp">
-      <Filter>Tools</Filter>
-    </ClInclude>
     <ClInclude Include="src\renderer\texture.hpp">
       <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\bitmap.hpp">
+      <Filter>Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

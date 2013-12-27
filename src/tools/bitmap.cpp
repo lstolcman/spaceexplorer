@@ -32,8 +32,9 @@ CBitmap::~CBitmap()
 bool CBitmap::loadBMP(std::string file)
 {
 	unsigned bmSize;
-	bmHandle.open(file, std::ios::in | std::ios::binary);
+	char tmp;
 
+	bmHandle.open(file, std::ios::in | std::ios::binary);
 	bmHandle.read((char*)&bmfh, sizeof(bmfh));
 
 	if (bmfh.bfType != 19778) // 'BM' magic
@@ -62,7 +63,6 @@ bool CBitmap::loadBMP(std::string file)
 	//swap colors: BGR -> RGB
 	for (unsigned i = 0; i < bmSize; i = i + 3)
 	{
-		char tmp;
 		tmp = data[i];
 		data[i] = data[i + 2];
 		data[i + 2] = tmp;
