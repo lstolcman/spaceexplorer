@@ -3,6 +3,7 @@
 #include "../game/camera.hpp"
 
 //additional mouse state definitions
+//special keys
 #define KEY_F1          GLUT_KEY_F1
 #define KEY_F2          GLUT_KEY_F2
 #define KEY_F3          GLUT_KEY_F3
@@ -24,13 +25,27 @@
 #define KEY_HOME        GLUT_KEY_HOME
 #define KEY_END         GLUT_KEY_END
 #define KEY_INSERT      GLUT_KEY_INSERT
+#define KEY_LSHIFT		GLUT_KEY_SHIFT_L
+#define KEY_RSHIFT		GLUT_KEY_SHIFT_R
+#define KEY_LALT		GLUT_KEY_ALT_L
+#define KEY_RALT		GLUT_KEY_ALT_R
+#define KEY_LCTRL		GLUT_KEY_CTRL_L
+#define KEY_RCTRL		GLUT_KEY_CTRL_R
+
+
+//normal keys redefinition
 #define KEY_ESC         27
+
 
 
 class CInput
 {
 	//Fields:
 private:
+	SInputState *inputState;
+	SCamera *camera;
+	SData *data;
+
 	float mouseSensitivity;
 	bool  captureMouse;
 
@@ -42,15 +57,6 @@ public:
 private:
 
 public:
-	struct //Input
-	{
-		SMouseState mouse;
-		SKeyState keys[256];
-		SKeyState specialKeys[256];
-	} inputState;
-
-	SCamera *camera;
-	SData *data;
 
 	CInput(SData*);
 	~CInput();

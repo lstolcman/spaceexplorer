@@ -44,8 +44,6 @@ struct SMouseState
 
 struct SCamera
 {
-
-	//bool  free3DMovement;
 	bool  captureMouse;
 	vec3  pos;
 	vec3  view;
@@ -70,6 +68,12 @@ struct SWindow
 	vec3 pos;
 };
 
+struct SInputState
+{
+	SMouseState mouse;
+	SKeyState keys[256];
+	SKeyState specialKeys[256];
+};
 
 struct SData
 {
@@ -78,8 +82,10 @@ struct SData
 	bool drawFPS;
 	unsigned last_fps;
 
+	SInputState *inputState;
 	SCamera	*camera;
-	SWindow window;
+	SWindow *window;
 };
+
 
 

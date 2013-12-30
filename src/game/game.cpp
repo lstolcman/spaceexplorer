@@ -20,17 +20,23 @@ CGame::CGame(void)
 	CGame::instance = this;
 
 	data = new SData;
+	data->inputState = new SInputState;
 	data->camera = new SCamera;
+	data->window = new SWindow;
+
+	///
 
 	data->fullscreen = false;
-	data->window.pos.x = 400;
-	data->window.pos.y = 300;
-	data->window.size.x = 640;
-	data->window.size.y = 360;
+	data->window->pos.x = 400;
+	data->window->pos.y = 300;
+	data->window->size.x = 640;
+	data->window->size.y = 360;
 
 	data->last_fps = 0;
 	data->drawFPS = true;
 	data->drawHUD = false;
+
+	///
 
 	handlers.camera = new CCamera(data);
 	handlers.input = new CInput(data);
@@ -54,8 +60,8 @@ CGame::~CGame(void)
 void CGame::Init(int argc, char **argv)
 {
 	glutInit(&argc, argv);
-	glutInitWindowSize(data->window.size.x, data->window.size.y);
-	glutInitWindowPosition(data->window.pos.x, data->window.pos.y);
+	glutInitWindowSize(data->window->size.x, data->window->size.y);
+	glutInitWindowPosition(data->window->pos.x, data->window->pos.y);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 	glutCreateWindow("Space Explorer");
 
@@ -165,10 +171,10 @@ void CGame::setMouse(void)
 {
 	// Ustawienie obs³ugi myszy
 	glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2); // Przesuniêcie kursora na œrodek ekranu
-
-	instance->handlers.input->inputState.mouse.x = glutGet(GLUT_WINDOW_WIDTH) / 2;
-	instance->handlers.input->inputState.mouse.y = glutGet(GLUT_WINDOW_HEIGHT) / 2;
-	glutSetCursor(GLUT_CURSOR_NONE); // Ukrycie kursora
+	data->inputState->mouse.x = glutGet(GLUT_WINDOW_WIDTH) / 2;
+	data->inputState->mouse.y = glutGet(GLUT_WINDOW_HEIGHT) / 2;
+	// Ukrycie kursora
+	glutSetCursor(GLUT_CURSOR_NONE);
 }
 
 

@@ -80,6 +80,13 @@ void CUI::displayDebug(void)
 		<< "view=" << data->camera->view.x << "x" << data->camera->view.y << "x" << data->camera->view.z << "  "
 		<< "velRX:" << data->camera->velRX << "  velRY:" << data->camera->velRY;
 	printOnScreen(10, 36, s.str());
+	s.str("");
+	s << "Keys: ";
+	for (int i = 0; i < 93; ++i)
+	if (data->inputState->keys[i + 32] == KEYDOWN)
+		s << char(i+32)  << " ";
+	printOnScreen(10, 52, s.str());
+
 }
 
 

@@ -28,6 +28,7 @@ private:
 public:
 
 
+
 	//Members:
 private:
 	static void     callbackRender(void);
@@ -54,23 +55,9 @@ public:
 	CGame(void);
 	~CGame(void);
 
-	void    Init(int, char **);
+	void			Init(int, char **);
 
 
 };
 
 
-
-
-/*
-
-petla gry:
-{
-//events:
-
-//logic:
-
-//rendering: world, skydome/box,
-}
-
-*/

@@ -5,13 +5,14 @@
 CInput::CInput(SData *data)
 {
 	//init state - nothing pressed
+	inputState = data->inputState;
 
 	for (int i = 0; i < 256; i++)
 	{
-		inputState.keys[i]        = KEYUP;
-		inputState.specialKeys[i] = KEYUP;
+		inputState->keys[i]        = KEYUP;
+		inputState->specialKeys[i] = KEYUP;
 	}
-	inputState.mouse.state = KEYUP;
+	inputState->mouse.state = KEYUP;
 	mouseSensitivity       = 0.031f;
 	captureMouse           = true;
 	this->camera           = data->camera;
@@ -27,10 +28,10 @@ CInput::~CInput()
 
 void CInput::mouseButtonPress(int button, int state, int x, int y)
 {
-	inputState.mouse.button = (SMouseKey)button;
-	inputState.mouse.state  = (SKeyState)state;
-	inputState.mouse.x      = x;
-	inputState.mouse.y      = y;
+	inputState->mouse.button = (SMouseKey)button;
+	inputState->mouse.state  = (SKeyState)state;
+	inputState->mouse.x      = x;
+	inputState->mouse.y      = y;
 
 #ifdef _DEBUG
 	std::cout << "mouseButtonPress: " << x << "x" << y;
@@ -68,20 +69,20 @@ void CInput::mouseButtonPress(int button, int state, int x, int y)
 
 void CInput::mouseMove(int x, int y)
 {
-	inputState.mouse.x = x;
-	inputState.mouse.y = y;
+	inputState->mouse.x = x;
+	inputState->mouse.y = y;
 
 	/*
 	#ifdef _DEBUG
 	std::cout << "mouseMove: " << x << "x" << y;
-	switch (inputState.mouse.state)
+	switch (inputState->mouse.state)
 	{
 	case KEYUP:
 	std::cout << " s: UP"; break;
 	case KEYDOWN:
 	std::cout << " s: DOWN"; break;
 	};
-	switch (inputState.mouse.button)
+	switch (inputState->mouse.button)
 	{
 	case LEFT_BUTTON:
 	std::cout << " b: LEFT"; break;
@@ -164,19 +165,17 @@ void CInput::keyUp(unsigned char keyid, int x, int y)
 	#endif
 	*/
 
-	inputState.keys[keyid] = KEYUP;
+	inputState->keys[keyid] = KEYUP;
 }
 
 void CInput::keyPress(unsigned char keyid, int x, int y)
 {
-	/*
 	#ifdef _DEBUG
 	std::cout << "keyPress " << keyid << "(" << (int)keyid << ") " << x << "x" << y << "\t\t\t\r";
 	#endif
-	*/
-	if (inputState.keys[keyid] == KEYUP)
+	if (inputState->keys[keyid] == KEYUP)
 	{
-		inputState.keys[keyid] = KEYDOWN;
+		inputState->keys[keyid] = KEYDOWN;
 		keyDown(keyid, x, y);
 	}
 
@@ -184,7 +183,7 @@ void CInput::keyPress(unsigned char keyid, int x, int y)
 
 bool CInput::isKeyDown(int keyid)
 {
-	if (inputState.keys[keyid] == KEYDOWN)
+	if (inputState->keys[keyid] == KEYDOWN)
 	{
 		return false;
 	}
@@ -199,7 +198,7 @@ bool CInput::isKeyDown(int keyid)
 
 void CInput::specialKeyDown(int keyid, int x, int y)
 {
-	/*
+	/*s
 	#ifdef _DEBUG
 	std::cout << "specialKeyDown " << keyid << "(" << (int)keyid << ") " << x << "x" << y << "\t\t\t\r";
 	#endif
@@ -219,26 +218,26 @@ void CInput::specialKeyUp(int keyid, int x, int y)
 	std::cout << "specialKeyUp " << keyid << "(" << (int)keyid << ") " << x << "x" << y << "\t\t\t\r";
 	#endif
 	*/
-	inputState.keys[keyid] = KEYUP;
+	inputState->keys[keyid] = KEYUP;
 }
 
 void CInput::specialKeyPress(int keyid, int x, int y)
 {
-	/*
+	
 	#ifdef _DEBUG
 	std::cout << "specialKeyPress " << keyid << "(" << (int)keyid << ") " << x << "x" << y << "\t\t\t\r";
 	#endif
-	*/
-	if (!inputState.specialKeys[keyid])
+
+	if (!inputState->specialKeys[keyid])
 	{
-		inputState.specialKeys[keyid] = KEYDOWN;
+		inputState->specialKeys[keyid] = KEYDOWN;
 		specialKeyDown(keyid, x, y);
 	}
 }
 
 bool CInput::isSpecialKeyDown(int keyid)
 {
-	if (inputState.specialKeys[keyid] == KEYDOWN)
+	if (inputState->specialKeys[keyid] == KEYDOWN)
 	{
 		return false;
 	}
@@ -251,7 +250,7 @@ bool CInput::isSpecialKeyDown(int keyid)
 
 bool CInput::isMouseButtonDown(int keyid)
 {
-	if (inputState.mouse.state == 1)
+	if (inputState->mouse.state == 1)
 	{
 		return false;
 	}
@@ -273,40 +272,40 @@ bool CInput::checkInput()
 	bool free3DMovement = true;
 	if (captureMouse)
 	{
-		camera->velRY = -mouseSensitivity * (glutGet(GLUT_WINDOW_WIDTH) / 2 - inputState.mouse.x);
-		camera->velRX = mouseSensitivity * (glutGet(GLUT_WINDOW_HEIGHT) / 2 - inputState.mouse.y);
+		camera->velRY = -mouseSensitivity * (glutGet(GLUT_WINDOW_WIDTH) / 2 - inputState->mouse.x);
+		camera->velRX = mouseSensitivity * (glutGet(GLUT_WINDOW_HEIGHT) / 2 - inputState->mouse.y);
 		glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2);
 	}
 
-	if (inputState.keys['w'] == KEYDOWN)
+	if (inputState->keys['w'] == KEYDOWN)
 	{
 		camera->velM = camera->speed;
 	}
-	if (inputState.keys['s'] == KEYDOWN)
+	if (inputState->keys['s'] == KEYDOWN)
 	{
 		camera->velM = -camera->speed;
 	}
-	if (inputState.keys['a'] == KEYDOWN)
+	if (inputState->keys['a'] == KEYDOWN)
 	{
 		camera->velS = -camera->speed;
 	}
-	if (inputState.keys['d'] == KEYDOWN)
+	if (inputState->keys['d'] == KEYDOWN)
 	{
 		camera->velS = camera->speed;
 	}
-	if (inputState.keys['q'] == KEYDOWN)
+	if (inputState->keys['q'] == KEYDOWN)
 	{
 		camera->velRY = -camera->speed;
 	}
-	if (inputState.keys['e'] == KEYDOWN)
+	if (inputState->keys['e'] == KEYDOWN)
 	{
 		camera->velRY = camera->speed;
 	}
-	if (inputState.keys['f'] == KEYDOWN)
+	if (inputState->keys['f'] == KEYDOWN)
 	{
 		camera->velRX = -camera->speed;
 	}
-	if (inputState.keys['c'] == KEYDOWN)
+	if (inputState->keys['c'] == KEYDOWN)
 	{
 		camera->velRX = camera->speed;
 	}
