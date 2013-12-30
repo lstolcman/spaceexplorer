@@ -31,6 +31,7 @@ bool CRenderer::loadTextures(void)
 	skybox.bottom.Load("resources/s_bottom4.bmp", GL_NEAREST, GL_NEAREST);
 	t.stop();
 	std::cout << "Skybox loaded, took " << t.getElapsedMilliseconds() << "ms" << std::endl;
+	
 	return true;
 }
 

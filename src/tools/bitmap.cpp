@@ -35,11 +35,18 @@ bool CBitmap::loadBMP(std::string file)
 	char tmp;
 
 	bmHandle.open(file, std::ios::in | std::ios::binary);
+
+	if (!bmHandle.is_open())
+	{
+		std::cout << file << " failed: file not found" << std::endl;
+		return false;
+}
+
 	bmHandle.read((char*)&bmfh, sizeof(bmfh));
 
 	if (bmfh.bfType != 19778) // 'BM' magic
 	{
-		std::cout << file << ": Wrong file header, cancelled" << std::endl;
+		std::cout << file << " failed: wrong file header" << std::endl;
 		return false;
 	}
 
@@ -47,7 +54,7 @@ bool CBitmap::loadBMP(std::string file)
 
 	if (bmih.biBitCount != 24)
 	{
-		std::cout << file << ": Only 24bpp bitmaps, cancelled" << std::endl;
+		std::cout << file << " failed: only 24bpp bitmaps" << std::endl;
 		return false;
 	}
 

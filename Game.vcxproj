@@ -90,6 +90,7 @@
     </ClCompile>
     <ClCompile Include="src\tools\bitmap.cpp" />
     <ClCompile Include="src\tools\math.cpp" />
+    <ClCompile Include="src\tools\obj.cpp" />
     <ClCompile Include="src\tools\quaternion.cpp" />
     <ClCompile Include="src\tools\timer.cpp" />
     <ClCompile Include="src\tools\vector.cpp" />
@@ -106,6 +107,7 @@
     <ClInclude Include="src\stdafx.hpp" />
     <ClInclude Include="src\tools\bitmap.hpp" />
     <ClInclude Include="src\tools\math.hpp" />
+    <ClInclude Include="src\tools\obj.hpp" />
     <ClInclude Include="src\tools\quaternion.hpp" />
     <ClInclude Include="src\tools\timer.hpp" />
     <ClInclude Include="src\tools\vector.hpp" />

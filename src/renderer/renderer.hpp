@@ -15,7 +15,6 @@ private:
 	SCamera			*camera;
 	SData			*data;
 
-
 	// front, right, back, left, top, bottom
 	struct
 	{

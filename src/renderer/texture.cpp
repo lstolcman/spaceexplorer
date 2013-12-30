@@ -7,6 +7,7 @@
 CTexture::CTexture(void)
 {
 	handle = NULL;
+	loaded = false;
 }
 
 CTexture::CTexture(std::string file, int magFilter, int minFilter)
@@ -24,7 +25,9 @@ GLuint CTexture::Load(std::string file, int magFilter, int minFilter)
 	CBitmap *texture = new CBitmap;
 	if (!texture->loadBMP(file))
 	{
-		std::cout << "Error loading texture " << file << "!" << std::endl;
+		std::cout << "Error loading texture: " << file << "!" << std::endl;
+		MessageBox(0, ("Error loading: "+file).c_str(), "Error", MB_OK | MB_ICONERROR);
+		exit(-1);
 		return -1;
 	}
 
@@ -55,7 +58,7 @@ GLuint CTexture::Load(std::string file, int magFilter, int minFilter)
 
 	// Zwolnienie pamiêci, usuniêcie bitmapy z pamiêci - bitmapa jest ju¿ w pamiêci karty graficznej
 	delete texture;
-
+	std::cout << "loaded: " << file << std::endl;
 	// Zwrócenie id tekstury
 	return handle;
 }

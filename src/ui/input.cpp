@@ -136,8 +136,9 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 	case 'P':
 		if (data->fullscreen)
 		{
-			glutReshapeWindow(data->window.size.x, data->window.size.y);
-			glutPositionWindow(data->window.pos.x, data->window.pos.y);
+			//glutReshapeWindow(data->window.size.x, data->window.size.y);
+			//glutPositionWindow(data->window.pos.x, data->window.pos.y);
+			glutLeaveFullScreen();
 			data->fullscreen = false;
 		}
 		else

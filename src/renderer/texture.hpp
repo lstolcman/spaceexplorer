@@ -8,6 +8,7 @@ class CTexture
 	//Fields:
 private:
 	GLuint		handle;
+	bool		loaded;
 public:
 
 
