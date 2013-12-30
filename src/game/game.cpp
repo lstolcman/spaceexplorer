@@ -54,13 +54,20 @@ CGame::~CGame(void)
 void CGame::Init(int argc, char **argv)
 {
 	glutInit(&argc, argv);
-
-
-
 	glutInitWindowSize(data->window.size.x, data->window.size.y);
 	glutInitWindowPosition(data->window.pos.x, data->window.pos.y);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 	glutCreateWindow("Space Explorer");
+
+	GLenum err = glewInit();
+	if (GLEW_OK != err)
+	{
+		/* Problem: glewInit failed, something is seriously wrong. */
+		fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
+	}
+	std::cout << "Status: Using GLEW " << glewGetString(GLEW_VERSION) << std::endl;
+
+
 
 	if (data->fullscreen)
 		glutFullScreen();

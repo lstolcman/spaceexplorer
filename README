@@ -1,1 +1,4 @@
-project needs to include compiled freeglut-2.8.1 libraries to ./3rd/
+third-party libraries needed to compile:
+./3rd/glew-1.10.0
+./3rd/freeglut-2.8.1
+

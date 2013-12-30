@@ -8,9 +8,20 @@
 #pragma once
 
 
+#ifndef _DEBUG
+#define FREEGLUT_STATIC
 
-//#define FREEGLUT_STATIC
+#define GLEW_STATIC
+#pragma comment(lib,"glew32s.lib")
 
+#else
+
+#pragma comment(lib,"glew32.lib")
+
+#endif
+
+
+#include <GL/glew.h>
 #include <GL/freeglut.h>
 
 #include <iostream>
