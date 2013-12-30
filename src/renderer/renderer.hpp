@@ -2,9 +2,11 @@
 
 #include "../game/gcommon.hpp"
 #include "../tools/timer.hpp"
+#include "../tools/obj.hpp"
 #include "../game/camera.hpp"
 
 #include "texture.hpp"
+
 
 
 class CRenderer
@@ -14,6 +16,8 @@ private:
 	CTimer			time, time_old;
 	SCamera			*camera;
 	SData			*data;
+
+	COBJ			obj;
 
 	// front, right, back, left, top, bottom
 	struct

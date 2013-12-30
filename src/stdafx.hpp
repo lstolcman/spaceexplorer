@@ -8,7 +8,13 @@
 #pragma once
 
 
+
+#define _CRT_SECURE_NO_WARNINGS
+
+
+
 #ifndef _DEBUG
+
 #define FREEGLUT_STATIC
 
 #define GLEW_STATIC
@@ -29,7 +35,7 @@
 #include <sstream>
 #include <valarray>
 #include <iomanip>
-
+#include <vector>
 #include <fstream>
 
 

@@ -31,7 +31,7 @@ bool CRenderer::loadTextures(void)
 	skybox.bottom.Load("resources/s_bottom4.bmp", GL_NEAREST, GL_NEAREST);
 	t.stop();
 	std::cout << "Skybox loaded, took " << t.getElapsedMilliseconds() << "ms" << std::endl;
-	
+	obj.loadObj("resources/ship.obj");
 	return true;
 }
 
@@ -318,6 +318,7 @@ void CRenderer::drawSky(void)
 
 void CRenderer::drawScene()
 {
+	glPolygonMode(GL_FRONT, GL_FILL);
 	countFPS();
 
 	setDisplayMatrices();
@@ -325,6 +326,8 @@ void CRenderer::drawScene()
 	setupLights();
 
 	drawSky();
+
+
 
 
 
@@ -339,6 +342,19 @@ void CRenderer::drawScene()
 	// Rysowanie obiektow na scenie.
 
 
+
+
+	glPolygonMode(GL_FRONT, GL_LINE);
+
+
+	glPushMatrix();
+	glTranslatef(0, -10, 3);
+	glRotatef(90, 0, 1, 0);
+	glTranslatef( data->camera->pos.x,  camera->pos.y,  camera->pos.z);
+	obj.disp();
+	glPopMatrix();
+
+
 	/* 3rd CAMERA */
 	/*
 	glPushMatrix();
@@ -349,6 +365,7 @@ void CRenderer::drawScene()
 	glTranslatef(-camera->view.x - camera->pos.x, -camera->view.y - camera->pos.y , -camera->view.z - camera->pos.z);
 	glPopMatrix();
 	*/
+	
 
 
 	glPushMatrix();
@@ -362,6 +379,9 @@ void CRenderer::drawScene()
 	glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);
 	glutSolidSphere(0.2, 12, 8);
 	glPopMatrix();
+
+
+
 
 
 #pragma region Szescian

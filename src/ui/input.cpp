@@ -12,7 +12,7 @@ CInput::CInput(SData *data)
 		inputState.specialKeys[i] = KEYUP;
 	}
 	inputState.mouse.state = KEYUP;
-	mouseSensitivity       = 0.1f;
+	mouseSensitivity       = 0.031f;
 	captureMouse           = true;
 	this->camera           = data->camera;
 	this->data             = data;
