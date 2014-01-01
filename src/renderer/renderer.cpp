@@ -6,7 +6,6 @@
 CRenderer::CRenderer(SData *data)
 {
 	this->data = data;
-	//this->camera = data->camera;
 	time.start();
 	frame = 0;
 	frame_old = 0;
@@ -81,7 +80,7 @@ void CRenderer::setDisplayMatrices(void)
 void CRenderer::setupLights(void)
 {
 	//oswietlenie ambient - wszystkie wierzcho³ki - wy³¹czone
-	float globAmbient[4] = { 1.1f, 1.1f, 1.1f, 1.0f };
+	float globAmbient[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globAmbient);
 
 	/*if (data->camera->latarka)
