@@ -36,6 +36,11 @@ CGame::CGame(void)
 	data->camera = new SCamera;
 	data->window = new SWindow;
 
+	handlers.camera = new CCamera(data);
+	handlers.input = new CInput(data);
+	handlers.ui = new CUI(data);
+	handlers.renderer = new CRenderer(data);
+
 	///
 
 	data->fullscreen = false;
@@ -48,12 +53,6 @@ CGame::CGame(void)
 	data->drawFPS = true;
 	data->drawHUD = true;
 
-	///
-
-	handlers.camera = new CCamera(data);
-	handlers.input = new CInput(data);
-	handlers.ui = new CUI(data);
-	handlers.renderer = new CRenderer(data);
 }
 
 
@@ -200,11 +199,6 @@ void CGame::callbackReshape(int width, int height)
 	instance->Reshape(width, height);
 }
 
-
-void CGame::callbackDrawFPS(int id)
-{
-	//	instance->drawFPS(id);
-}
 
 
 void CGame::callbackRedisplay(void)

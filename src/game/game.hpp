@@ -34,7 +34,6 @@ private:
 	static void     callbackRender(void);
 	static void     callbackReshape(int, int);
 	static void     callbackRedisplay(void);
-	static void     callbackDrawFPS(int);
 	static void     callbackMouseButtonPress(int, int, int, int);
 	static void     callbackMouseMove(int, int);
 	static void     callbackKeyPress(unsigned char, int, int);
