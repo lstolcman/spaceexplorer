@@ -34,7 +34,7 @@ CGame::CGame(void)
 
 	data->last_fps = 0;
 	data->drawFPS = true;
-	data->drawHUD = false;
+	data->drawHUD = true;
 
 	///
 

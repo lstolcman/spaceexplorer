@@ -9,14 +9,14 @@ CInput::CInput(SData *data)
 
 	for (int i = 0; i < 256; i++)
 	{
-		inputState->keys[i]        = KEYUP;
+		inputState->keys[i] = KEYUP;
 		inputState->specialKeys[i] = KEYUP;
 	}
 	inputState->mouse.state = KEYUP;
-	mouseSensitivity       = 0.031f;
-	captureMouse           = true;
-	this->camera           = data->camera;
-	this->data             = data;
+	mouseSensitivity = 0.031f;
+	captureMouse = true;
+	this->camera = data->camera;
+	this->data = data;
 
 }
 
@@ -29,9 +29,9 @@ CInput::~CInput()
 void CInput::mouseButtonPress(int button, int state, int x, int y)
 {
 	inputState->mouse.button = (SMouseKey)button;
-	inputState->mouse.state  = (SKeyState)state;
-	inputState->mouse.x      = x;
-	inputState->mouse.y      = y;
+	inputState->mouse.state = (SKeyState)state;
+	inputState->mouse.x = x;
+	inputState->mouse.y = y;
 
 #ifdef _DEBUG
 	std::cout << "mouseButtonPress: " << x << "x" << y;
@@ -159,24 +159,26 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 
 void CInput::keyUp(unsigned char keyid, int x, int y)
 {
-	/*
-	#ifdef _DEBUG
+#ifdef _DEBUG
 	std::cout << "keyUp " << keyid << "(" << (int)keyid << ") " << x << "x" << y << "\t\t\t\r";
-	#endif
-	*/
+#endif
 
 	inputState->keys[keyid] = KEYUP;
 
 	//when shift-letter was pressed and letter was released w/o shfift - release both keys (works with a-z only!!)
 	if (keyid >= 97 || keyid <= 122)
-		inputState->keys[keyid-32] = KEYUP;
+		inputState->keys[keyid - 32] = KEYUP;
+
+	if (keyid >= 65 || keyid <= 90)
+		inputState->keys[keyid + 32] = KEYUP;
+
 }
 
 void CInput::keyPress(unsigned char keyid, int x, int y)
 {
-	#ifdef _DEBUG
+#ifdef _DEBUG
 	std::cout << "keyPress " << keyid << "(" << (int)keyid << ") " << x << "x" << y << "\t\t\t\r";
-	#endif
+#endif
 	if (inputState->keys[keyid] == KEYUP)
 	{
 		inputState->keys[keyid] = KEYDOWN;
@@ -227,10 +229,10 @@ void CInput::specialKeyUp(int keyid, int x, int y)
 
 void CInput::specialKeyPress(int keyid, int x, int y)
 {
-	
-	#ifdef _DEBUG
+
+#ifdef _DEBUG
 	std::cout << "specialKeyPress " << keyid << "(" << (int)keyid << ") " << x << "x" << y << "\t\t\t\r";
-	#endif
+#endif
 
 	if (!inputState->specialKeys[keyid])
 	{
@@ -267,7 +269,7 @@ bool CInput::isMouseButtonDown(int keyid)
 
 bool CInput::checkInput()
 {
-	#pragma region Ruch kamery
+#pragma region Ruch kamery
 
 
 	//std::cout
@@ -315,7 +317,7 @@ bool CInput::checkInput()
 	}
 
 
-	#pragma endregion
+#pragma endregion
 
 	return true;
 }
