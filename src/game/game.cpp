@@ -11,6 +11,18 @@ petla gry:
 
 //rendering: world, skydome/box,
 }
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+£ADOWANIE PLIK”W/TEKSTUR/OBIEKT”W LUB wYWO£YWANIE FUNKCJI £ADUJ•CYCH W.W.
+NIE ROBI∆ TEGO W KONSTRUKTORACH KLAS -> OPENGL NIE ZAINICJOWANY FUNCKJ•
+GLUTINIT - NIE ZWRACA WSKAèNIK”W NA PAMI ∆ DO NICH - NIE £ADUJE ICH DO PAMI CI
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
 */
 
 CGame *CGame::instance = NULL;
