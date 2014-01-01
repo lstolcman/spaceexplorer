@@ -318,7 +318,8 @@ void CRenderer::drawSky(void)
 
 void CRenderer::drawScene()
 {
-	glPolygonMode(GL_FRONT, GL_FILL);
+
+	//glPolygonMode(GL_FRONT, GL_FILL);
 	countFPS();
 
 	setDisplayMatrices();
@@ -344,7 +345,7 @@ void CRenderer::drawScene()
 
 
 
-	glPolygonMode(GL_FRONT, GL_LINE);
+	//glPolygonMode(GL_FRONT, GL_LINE);
 
 
 	glPushMatrix();
@@ -552,6 +553,9 @@ void CRenderer::drawScene()
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, dif);
 		glMaterialfv(GL_FRONT, GL_SPECULAR, spe);
 	}
+
+
+
 
 	// Inkrementacja licznika klatek.
 	frame += 1;

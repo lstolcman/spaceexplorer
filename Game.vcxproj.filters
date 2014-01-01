@@ -41,9 +41,6 @@
     <ClCompile Include="src\game\camera.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="src\renderer\texture.cpp">
-      <Filter>Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="src\tools\bitmap.cpp">
       <Filter>Tools\Loaders</Filter>
     </ClCompile>
@@ -60,6 +57,9 @@
       <Filter>Tools\Math</Filter>
     </ClCompile>
     <ClCompile Include="src\tools\obj.cpp">
+      <Filter>Tools\Loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\texture.cpp">
       <Filter>Tools\Loaders</Filter>
     </ClCompile>
   </ItemGroup>
@@ -84,9 +84,6 @@
     <ClInclude Include="src\game\camera.hpp">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="src\renderer\texture.hpp">
-      <Filter>Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="src\tools\bitmap.hpp">
       <Filter>Tools\Loaders</Filter>
     </ClInclude>
@@ -103,6 +100,9 @@
       <Filter>Tools\Math</Filter>
     </ClInclude>
     <ClInclude Include="src\tools\obj.hpp">
+      <Filter>Tools\Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\texture.hpp">
       <Filter>Tools\Loaders</Filter>
     </ClInclude>
   </ItemGroup>

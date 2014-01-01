@@ -53,6 +53,7 @@ CGame::~CGame(void)
 	delete handlers.input;
 
 	delete data->camera;
+	delete data->inputState;
 	delete data;
 }
 

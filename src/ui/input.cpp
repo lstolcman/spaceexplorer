@@ -166,6 +166,10 @@ void CInput::keyUp(unsigned char keyid, int x, int y)
 	*/
 
 	inputState->keys[keyid] = KEYUP;
+
+	//when shift-letter was pressed and letter was released w/o shfift - release both keys (works with a-z only!!)
+	if (keyid >= 97 || keyid <= 122)
+		inputState->keys[keyid-32] = KEYUP;
 }
 
 void CInput::keyPress(unsigned char keyid, int x, int y)

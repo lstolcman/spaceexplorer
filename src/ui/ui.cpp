@@ -8,6 +8,7 @@ CUI::CUI(SData *data)
 {
 	this->data = data;
 	font = GLUT_BITMAP_HELVETICA_12;
+	a.Load("resources/1_back6.bmp", GL_NEAREST, GL_NEAREST);
 }
 
 
@@ -36,7 +37,28 @@ void CUI::drawUI(void)
 #endif
 
 
+
+
 	glMatrixMode(GL_PROJECTION);
+
+
+	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_TEXTURE_2D);
+	glBegin(GL_QUADS);
+	glColor3f(1.0f, 1.0f, 0.1f);
+	glBindTexture(GL_TEXTURE_2D, a());
+	glTexCoord2f(0, 0);
+	glVertex2f(100, 100);
+	glTexCoord2f(0, 1);
+	glVertex2f(100, 200);
+	glTexCoord2f(1, 1);
+	glVertex2f(200, 200);
+	glTexCoord2f(1, 0);
+	glVertex2f(200, 100);
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
+
+
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
 }

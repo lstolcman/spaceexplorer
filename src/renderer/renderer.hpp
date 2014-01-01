@@ -5,7 +5,7 @@
 #include "../tools/obj.hpp"
 #include "../game/camera.hpp"
 
-#include "texture.hpp"
+#include "../tools/texture.hpp"
 
 
 

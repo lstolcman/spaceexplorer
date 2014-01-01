@@ -2,6 +2,8 @@
 
 #include "../game/gcommon.hpp"
 
+#include "../tools/texture.hpp"
+
 
 
 class CUI
@@ -10,6 +12,7 @@ class CUI
 private:
 	void*			font;
 	SData			*data;
+	CTexture a;
 
 public:
 
