@@ -8,7 +8,8 @@ CUI::CUI(SData *data)
 {
 	this->data = data;
 	font = GLUT_BITMAP_HELVETICA_12;
-	a.Load("resources/1_back6.bmp", GL_NEAREST, GL_NEAREST);
+	//loading textures here does not work!!!
+	a.Load("resources/hp.bmp", GL_NEAREST, GL_NEAREST);
 }
 
 
@@ -68,10 +69,8 @@ void CUI::displayHUD(void)
 {
 	if (data->drawHUD)
 	{
-
-
-
-
+		unsigned width = glutGet(GLUT_WINDOW_WIDTH);
+		unsigned height = glutGet(GLUT_WINDOW_HEIGHT);
 
 		glDisable(GL_DEPTH_TEST);
 		glEnable(GL_TEXTURE_2D);

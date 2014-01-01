@@ -52,6 +52,13 @@ void CRenderer::countFPS()
 
 void CRenderer::setDisplayMatrices(void)
 {
+
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE); // W³¹czenie cullingu - rysowania tylko jednej strony wielok¹tów
+	glCullFace(GL_BACK); // Okreœlenie, któr¹ stronê wielok¹tów chcemy ukrywaæ
+	glFrontFace(GL_CCW); // Okreœlenie, jaki kierunek definicji wierzcho³ków oznacza przód wielok¹tu (GL_CCW - przeciwnie do ruchu wskazówek zegara, GL_CW - zgodnie)
+
+	glEnable(GL_LIGHTING);
 	// Wyczysc zawartosc bufora koloru i glebokosci.
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

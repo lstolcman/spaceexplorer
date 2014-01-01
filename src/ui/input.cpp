@@ -118,6 +118,69 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 	case KEY_ESC:
 		glutLeaveMainLoop();
 		break;
+
+
+
+	case 'a':
+	case 'A':
+
+		break;
+
+	case 'b':
+	case 'B':
+
+		break;
+
+	case 'c':
+	case 'C':
+
+		break;
+
+	case 'd':
+	case 'D':
+
+		break;
+
+	case 'e':
+	case 'E':
+
+		break;
+
+	case 'f':
+	case 'F':
+
+		break;
+
+	case 'g':
+	case 'G':
+
+		break;
+
+	case 'h':
+	case 'H':
+
+		break;
+
+	case 'i':
+	case 'I':
+
+		break;
+
+	case 'j':
+	case 'J':
+
+		break;
+
+	case 'k':
+	case 'K':
+
+		break;
+
+	case 'l':
+	case 'L':
+
+		break;
+
 	case 'm':
 	case 'M':
 		if (captureMouse && !data->fullscreen)
@@ -131,6 +194,16 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 			glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2);
 			glutSetCursor(GLUT_CURSOR_NONE);
 		}
+		break;
+
+	case 'n':
+	case 'N':
+
+		break;
+
+	case 'o':
+	case 'O':
+
 		break;
 
 	case 'p':
@@ -150,6 +223,57 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 			glutSetCursor(GLUT_CURSOR_NONE);
 		}
 		break;
+
+	case 'q':
+	case 'Q':
+
+		break;
+
+	case 'r':
+	case 'R':
+
+		break;
+
+	case 's':
+	case 'S':
+
+		break;
+
+	case 't':
+	case 'T':
+
+		break;
+
+	case 'u':
+	case 'U':
+
+		break;
+
+	case 'v':
+	case 'V':
+		data->drawHUD = !data->drawHUD;
+		break;
+
+	case 'w':
+	case 'W':
+
+		break;
+
+	case 'x':
+	case 'X':
+
+		break;
+
+	case 'y':
+	case 'Y':
+
+		break;
+
+	case 'z':
+	case 'Z':
+
+		break;
+
 
 	default:
 		break;
