@@ -42,8 +42,6 @@ class CInput
 {
 	//Fields:
 private:
-	SInputState *inputState;
-	SCamera *camera;
 	SData *data;
 
 	float mouseSensitivity;

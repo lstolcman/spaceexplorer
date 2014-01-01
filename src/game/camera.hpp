@@ -4,15 +4,18 @@
 
 class CCamera
 {
+	//Fields:
+private:
+	SData *data;
 public:
 
-	
+	//Members:
+private:
 
-
+public:
 	CCamera(SData*);
 	~CCamera();
 
-	SCamera *camera;
 	void cameraMove(void);
 	void rotX(float);
 	void rotY(float);

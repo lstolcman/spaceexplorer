@@ -6,7 +6,7 @@
 CRenderer::CRenderer(SData *data)
 {
 	this->data = data;
-	this->camera = data->camera;
+	//this->camera = data->camera;
 	time.start();
 	frame = 0;
 	frame_old = 0;
@@ -70,9 +70,9 @@ void CRenderer::setDisplayMatrices(void)
 	glLoadIdentity();
 
 	gluLookAt(
-		camera->pos.x, camera->pos.y, camera->pos.z,
-		camera->pos.x + camera->view.x, camera->pos.y + camera->view.y, camera->pos.z + camera->view.z,
-		camera->up.x, camera->up.y, camera->up.z
+		data->camera->pos.x, data->camera->pos.y, data->camera->pos.z,
+		data->camera->pos.x + data->camera->view.x, data->camera->pos.y + data->camera->view.y, data->camera->pos.z + data->camera->view.z,
+		data->camera->up.x, data->camera->up.y, data->camera->up.z
 		);
 
 }
@@ -84,7 +84,7 @@ void CRenderer::setupLights(void)
 	float globAmbient[4] = { 1.1f, 1.1f, 1.1f, 1.0f };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globAmbient);
 
-	/*if (camera->latarka)
+	/*if (data->camera->latarka)
 		glEnable(GL_LIGHT0);
 		else
 		glDisable(GL_LIGHT0);
@@ -93,8 +93,8 @@ void CRenderer::setupLights(void)
 		float l0_spe[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 		//float l0_pos[] = { 2.7f, 2.7f, -1.3f, 1.0f };
 		//float l0_dir[] = { -0.9f, -0.3f, 1.3f};
-		float l0_pos[] = { camera->pos.x, camera->pos.y, camera->pos.z, 1.0f };
-		float l0_dir[] = { camera->view.x, camera->view.y, camera->view.z };
+		float l0_pos[] = { data->camera->pos.x, data->camera->pos.y, data->camera->pos.z, 1.0f };
+		float l0_dir[] = { data->camera->view.x, data->camera->view.y, data->camera->view.z };
 		glLightfv(GL_LIGHT0, GL_AMBIENT, l0_amb);
 		glLightfv(GL_LIGHT0, GL_DIFFUSE, l0_dif);
 		glLightfv(GL_LIGHT0, GL_SPECULAR, l0_spe);
@@ -140,7 +140,7 @@ void CRenderer::drawSky(void)
 	//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
 
-	glTranslatef(camera->pos.x, camera->pos.y, camera->pos.z);
+	glTranslatef(data->camera->pos.x, data->camera->pos.y, data->camera->pos.z);
 	glScaled(50, 50, 50);
 
 	float m_amb[] = { 0.7f, 0.7f, 0.7f, 1.0f };
@@ -358,7 +358,7 @@ void CRenderer::drawScene()
 	glPushMatrix();
 	glTranslatef(0, -10, 3);
 	glRotatef(90, 0, 1, 0);
-	glTranslatef( data->camera->pos.x,  camera->pos.y,  camera->pos.z);
+	glTranslatef( data->camera->pos.x,  data->camera->pos.y,  data->camera->pos.z);
 	obj.disp();
 	glPopMatrix();
 
@@ -366,11 +366,11 @@ void CRenderer::drawScene()
 	/* 3rd CAMERA */
 	/*
 	glPushMatrix();
-	glTranslatef(camera->view.x + camera->pos.x, camera->view.y + camera->pos.y, camera->view.z + camera->pos.z);
-	glRotatef(-((camera->angleY * 180) / PI), 0, 1, 0);
-	glRotatef(-((camera->angleX * 180) / PI), 0, 0, 1);
+	glTranslatef(data->camera->view.x + data->camera->pos.x, data->camera->view.y + data->camera->pos.y, data->camera->view.z + data->camera->pos.z);
+	glRotatef(-((data->camera->angleY * 180) / PI), 0, 1, 0);
+	glRotatef(-((data->camera->angleX * 180) / PI), 0, 0, 1);
 	glutWireCube(0.2);
-	glTranslatef(-camera->view.x - camera->pos.x, -camera->view.y - camera->pos.y , -camera->view.z - camera->pos.z);
+	glTranslatef(-data->camera->view.x - data->camera->pos.x, -data->camera->view.y - data->camera->pos.y , -data->camera->view.z - data->camera->pos.z);
 	glPopMatrix();
 	*/
 	

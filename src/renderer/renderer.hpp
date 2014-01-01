@@ -14,7 +14,6 @@ class CRenderer
 private:
 	unsigned long	frame, frame_old;
 	CTimer			time, time_old;
-	SCamera			*camera;
 	SData			*data;
 
 	COBJ			obj;
