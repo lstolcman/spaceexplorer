@@ -8,19 +8,17 @@ CUI::CUI(SData *data)
 {
 	this->data = data;
 	font = GLUT_BITMAP_HELVETICA_12;
-	//loading textures here does not work!!!
-	a.Load("resources/hp.bmp", GL_NEAREST, GL_NEAREST);
 }
 
 
 CUI::~CUI()
 {
-
 }
 
 
 void CUI::drawUI(void)
 {
+
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
 	glLoadIdentity();
@@ -76,7 +74,7 @@ void CUI::displayHUD(void)
 		glEnable(GL_TEXTURE_2D);
 		glBegin(GL_QUADS);
 		glColor3f(1.0f, 1.0f, 0.1f);
-		glBindTexture(GL_TEXTURE_2D, a());
+		//glBindTexture(GL_TEXTURE_2D, texture());
 		glTexCoord2f(0, 0);
 		glVertex2f(100, 100);
 		glTexCoord2f(0, 1);

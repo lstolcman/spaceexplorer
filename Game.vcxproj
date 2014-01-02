@@ -44,7 +44,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\3rd\glew-1.10.0\include;$(SolutionDir)\3rd\freeglut-2.8.1\include;$(SolutionDir)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\3rd\glm;$(SolutionDir)\3rd\glew-1.10.0\include;$(SolutionDir)\3rd\freeglut-2.8.1\include;$(SolutionDir)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
@@ -82,13 +82,16 @@
     <ClCompile Include="src\game\game.cpp" />
     <ClCompile Include="src\game\camera.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\renderer\object.cpp" />
     <ClCompile Include="src\renderer\renderer.cpp" />
+    <ClCompile Include="src\renderer\skybox.cpp" />
     <ClCompile Include="src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\tools\bitmap.cpp" />
+    <ClCompile Include="src\tools\bmp.cpp" />
     <ClCompile Include="src\tools\math.cpp" />
+    <ClCompile Include="src\tools\model.cpp" />
     <ClCompile Include="src\tools\obj.cpp" />
     <ClCompile Include="src\tools\quaternion.cpp" />
     <ClCompile Include="src\tools\texture.cpp" />
@@ -102,10 +105,13 @@
     <ClInclude Include="src\game\gcommon.hpp" />
     <ClInclude Include="src\game\camera.hpp" />
     <ClInclude Include="src\main.hpp" />
+    <ClInclude Include="src\renderer\object.hpp" />
     <ClInclude Include="src\renderer\renderer.hpp" />
+    <ClInclude Include="src\renderer\skybox.hpp" />
     <ClInclude Include="src\stdafx.hpp" />
-    <ClInclude Include="src\tools\bitmap.hpp" />
+    <ClInclude Include="src\tools\bmp.hpp" />
     <ClInclude Include="src\tools\math.hpp" />
+    <ClInclude Include="src\tools\model.hpp" />
     <ClInclude Include="src\tools\obj.hpp" />
     <ClInclude Include="src\tools\quaternion.hpp" />
     <ClInclude Include="src\tools\texture.hpp" />

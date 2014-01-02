@@ -2,9 +2,12 @@
 
 #include "../game/gcommon.hpp"
 #include "../tools/timer.hpp"
-#include "../tools/obj.hpp"
 #include "../game/camera.hpp"
 
+#include "object.hpp"
+#include "skybox.hpp"
+
+//#include "../tools/obj.hpp"
 #include "../tools/texture.hpp"
 
 
@@ -15,19 +18,8 @@ private:
 	unsigned long	frame, frame_old;
 	CTimer			time, time_old;
 	SData			*data;
-
-	COBJ			obj;
-
-	// front, right, back, left, top, bottom
-	struct
-	{
-		CTexture	front;
-		CTexture	back;
-		CTexture	right;
-		CTexture	left;
-		CTexture	top;
-		CTexture	bottom;
-	} skybox;
+	CSkybox			*skybox;
+	CObject			object;
 
 	void            countFPS(void);
 	void            setDisplayMatrices(void);

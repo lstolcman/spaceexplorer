@@ -64,8 +64,11 @@ struct SCamera
 
 struct SWindow
 {
-	vec3 size;
-	vec3 pos;
+	//fixes float-to-int warnings
+	glm::ivec2 size;
+	glm::ivec2 pos;
+	//vec3 size;
+	//vec3 pos;
 };
 
 struct SInputState

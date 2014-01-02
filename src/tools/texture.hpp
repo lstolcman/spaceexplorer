@@ -1,5 +1,5 @@
 #pragma once
-#include "../tools/bitmap.hpp"
+#include "../tools/bmp.hpp"
 
 
 

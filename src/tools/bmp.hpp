@@ -2,7 +2,7 @@
 
 
 
-class CBitmap
+class CLoaderBMP
 {
 	//Fields:
 private:
@@ -18,9 +18,9 @@ public:
 private:
 
 public:
-	//CBitmap(std::string);
-	CBitmap(void);
-	~CBitmap();
+	//CLoaderBMP(std::string);
+	CLoaderBMP(void);
+	~CLoaderBMP();
 
 	bool				loadBMP(std::string);
 

@@ -1,13 +1,11 @@
 #include "stdafx.hpp"
 #include "main.hpp"
 
-#include "tools/math.hpp"
-
 
 //int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow )
 int main(int argc, char *argv[])
 {
-	system("chcp 1250"); // strona kodowa do polskich znaków w cmd
+	system("chcp 1250"); // codepage win-1250 for polish characters in command line
 
 #ifdef _DEBUG
 	std::cout
@@ -22,6 +20,5 @@ int main(int argc, char *argv[])
 
 	Game.Init(argc, argv);
 
-	//std::cin.get();
 	return 0;
 }

@@ -12,17 +12,6 @@ petla gry:
 //rendering: world, skydome/box,
 }
 
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-£ADOWANIE PLIKÓW/TEKSTUR/OBIEKTÓW LUB wYWO£YWANIE FUNKCJI £ADUJ¥CYCH W.W.
-NIE ROBIÆ TEGO W KONSTRUKTORACH KLAS -> OPENGL NIE ZAINICJOWANY FUNCKJ¥
-GLUTINIT - NIE ZWRACA WSKANIKÓW NA PAMIÊÆ DO NICH - NIE £ADUJE ICH DO PAMIÊCI
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
 */
 
 CGame *CGame::instance = NULL;
@@ -43,15 +32,15 @@ CGame::CGame(void)
 
 	///
 
+	data->drawFPS = true;
+	data->drawHUD = false;
 	data->fullscreen = false;
+
 	data->window->pos.x = 400;
 	data->window->pos.y = 300;
 	data->window->size.x = 640;
 	data->window->size.y = 360;
-
 	data->last_fps = 0;
-	data->drawFPS = true;
-	data->drawHUD = true;
 
 }
 

@@ -3,14 +3,15 @@
 class CTimer
 {
 public:
-	CTimer();
+	CTimer(void);
 	~CTimer();
 
-	void        start();
-	void        stop();
+	void        start(void);
+	void        reset(void);
+	void        stop(void);
 
-	unsigned    getElapsedMilliseconds();
-	float       getElapsedSeconds();
+	unsigned    getElapsedMilliseconds(void);
+	float       getElapsedSeconds(void);
 
 	bool operator()();
 

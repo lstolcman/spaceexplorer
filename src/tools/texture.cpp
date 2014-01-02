@@ -22,7 +22,7 @@ CTexture::~CTexture(void)
 
 GLuint CTexture::Load(std::string file, int magFilter, int minFilter)
 {
-	CBitmap *texture = new CBitmap;
+	CLoaderBMP *texture = new CLoaderBMP;
 	if (!texture->loadBMP(file))
 	{
 		std::cout << "Error loading texture: " << file << "!" << std::endl;

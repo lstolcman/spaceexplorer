@@ -1,9 +1,9 @@
 #include "stdafx.hpp"
-#include "bitmap.hpp"
+#include "bmp.hpp"
 
 
 /*
-CBitmap::CBitmap(std::string file)
+CLoaderBMP::CLoaderBMP(std::string file)
 {
 data = NULL;
 bmHandle.open(file, std::ios::in | std::ios::binary);
@@ -12,7 +12,7 @@ bmHandle.open(file, std::ios::in | std::ios::binary);
 
 
 
-CBitmap::CBitmap(void)
+CLoaderBMP::CLoaderBMP(void)
 {
 	bmWidth = 0;
 	bmHeight = 0;
@@ -20,7 +20,7 @@ CBitmap::CBitmap(void)
 }
 
 
-CBitmap::~CBitmap()
+CLoaderBMP::~CLoaderBMP()
 {
 	if (bmHandle.is_open())
 		bmHandle.close();
@@ -29,7 +29,7 @@ CBitmap::~CBitmap()
 
 
 
-bool CBitmap::loadBMP(std::string file)
+bool CLoaderBMP::loadBMP(std::string file)
 {
 	unsigned bmSize;
 	char tmp;
