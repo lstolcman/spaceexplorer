@@ -9,7 +9,7 @@ CCamera::CCamera(SData *data)
 	
 	data->camera->captureMouse   = true;
 
-	data->camera->speed = 0.1f;
+	data->camera->speed = 0.6f;
 
 	data->camera->pos.x = 0.0f;
 	data->camera->pos.y = 0.0f;
@@ -26,6 +26,7 @@ CCamera::CCamera(SData *data)
 	data->camera->velM = 0.0f;
 	data->camera->velRX = 0.0f;
 	data->camera->velRY = 0.0f;
+	data->camera->velRZ = 0.0f;
 	data->camera->velS = 0.0f;
 
 
@@ -60,6 +61,12 @@ void CCamera::cameraMove(void)
 	}
 
 
+	// Obrot kamery
+	data->camera->angleZ = atan2(data->camera->up.x, data->camera->up.y);
+	data->camera->angleZ -= .02f * data->camera->velRZ;
+	data->camera->up.y = cos(data->camera->angleZ);
+	data->camera->up.x = sin(data->camera->angleZ);
+
 	/*std::cout << std::fixed << std::setprecision(4)// << "B" << angleX << " " << angleY << " "
 		<< data->camera->pos.x << "x" << data->camera->pos.y << "x" << data->camera->pos.z << " "
 		<< data->camera->view.x << "x" << data->camera->view.y << "x" << data->camera->view.z
@@ -69,7 +76,7 @@ void CCamera::cameraMove(void)
 	// Wektor prostopad³y:
 	vec3 per;
 	per.x = -data->camera->view.z;
-	per.y = 0;
+	per.y = data->camera->view.y; //0;
 	per.z = data->camera->view.x;
 
 	// Ruch przod/tyl:
@@ -85,6 +92,7 @@ void CCamera::cameraMove(void)
 	// Inercja:
 	data->camera->velRX /= 2.2f;
 	data->camera->velRY /= 2.2f;
+	data->camera->velRZ /= 2.2f;
 	data->camera->velM /= 2.2f;
 	data->camera->velS /= 2.2f;
 

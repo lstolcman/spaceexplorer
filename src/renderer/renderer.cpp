@@ -149,7 +149,7 @@ void CRenderer::drawScene()
 
 
 
-	glScaled(0.1, 0.1, 0.1);
+	glScaled(0.01, 0.01, 0.01);
 
 
 	// Przesuniecie swiata (przeciwienstwo przesuniecia kamery).

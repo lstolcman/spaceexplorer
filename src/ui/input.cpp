@@ -39,9 +39,45 @@ void CInput::mouseButtonPress(int button, int state, int x, int y)
 		std::cout << " s: UP"; break;
 	case KEYDOWN:
 		std::cout << " s: DOWN"; break;
-	}
-	;
+	};
 	switch (button)
+	{
+	case LEFT_BUTTON:
+		std::cout << " b: LEFT"; break;
+	case MIDDLE_BUTTON:
+		std::cout << " b: MIDDLE"; break;
+	case RIGHT_BUTTON:
+		std::cout << " b: RIGHT"; break;
+	case WHEELSCROLLUP:
+		std::cout << " s: WHEEL SCROLL UP"; data->camera->speed += 0.005f; break;
+	case WHEELSCROLLDOWN:
+		std::cout << " s: WHEEL SCROLL DOWN";  data->camera->speed -= 0.005f; break;
+	case HOLDWHEELSCROLLUP:
+		std::cout << " s: HOLD WHEEL SCROLL UP"; break;
+	case HOLDWHEELSCROLLDOWN:
+		std::cout << " s: HOLD WHEEL SCROLL DOWN"; break;
+	};
+	std::cout << "\t\t\r";
+#endif
+
+}
+
+
+void CInput::mouseMove(int x, int y)
+{
+	data->inputState->mouse.x = x;
+	data->inputState->mouse.y = y;
+
+#ifdef _DEBUG
+	std::cout << "mouseMove: " << x << "x" << y;
+	switch (data->inputState->mouse.state)
+	{
+	case KEYUP:
+		std::cout << " s: UP"; break;
+	case KEYDOWN:
+		std::cout << " s: DOWN"; break;
+	};
+	switch (data->inputState->mouse.button)
 	{
 	case LEFT_BUTTON:
 		std::cout << " b: LEFT"; break;
@@ -57,49 +93,9 @@ void CInput::mouseButtonPress(int button, int state, int x, int y)
 		std::cout << " s: HOLD WHEEL SCROLL UP"; break;
 	case HOLDWHEELSCROLLDOWN:
 		std::cout << " s: HOLD WHEEL SCROLL DOWN"; break;
-	}
-	;
+	};
 	std::cout << "\t\t\r";
 #endif
-
-}
-
-
-void CInput::mouseMove(int x, int y)
-{
-	data->inputState->mouse.x = x;
-	data->inputState->mouse.y = y;
-
-	/*
-	#ifdef _DEBUG
-	std::cout << "mouseMove: " << x << "x" << y;
-	switch (data->inputState->mouse.state)
-	{
-	case KEYUP:
-	std::cout << " s: UP"; break;
-	case KEYDOWN:
-	std::cout << " s: DOWN"; break;
-	};
-	switch (data->inputState->mouse.button)
-	{
-	case LEFT_BUTTON:
-	std::cout << " b: LEFT"; break;
-	case MIDDLE_BUTTON:
-	std::cout << " b: MIDDLE"; break;
-	case RIGHT_BUTTON:
-	std::cout << " b: RIGHT"; break;
-	case WHEELSCROLLUP:
-	std::cout << " s: WHEEL SCROLL UP"; break;
-	case WHEELSCROLLDOWN:
-	std::cout << " s: WHEEL SCROLL DOWN"; break;
-	case HOLDWHEELSCROLLUP:
-	std::cout << " s: HOLD WHEEL SCROLL UP"; break;
-	case HOLDWHEELSCROLLDOWN:
-	std::cout << " s: HOLD WHEEL SCROLL DOWN"; break;
-	};
-	std::cout << "\t\t\r";
-	#endif
-	*/
 }
 
 
@@ -378,7 +374,7 @@ bool CInput::isSpecialKeyDown(int keyid)
 
 bool CInput::isMouseButtonDown(int keyid)
 {
-	if (data->inputState->mouse.state == 1)
+	if (data->inputState->mouse.state == KEYUP)
 	{
 		return false;
 	}
@@ -391,13 +387,6 @@ bool CInput::isMouseButtonDown(int keyid)
 
 bool CInput::checkInput()
 {
-#pragma region Ruch kamery
-
-
-	//std::cout
-	//	<< data->camera.pos.x << "x" << data->camera.pos.y << "x" << data->camera.pos.z << " "
-	//	<< data->camera.dir.x << "x" << data->camera.dir.y << "x" << data->camera.dir.z << "\n";
-	bool free3DMovement = true;
 	if (captureMouse)
 	{
 		data->camera->velRY = -mouseSensitivity * (glutGet(GLUT_WINDOW_WIDTH) / 2 - data->inputState->mouse.x);
@@ -423,11 +412,11 @@ bool CInput::checkInput()
 	}
 	if (data->inputState->keys['q'] == KEYDOWN)
 	{
-		data->camera->velRY = -data->camera->speed;
+		data->camera->velRZ = -data->camera->speed;
 	}
 	if (data->inputState->keys['e'] == KEYDOWN)
 	{
-		data->camera->velRY = data->camera->speed;
+		data->camera->velRZ = data->camera->speed;
 	}
 	if (data->inputState->keys['f'] == KEYDOWN)
 	{
@@ -437,9 +426,6 @@ bool CInput::checkInput()
 	{
 		data->camera->velRX = data->camera->speed;
 	}
-
-
-#pragma endregion
 
 	return true;
 }

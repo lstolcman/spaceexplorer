@@ -8,6 +8,7 @@ CUI::CUI(SData *data)
 {
 	this->data = data;
 	font = GLUT_BITMAP_HELVETICA_12;
+	textLines = 0;
 }
 
 
@@ -39,6 +40,7 @@ void CUI::drawUI(void)
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
+	textLines = 0;
 }
 
 
@@ -51,14 +53,15 @@ void CUI::setFont(void* font)
 
 
 
-void CUI::printOnScreen(int x, int y, std::string text)
+void CUI::printOnScreen(std::string &text)
 {
-	glRasterPos2f(x, y);
+	glRasterPos2f(10, 20 + 16 * textLines);
 
 	for (int i = 0; i < text.size(); i++)
 	{
 		glutBitmapCharacter(font, text[i]);
 	}
+	++textLines;
 }
 
 
@@ -94,17 +97,50 @@ void CUI::displayHUD(void)
 void CUI::displayDebug(void)
 {
 	std::stringstream s;
-	s	<< std::fixed << std::setprecision(4)
-		<< "pos=" << data->camera->pos.x << "x" << data->camera->pos.y << "x" << data->camera->pos.z << "  "
-		<< "view=" << data->camera->view.x << "x" << data->camera->view.y << "x" << data->camera->view.z << "  "
-		<< "velRX:" << data->camera->velRX << "  velRY:" << data->camera->velRY;
-	printOnScreen(10, 36, s.str());
+	s << std::fixed << std::setprecision(4);
+	s << "pos=" << data->camera->pos.x << "x" << data->camera->pos.y << "x" << data->camera->pos.z;
+	printOnScreen(s.str());
+	s.str("");
+	s << "view=" << data->camera->view.x << "x" << data->camera->view.y << "x" << data->camera->view.z;
+	printOnScreen(s.str());
+	s.str("");
+	s << "up=" << data->camera->up.x << "x" << data->camera->up.y << "x" << data->camera->up.z;
+	printOnScreen(s.str());
+	s.str("");
+	s << "speed=" << data->camera->speed;
+	printOnScreen(s.str());
+	s.str("");
+	s << "velRX:" << data->camera->velRX << "  velRY:" << data->camera->velRY << "  velRZ:" << data->camera->velRZ;
+	printOnScreen(s.str());
+	s.str("");
+	s << std::setprecision(2) << "angleX:" << (data->camera->angleX * 180) / PI
+	  << "  angleY:" << (data->camera->angleY*180)/PI
+	  << "  angleZ:" << (data->camera->angleZ*180)/PI;
+	printOnScreen(s.str());
 	s.str("");
 	s << "Keys: ";
 	for (int i = 0; i < 93; ++i)
 	if (data->inputState->keys[i + 32] == KEYDOWN)
-		s << char(i+32)  << " ";
-	printOnScreen(10, 52, s.str());
+		s << char(i + 32) << " ";
+	printOnScreen(s.str());
+	s.str("");
+	s << "Mouse: ";
+	if (data->inputState->mouse.state == KEYDOWN)
+	{
+		switch (data->inputState->mouse.button)
+		{
+		case LEFT_BUTTON:
+			s << "LEFT ";
+			break;
+		case MIDDLE_BUTTON:
+			s << "MIDDLE ";
+			break;
+		case RIGHT_BUTTON:
+			s << "RIGHT ";
+			break;
+		}
+	}
+	printOnScreen(s.str());
 
 }
 
@@ -113,7 +149,7 @@ void CUI::displayFPS(void)
 {
 	std::stringstream s;
 	s << "FPS: " << data->last_fps;
-	printOnScreen(10, 20, s.str());
+	printOnScreen(s.str());
 }
 
 

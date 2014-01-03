@@ -1,17 +1,6 @@
 #pragma once
 #include "../tools/math.hpp"
 
-struct SPlayer
-{
-	vec3 pos;
-	vec3 view;
-	vec3 up;
-	float speed;
-	float velRX;
-	float velRY;
-	float velM;
-	float velS;
-};
 
 enum SKeyState
 {
@@ -28,7 +17,6 @@ enum SMouseKey
 	LEFT_BUTTON = GLUT_LEFT_BUTTON,
 	MIDDLE_BUTTON = GLUT_MIDDLE_BUTTON,
 	RIGHT_BUTTON = GLUT_RIGHT_BUTTON,
-
 };
 
 struct SMouseState
@@ -52,6 +40,7 @@ struct SCamera
 
 	float velRX;
 	float velRY;
+	float velRZ;
 
 	float velM;
 	float velS;

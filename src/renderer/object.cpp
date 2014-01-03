@@ -54,7 +54,6 @@ void CObject::draw(void)
 		obj->loadObj("resources/models/vehicle");
 	}
 	glPushMatrix();
-	//glScaled(0.3, 0.3, 0.3);
 	obj->disp();
 	glPopMatrix();
 }

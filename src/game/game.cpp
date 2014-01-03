@@ -143,7 +143,7 @@ void CGame::setGlutCallbacks(void)
 	glutReshapeFunc(callbackReshape);
 
 
-	//glutMouseFunc(callbackMouseButtonPress);
+	glutMouseFunc(callbackMouseButtonPress);
 	glutMotionFunc(callbackMouseMove);
 	glutPassiveMotionFunc(callbackMouseMove);
 

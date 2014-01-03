@@ -12,13 +12,14 @@ class CUI
 private:
 	void*			font;
 	SData			*data;
+	unsigned		textLines;
 
 public:
 
 
 	//Members:
 private:
-	void			printOnScreen(int, int, std::string);
+	void			printOnScreen(std::string&);
 	void			displayHUD(void);
 	void			displayFPS(void);
 	void			displayDebug(void);
