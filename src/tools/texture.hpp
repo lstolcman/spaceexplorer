@@ -20,6 +20,7 @@ public:
 	CTexture(std::string, int, int);
 	~CTexture(void);
 
+	GLuint		Load(std::string);
 	GLuint		Load(std::string, int, int);
 	GLuint		operator()();
 

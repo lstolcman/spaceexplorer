@@ -25,7 +25,6 @@ bool CRenderer::loadTextures(void)
 {
 	skybox = new CSkybox;
 	skybox->load();
-	//obj.loadObj("resources/ship.obj");
 	return true;
 }
 
@@ -115,27 +114,21 @@ void CRenderer::setupLights(void)
 
 void CRenderer::drawSky(void)
 {
-	// Store the current matrix
 	glPushMatrix();
-
-	// Enable/Disable features
 
 	// Just in case we set all vertices to white.
 	glColor4f(1, 1, 1, 1);
 
 
 	// W³¹czamy teksturowanie
-
 	// Ustawienie sposobu teksturowania - GL_MODULATE sprawia, ¿e œwiat³o ma wp³yw na teksturê; GL_DECAL i GL_REPLACE rysuj¹ teksturê tak jak jest
 	//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-
 
 	glTranslatef(data->camera->pos.x, data->camera->pos.y, data->camera->pos.z);
 	glScaled(50, 50, 50);
 
 	skybox->draw();
 
-	// Restore enable bits and matrix
 	glPopMatrix();
 }
 
@@ -176,7 +169,6 @@ void CRenderer::drawScene()
 	glTranslatef(0, -10, 3);
 	glRotatef(90, 0, 1, 0);
 	glTranslatef( data->camera->pos.x,  data->camera->pos.y,  data->camera->pos.z);
-	//obj.disp();
 	object.draw();
 	glPopMatrix();
 

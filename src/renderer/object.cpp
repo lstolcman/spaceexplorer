@@ -35,7 +35,7 @@ bool CObject::bindModel(CModel *model)
 	return true;
 }
 
-bool CObject::bindObj(COBJ *obj)
+bool CObject::bindObj(CLoaderOBJ *obj)
 {
 	this->obj = obj;
 
@@ -50,10 +50,13 @@ void CObject::draw(void)
 {
 	if (!obj)
 	{
-		obj = new COBJ;
-		obj->loadObj("resources/ship.obj");
+		obj = new CLoaderOBJ;
+		obj->loadObj("resources/models/vehicle");
 	}
+	glPushMatrix();
+	//glScaled(0.3, 0.3, 0.3);
 	obj->disp();
+	glPopMatrix();
 }
 
 

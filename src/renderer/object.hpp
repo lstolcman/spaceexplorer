@@ -11,7 +11,7 @@ class CObject
 private:
 	CTexture	*texture;
 	CModel		*model;
-	COBJ		*obj;
+	CLoaderOBJ	*obj;
 	glm::vec3	pos;
 	float		rotationSpeed;
 public:
@@ -28,7 +28,7 @@ public:
 	bool			bindTexture(CTexture*);
 	bool			bindModel(CModel*);
 
-	bool			bindObj(COBJ*);
+	bool			bindObj(CLoaderOBJ*);
 
 	void			draw(void);
 

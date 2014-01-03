@@ -1,28 +1,34 @@
 #pragma once
 
 #include "../tools/math.hpp"
+#include "texture.hpp"
 
 
-class COBJ
+class CLoaderOBJ
 {
 	//Fields:
 private:
 	struct SFace {
-		int v[3];
-		int n[3];
-		int t[3];
+		unsigned v[3];
+		unsigned t[3];
+		unsigned n[3];
 	};
 	std::ifstream		obj;
+	std::ifstream		mtl;
 	GLuint				handle;
+	CTexture			tex;
+
 public:
 
 
 	//Members:
 private:
 
+
+
 public:
-	COBJ(void);
-	~COBJ();
+	CLoaderOBJ(void);
+	~CLoaderOBJ();
 
 	bool				loadObj(std::string);
 	void				disp(void);
