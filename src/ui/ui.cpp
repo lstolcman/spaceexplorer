@@ -32,9 +32,9 @@ void CUI::drawUI(void)
 
 	displayHUD();
 	displayFPS();
-#ifdef _DEBUG
-	displayDebug();
-#endif
+
+	if (data->drawDebug)
+		displayDebug();
 
 
 	glMatrixMode(GL_PROJECTION);

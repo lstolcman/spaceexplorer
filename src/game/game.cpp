@@ -32,6 +32,7 @@ CGame::CGame(void)
 
 	///
 
+	data->drawDebug = false;
 	data->drawFPS = true;
 	data->drawHUD = false;
 	data->fullscreen = false;

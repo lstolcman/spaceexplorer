@@ -10,7 +10,6 @@ CInput::CInput(SData *data)
 	for (int i = 0; i < 256; i++)
 	{
 		data->inputState->keys[i] = KEYUP;
-		data->inputState->specialKeys[i] = KEYUP;
 	}
 	data->inputState->mouse.state = KEYUP;
 	mouseSensitivity = 0.031f;
@@ -31,6 +30,7 @@ void CInput::mouseButtonPress(int button, int state, int x, int y)
 	data->inputState->mouse.x = x;
 	data->inputState->mouse.y = y;
 
+	/*
 #ifdef _DEBUG
 	std::cout << "mouseButtonPress: " << x << "x" << y;
 	switch (state)
@@ -59,7 +59,7 @@ void CInput::mouseButtonPress(int button, int state, int x, int y)
 	};
 	std::cout << "\t\t\r";
 #endif
-
+	*/
 }
 
 
@@ -67,7 +67,7 @@ void CInput::mouseMove(int x, int y)
 {
 	data->inputState->mouse.x = x;
 	data->inputState->mouse.y = y;
-
+	/*
 #ifdef _DEBUG
 	std::cout << "mouseMove: " << x << "x" << y;
 	switch (data->inputState->mouse.state)
@@ -96,24 +96,23 @@ void CInput::mouseMove(int x, int y)
 	};
 	std::cout << "\t\t\r";
 #endif
+	*/
 }
 
 
 void CInput::keyDown(unsigned char keyid, int x, int y)
 {
-	/*
+	
 	#ifdef _DEBUG
 	std::cout << "keyDown " << keyid << "(" << (int)keyid << ") " << x << "x" << y << "\t\t\t\r";
 	#endif
-	*/
+	
 
 	switch (keyid)
 	{
 	case KEY_ESC:
 		glutLeaveMainLoop();
 		break;
-
-
 
 	case 'a':
 	case 'A':
@@ -317,31 +316,40 @@ bool CInput::isKeyDown(int keyid)
 	}
 }
 
-
-
-
 void CInput::specialKeyDown(int keyid, int x, int y)
 {
-	/*s
 	#ifdef _DEBUG
 	std::cout << "specialKeyDown " << keyid << "(" << (int)keyid << ") " << x << "x" << y << "\t\t\t\r";
 	#endif
-	*/
 	/*switch (keyid)
 	{
 	case KEY_ESC: //esc is not special key
 	glutLeaveMainLoop();
 	break;
 	}*/
+
+	switch (keyid)
+	{
+
+	case KEY_F1:
+		data->drawFPS = !data->drawFPS;
+		break;
+
+
+	case KEY_F12:
+		data->drawDebug = !data->drawDebug;
+		break;
+
+	}
+
+
 }
 
 void CInput::specialKeyUp(int keyid, int x, int y)
 {
-	/*
 	#ifdef _DEBUG
 	std::cout << "specialKeyUp " << keyid << "(" << (int)keyid << ") " << x << "x" << y << "\t\t\t\r";
 	#endif
-	*/
 	data->inputState->keys[keyid] = KEYUP;
 }
 
@@ -352,16 +360,17 @@ void CInput::specialKeyPress(int keyid, int x, int y)
 	std::cout << "specialKeyPress " << keyid << "(" << (int)keyid << ") " << x << "x" << y << "\t\t\t\r";
 #endif
 
-	if (!data->inputState->specialKeys[keyid])
+	if (data->inputState->keys[keyid] == KEYUP)
 	{
-		data->inputState->specialKeys[keyid] = KEYDOWN;
+		std::cout << "HUJ";
+		data->inputState->keys[keyid] = KEYDOWN;
 		specialKeyDown(keyid, x, y);
 	}
 }
 
 bool CInput::isSpecialKeyDown(int keyid)
 {
-	if (data->inputState->specialKeys[keyid] == KEYDOWN)
+	if (data->inputState->keys[keyid] == KEYDOWN)
 	{
 		return false;
 	}
@@ -370,7 +379,6 @@ bool CInput::isSpecialKeyDown(int keyid)
 		return true;
 	}
 }
-
 
 bool CInput::isMouseButtonDown(int keyid)
 {
@@ -383,7 +391,6 @@ bool CInput::isMouseButtonDown(int keyid)
 		return true;
 	}
 }
-
 
 bool CInput::checkInput()
 {

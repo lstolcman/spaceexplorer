@@ -64,7 +64,6 @@ struct SInputState
 {
 	SMouseState mouse;
 	SKeyState keys[256];
-	SKeyState specialKeys[256];
 };
 
 struct SData
@@ -72,6 +71,7 @@ struct SData
 	bool fullscreen;
 	bool drawHUD;
 	bool drawFPS;
+	bool drawDebug;
 	unsigned last_fps;
 
 	SInputState *inputState;
