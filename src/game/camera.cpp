@@ -74,7 +74,7 @@ void CCamera::cameraMove(void)
 
 
 	// Wektor prostopad³y:
-	vec3 per;
+	glm::vec3 per;
 	per.x = -data->camera->view.z;
 	per.y = data->camera->view.y; //0;
 	per.z = data->camera->view.x;

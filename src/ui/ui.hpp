@@ -20,6 +20,7 @@ public:
 	//Members:
 private:
 	void			printOnScreen(std::string&);
+	void			printOnScreen(int, int, std::string&);
 	void			displayHUD(void);
 	void			displayFPS(void);
 	void			displayDebug(void);

@@ -33,8 +33,7 @@ void CUI::drawUI(void)
 	displayHUD();
 	displayFPS();
 
-	if (data->drawDebug)
-		displayDebug();
+	displayDebug();
 
 
 	glMatrixMode(GL_PROJECTION);
@@ -56,13 +55,19 @@ void CUI::setFont(void* font)
 void CUI::printOnScreen(std::string &text)
 {
 	glRasterPos2f(10, 20 + 16 * textLines);
-
-	for (int i = 0; i < text.size(); i++)
-	{
-		glutBitmapCharacter(font, text[i]);
-	}
+	glutBitmapString(font, (const unsigned char *)text.c_str());
 	++textLines;
 }
+
+
+
+
+void CUI::printOnScreen(int x, int y, std::string &text)
+{
+	glRasterPos2f(x, y);
+	glutBitmapString(font, (const unsigned char *)text.c_str());
+}
+
 
 
 
@@ -88,68 +93,71 @@ void CUI::displayHUD(void)
 		glVertex2f(200, 100);
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
-
-
 	}
 }
 
 
 void CUI::displayDebug(void)
 {
-	std::stringstream s;
-	s << std::fixed << std::setprecision(4);
-	s << "pos=" << data->camera->pos.x << "x" << data->camera->pos.y << "x" << data->camera->pos.z;
-	printOnScreen(s.str());
-	s.str("");
-	s << "view=" << data->camera->view.x << "x" << data->camera->view.y << "x" << data->camera->view.z;
-	printOnScreen(s.str());
-	s.str("");
-	s << "up=" << data->camera->up.x << "x" << data->camera->up.y << "x" << data->camera->up.z;
-	printOnScreen(s.str());
-	s.str("");
-	s << "speed=" << data->camera->speed;
-	printOnScreen(s.str());
-	s.str("");
-	s << "velRX:" << data->camera->velRX << "  velRY:" << data->camera->velRY << "  velRZ:" << data->camera->velRZ;
-	printOnScreen(s.str());
-	s.str("");
-	s << std::setprecision(2) << "angleX:" << (data->camera->angleX * 180) / PI
-	  << "  angleY:" << (data->camera->angleY*180)/PI
-	  << "  angleZ:" << (data->camera->angleZ*180)/PI;
-	printOnScreen(s.str());
-	s.str("");
-	s << "Keys: ";
-	for (int i = 0; i < 93; ++i)
-	if (data->inputState->keys[i + 32] == KEYDOWN)
-		s << char(i + 32) << " ";
-	printOnScreen(s.str());
-	s.str("");
-	s << "Mouse: ";
-	if (data->inputState->mouse.state == KEYDOWN)
+	if (data->drawDebug)
 	{
-		switch (data->inputState->mouse.button)
+		std::stringstream s;
+		s << std::fixed << std::setprecision(4);
+		s << "pos=" << data->camera->pos.x << "x" << data->camera->pos.y << "x" << data->camera->pos.z;
+		printOnScreen(s.str());
+		s.str("");
+		s << "view=" << data->camera->view.x << "x" << data->camera->view.y << "x" << data->camera->view.z;
+		printOnScreen(s.str());
+		s.str("");
+		s << "up=" << data->camera->up.x << "x" << data->camera->up.y << "x" << data->camera->up.z;
+		printOnScreen(s.str());
+		s.str("");
+		s << "speed=" << data->camera->speed;
+		printOnScreen(s.str());
+		s.str("");
+		s << "velRX:" << data->camera->velRX << "  velRY:" << data->camera->velRY << "  velRZ:" << data->camera->velRZ;
+		printOnScreen(s.str());
+		s.str("");
+		s << std::setprecision(2) << "angleX:" << (data->camera->angleX * 180) / PI
+			<< "  angleY:" << (data->camera->angleY * 180) / PI
+			<< "  angleZ:" << (data->camera->angleZ * 180) / PI;
+		printOnScreen(s.str());
+		s.str("");
+		s << "Keys: ";
+		for (int i = 0; i < 93; ++i)
+		if (data->inputState->keys[i + 32] == KEYDOWN)
+			s << char(i + 32) << " ";
+		printOnScreen(s.str());
+		s.str("");
+		s << "Mouse: ";
+		if (data->inputState->mouse.state == KEYDOWN)
 		{
-		case LEFT_BUTTON:
-			s << "LEFT ";
-			break;
-		case MIDDLE_BUTTON:
-			s << "MIDDLE ";
-			break;
-		case RIGHT_BUTTON:
-			s << "RIGHT ";
-			break;
+			switch (data->inputState->mouse.button)
+			{
+			case LEFT_BUTTON:
+				s << "LEFT ";
+				break;
+			case MIDDLE_BUTTON:
+				s << "MIDDLE ";
+				break;
+			case RIGHT_BUTTON:
+				s << "RIGHT ";
+				break;
+			}
 		}
+		printOnScreen(s.str());
 	}
-	printOnScreen(s.str());
-
 }
 
 
 void CUI::displayFPS(void)
 {
-	std::stringstream s;
-	s << "FPS: " << data->last_fps;
-	printOnScreen(s.str());
+	if (data->drawFPS)
+	{
+		std::stringstream s;
+		s << "FPS: " << data->last_fps;
+		printOnScreen(s.str());
+	}
 }
 
 

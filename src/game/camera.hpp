@@ -1,5 +1,4 @@
 #pragma once
-#include "../tools/math.hpp"
 #include "gcommon.hpp"
 
 class CCamera

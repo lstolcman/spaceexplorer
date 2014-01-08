@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../tools/math.hpp"
 #include "texture.hpp"
 
 

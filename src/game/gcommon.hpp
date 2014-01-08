@@ -1,6 +1,6 @@
 #pragma once
-#include "../tools/math.hpp"
 
+#define PI 3.1415926535
 
 enum SKeyState
 {
@@ -33,9 +33,9 @@ struct SMouseState
 struct SCamera
 {
 	bool  captureMouse;
-	vec3  pos;
-	vec3  view;
-	vec3  up;
+	glm::vec3  pos;
+	glm::vec3  view;
+	glm::vec3  up;
 	float speed;
 
 	float velRX;
