@@ -64,6 +64,7 @@ struct SInputState
 {
 	SMouseState mouse;
 	SKeyState keys[256];
+	SKeyState specialKeys[256];
 };
 
 struct SData

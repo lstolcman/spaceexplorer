@@ -7,14 +7,14 @@ CInput::CInput(SData *data)
 	this->data = data;
 
 	//init state - nothing pressed
-	for (int i = 0; i < 256; i++)
+	for (int i = 0; i < 256; ++i)
 	{
 		data->inputState->keys[i] = KEYUP;
+		data->inputState->specialKeys[i] = KEYUP;
 	}
 	data->inputState->mouse.state = KEYUP;
 	mouseSensitivity = 0.031f;
 	captureMouse = true;
-
 }
 
 CInput::~CInput()
@@ -62,7 +62,6 @@ void CInput::mouseButtonPress(int button, int state, int x, int y)
 	*/
 }
 
-
 void CInput::mouseMove(int x, int y)
 {
 	data->inputState->mouse.x = x;
@@ -98,7 +97,6 @@ void CInput::mouseMove(int x, int y)
 #endif
 	*/
 }
-
 
 void CInput::keyDown(unsigned char keyid, int x, int y)
 {
@@ -321,12 +319,6 @@ void CInput::specialKeyDown(int keyid, int x, int y)
 	#ifdef _DEBUG
 	std::cout << "specialKeyDown " << keyid << "(" << (int)keyid << ") " << x << "x" << y << "\t\t\t\r";
 	#endif
-	/*switch (keyid)
-	{
-	case KEY_ESC: //esc is not special key
-	glutLeaveMainLoop();
-	break;
-	}*/
 
 	switch (keyid)
 	{
@@ -350,7 +342,7 @@ void CInput::specialKeyUp(int keyid, int x, int y)
 	#ifdef _DEBUG
 	std::cout << "specialKeyUp " << keyid << "(" << (int)keyid << ") " << x << "x" << y << "\t\t\t\r";
 	#endif
-	data->inputState->keys[keyid] = KEYUP;
+	data->inputState->specialKeys[keyid] = KEYUP;
 }
 
 void CInput::specialKeyPress(int keyid, int x, int y)
@@ -360,17 +352,16 @@ void CInput::specialKeyPress(int keyid, int x, int y)
 	std::cout << "specialKeyPress " << keyid << "(" << (int)keyid << ") " << x << "x" << y << "\t\t\t\r";
 #endif
 
-	if (data->inputState->keys[keyid] == KEYUP)
+	if (data->inputState->specialKeys[keyid] == KEYUP)
 	{
-		std::cout << "HUJ";
-		data->inputState->keys[keyid] = KEYDOWN;
+		data->inputState->specialKeys[keyid] = KEYDOWN;
 		specialKeyDown(keyid, x, y);
 	}
 }
 
 bool CInput::isSpecialKeyDown(int keyid)
 {
-	if (data->inputState->keys[keyid] == KEYDOWN)
+	if (data->inputState->specialKeys[keyid] == KEYDOWN)
 	{
 		return false;
 	}
@@ -382,7 +373,7 @@ bool CInput::isSpecialKeyDown(int keyid)
 
 bool CInput::isMouseButtonDown(int keyid)
 {
-	if (data->inputState->mouse.state == KEYUP)
+	if (data->inputState->mouse.state == KEYUP && data->inputState->mouse.button == keyid)
 	{
 		return false;
 	}
@@ -436,3 +427,7 @@ bool CInput::checkInput()
 
 	return true;
 }
+
+
+
+
