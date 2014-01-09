@@ -62,19 +62,26 @@ CGame::~CGame(void)
 void CGame::Init(int argc, char **argv)
 {
 	glutInit(&argc, argv);
+	//glutInitContextVersion(3, 0);
 	glutInitWindowSize(data->window->size.x, data->window->size.y);
 	glutInitWindowPosition(data->window->pos.x, data->window->pos.y);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 	glutCreateWindow("Space Explorer");
 
+	std::cout << glGetString(GL_VENDOR) << std::endl;
+	std::cout << glGetString(GL_RENDERER) << std::endl;
+	std::cout << "OpenGL " << glGetString(GL_VERSION) << " available" << std::endl;
+
 	GLenum err = glewInit();
 	if (GLEW_OK != err)
 	{
-		/* Problem: glewInit failed, something is seriously wrong. */
-		fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
+		// Problem: glewInit failed, something is seriously wrong.
+		//std::cerr << "Error: " << glewGetErrorString(err) << std::endl;
+		MessageBox(0, (LPCSTR)glewGetErrorString(err), "GLEW Error", MB_ICONERROR | MB_OK);
+		exit(-1);
 	}
-	std::cout << "Status: Using GLEW " << glewGetString(GLEW_VERSION) << std::endl;
-
+	std::cout << "Using GLEW " << glewGetString(GLEW_VERSION) << std::endl;
+	std::cout << "Using OpenGL " << glewGetString(GLEW_VERSION_MAJOR) << "." << glewGetString(GLEW_VERSION_MINOR) << "." << glewGetString(GLEW_VERSION_MICRO) << std::endl;
 
 
 	if (data->fullscreen)
