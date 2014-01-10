@@ -1,4 +1,6 @@
 #pragma once
+#include "../game/gcommon.hpp"
+
 #include "../tools/bmp.hpp"
 
 
@@ -9,6 +11,8 @@ class CTexture
 private:
 	GLuint		handle;
 	bool		loaded;
+
+	SData		*data;
 public:
 
 
@@ -16,8 +20,8 @@ public:
 private:
 
 public:
+	CTexture(SData*);
 	CTexture(void);
-	CTexture(std::string, int, int);
 	~CTexture(void);
 
 	GLuint		Load(std::string);

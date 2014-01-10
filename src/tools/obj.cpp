@@ -106,8 +106,10 @@ bool CLoaderOBJ::loadObj(std::string file)
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, o_dif);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, o_spe);
 
+
 	glNewList(handle, GL_COMPILE);
 	glEnable(GL_TEXTURE_2D);
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, tex());
 	glBegin(GL_TRIANGLES);
 	for (int i = 0; i < f->size(); ++i)

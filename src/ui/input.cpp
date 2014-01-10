@@ -60,6 +60,44 @@ void CInput::mouseButtonPress(int button, int state, int x, int y)
 	std::cout << "\t\t\r";
 #endif
 	*/
+
+
+	if (data->inputState->mouse.state == KEYDOWN)
+	{
+		switch (data->inputState->mouse.button)
+		{
+		case LEFT_BUTTON:
+
+			break;
+
+		case MIDDLE_BUTTON:
+
+			break;
+
+		case RIGHT_BUTTON:
+
+			break;
+
+		case WHEELSCROLLUP:
+			data->camera->speed += 0.001f;
+			break;
+
+		case WHEELSCROLLDOWN:
+			data->camera->speed -= 0.001f;
+			break;
+
+		case HOLDWHEELSCROLLUP:
+
+			break;
+
+		case HOLDWHEELSCROLLDOWN:
+
+			break;
+
+		};
+	}
+
+
 }
 
 void CInput::mouseMove(int x, int y)
@@ -96,6 +134,7 @@ void CInput::mouseMove(int x, int y)
 	std::cout << "\t\t\r";
 #endif
 	*/
+
 }
 
 void CInput::keyDown(unsigned char keyid, int x, int y)
@@ -139,7 +178,6 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 
 	case 'f':
 	case 'F':
-
 		break;
 
 	case 'g':
@@ -169,7 +207,7 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 
 	case 'l':
 	case 'L':
-
+		data->drawEdges = !data->drawEdges;
 		break;
 
 	case 'm':
@@ -222,7 +260,7 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 
 	case 'r':
 	case 'R':
-
+		data->flash = !data->flash;
 		break;
 
 	case 's':
@@ -262,6 +300,10 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 
 	case 'z':
 	case 'Z':
+
+		break;
+
+	case ' ':
 
 		break;
 
@@ -327,6 +369,38 @@ void CInput::specialKeyDown(int keyid, int x, int y)
 		data->drawFPS = !data->drawFPS;
 		break;
 
+	case KEY_F2:
+		data->debugMode = !data->debugMode;
+		break;
+
+	case KEY_F3:
+		break;
+
+	case KEY_F4:
+		break;
+
+	case KEY_F5:
+		break;
+
+	case KEY_F6:
+		break;
+
+	case KEY_F7:
+		break;
+
+	case KEY_F8:
+		break;
+
+	case KEY_F9:
+		break;
+
+
+	case KEY_F10:
+		break;
+
+
+	case KEY_F11:
+		break;
 
 	case KEY_F12:
 		data->drawDebug = !data->drawDebug;

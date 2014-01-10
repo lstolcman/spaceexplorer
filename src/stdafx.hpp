@@ -34,6 +34,7 @@
 #include <glm/glm.hpp>
 
 #include <iostream>
+#include <algorithm>
 #include <string>
 #include <sstream>
 #include <valarray>

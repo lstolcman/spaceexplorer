@@ -56,8 +56,6 @@ struct SWindow
 	//fixes float-to-int warnings
 	glm::ivec2 size;
 	glm::ivec2 pos;
-	//vec3 size;
-	//vec3 pos;
 };
 
 struct SInputState
@@ -73,7 +71,12 @@ struct SData
 	bool drawHUD;
 	bool drawFPS;
 	bool drawDebug;
+	bool debugMode;
+	bool flash;
+	bool drawEdges;
 	unsigned last_fps;
+
+	GLuint phongShaderID;
 
 	SInputState *inputState;
 	SCamera	*camera;

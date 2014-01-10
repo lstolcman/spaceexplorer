@@ -48,6 +48,7 @@ private:
 	void			setGlutCallbacks(void);
 	void			loadTextures(void);
 	void			setMouse(void);
+	void			compileShaders(void);
 
 
 public:

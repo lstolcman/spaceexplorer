@@ -35,6 +35,14 @@ bool CObject::bindModel(CModel *model)
 	return true;
 }
 
+bool CObject::bindShader(CShader *shader)
+{
+	this->shader = shader;
+
+
+	return true;
+}
+
 bool CObject::bindObj(CLoaderOBJ *obj)
 {
 	this->obj = obj;

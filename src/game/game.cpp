@@ -35,7 +35,15 @@ CGame::CGame(void)
 	data->drawDebug = false;
 	data->drawFPS = true;
 	data->drawHUD = false;
+	data->flash = false;
+	data->drawEdges = false;
+#ifdef _DEBUG
 	data->fullscreen = false;
+	data->debugMode = true;
+#else
+	data->fullscreen = true;
+	data->debugMode = false;
+#endif
 
 	data->window->pos.x = 400;
 	data->window->pos.y = 300;
@@ -62,7 +70,7 @@ CGame::~CGame(void)
 void CGame::Init(int argc, char **argv)
 {
 	glutInit(&argc, argv);
-	//glutInitContextVersion(3, 0);
+	glutInitContextVersion(3, 0);
 	glutInitWindowSize(data->window->size.x, data->window->size.y);
 	glutInitWindowPosition(data->window->pos.x, data->window->pos.y);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
@@ -70,7 +78,7 @@ void CGame::Init(int argc, char **argv)
 
 	std::cout << glGetString(GL_VENDOR) << std::endl;
 	std::cout << glGetString(GL_RENDERER) << std::endl;
-	std::cout << "OpenGL " << glGetString(GL_VERSION) << " available" << std::endl;
+	std::cout << "OpenGL " << glGetString(GL_VERSION) << std::endl;
 
 	GLenum err = glewInit();
 	if (GLEW_OK != err)
@@ -78,24 +86,29 @@ void CGame::Init(int argc, char **argv)
 		// Problem: glewInit failed, something is seriously wrong.
 		//std::cerr << "Error: " << glewGetErrorString(err) << std::endl;
 		MessageBox(0, (LPCSTR)glewGetErrorString(err), "GLEW Error", MB_ICONERROR | MB_OK);
-		exit(-1);
+		exit(1);
+	}
+
+	if (GLEW_VERSION_3_0 == false)
+	{
+		MessageBox(0, "To run a game, OpenGL 3.0 or higher is required", "Error", MB_ICONERROR | MB_OK);
+		exit(1);
 	}
 	std::cout << "Using GLEW " << glewGetString(GLEW_VERSION) << std::endl;
-	std::cout << "Using OpenGL " << glewGetString(GLEW_VERSION_MAJOR) << "." << glewGetString(GLEW_VERSION_MINOR) << "." << glewGetString(GLEW_VERSION_MICRO) << std::endl;
-
 
 	if (data->fullscreen)
 		glutFullScreen();
 
+
+
 	//glutTimerFunc(1000, callbackDrawFPS, 0);
 	//glutTimerFunc(15, callbackRedisplay, 0);
-
-
 	//glutRedisplayFunc(callbackRedisplay);
 
 
 
 	setMouse();
+	compileShaders();
 	loadTextures();
 
 	setGlutCallbacks();
@@ -139,17 +152,15 @@ void CGame::Reshape(int width, int height)
 
 	// Chcemy uzyc kamery perspektywicznej o kacie widzenia 60 stopni
 	// i zasiegu renderowania 0.01-100.0 jednostek.
-	gluPerspective(50.0f, (float)width / height, 0.01f, 100.0f);
+	gluPerspective(60.0f, (float)width / height, 0.001f, 100.0f);
 }
 
 
 void CGame::setGlutCallbacks(void)
 {
-
 	glutDisplayFunc(callbackRender);
 	//glutIdleFunc(callbackRedisplay); //http://forum.warsztat.gd/index.php?topic=4703.0
 	glutReshapeFunc(callbackReshape);
-
 
 	glutMouseFunc(callbackMouseButtonPress);
 	glutMotionFunc(callbackMouseMove);
@@ -159,8 +170,6 @@ void CGame::setGlutCallbacks(void)
 	glutKeyboardUpFunc(callbackKeyUp);
 	glutSpecialFunc(callbackSpecialKeyPress);
 	glutSpecialUpFunc(callbackSpecialKeyUp);
-
-
 }
 
 
@@ -172,16 +181,18 @@ void CGame::loadTextures(void)
 
 void CGame::setMouse(void)
 {
-	// Ustawienie obs³ugi myszy
-	glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2); // Przesuniêcie kursora na œrodek ekranu
+	glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2);
 	data->inputState->mouse.x = glutGet(GLUT_WINDOW_WIDTH) / 2;
 	data->inputState->mouse.y = glutGet(GLUT_WINDOW_HEIGHT) / 2;
-	// Ukrycie kursora
 	glutSetCursor(GLUT_CURSOR_NONE);
 }
 
 
 
+void CGame::compileShaders(void)
+{
+	handlers.renderer->compileShaders();
+}
 
 
 

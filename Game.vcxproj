@@ -92,6 +92,7 @@
     <ClCompile Include="src\tools\bmp.cpp" />
     <ClCompile Include="src\tools\model.cpp" />
     <ClCompile Include="src\tools\obj.cpp" />
+    <ClCompile Include="src\tools\shader.cpp" />
     <ClCompile Include="src\tools\texture.cpp" />
     <ClCompile Include="src\tools\timer.cpp" />
     <ClCompile Include="src\ui\input.cpp" />
@@ -109,6 +110,7 @@
     <ClInclude Include="src\tools\bmp.hpp" />
     <ClInclude Include="src\tools\model.hpp" />
     <ClInclude Include="src\tools\obj.hpp" />
+    <ClInclude Include="src\tools\shader.hpp" />
     <ClInclude Include="src\tools\texture.hpp" />
     <ClInclude Include="src\tools\timer.hpp" />
     <ClInclude Include="src\ui\input.hpp" />
@@ -121,6 +123,10 @@
     <Image Include="resources\1_left2.bmp" />
     <Image Include="resources\1_right1.bmp" />
     <Image Include="resources\1_top3.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shaders\phong.frag" />
+    <None Include="src\shaders\phong.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

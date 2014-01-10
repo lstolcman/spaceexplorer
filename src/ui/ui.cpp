@@ -19,6 +19,13 @@ CUI::~CUI()
 
 void CUI::drawUI(void)
 {
+#ifdef _DEBUG
+	float fontColor[4] = { 1.0f, 0.0f, 0.0f, 1.0f };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, fontColor);
+#else
+	float fontColor[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, fontColor);
+#endif
 
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
@@ -99,6 +106,10 @@ void CUI::displayHUD(void)
 
 void CUI::displayDebug(void)
 {
+	if (data->debugMode)
+	{
+		printOnScreen(100, 20, std::string("Debug mode"));
+	}
 	if (data->drawDebug)
 	{
 		std::stringstream s;

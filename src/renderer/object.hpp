@@ -1,7 +1,7 @@
 #pragma once
 #include "../tools/model.hpp"
 #include "../tools/texture.hpp"
-
+#include "../tools/shader.hpp"
 #include "../tools/obj.hpp"
 
 
@@ -12,6 +12,7 @@ private:
 	CTexture	*texture;
 	CModel		*model;
 	CLoaderOBJ	*obj;
+	CShader		*shader;
 	glm::vec3	pos;
 	float		rotationSpeed;
 public:
@@ -27,6 +28,7 @@ public:
 
 	bool			bindTexture(CTexture*);
 	bool			bindModel(CModel*);
+	bool			bindShader(CShader*);
 
 	bool			bindObj(CLoaderOBJ*);
 

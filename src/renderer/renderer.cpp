@@ -8,6 +8,7 @@ CRenderer::CRenderer(SData *data)
 	this->data = data;
 
 	skybox = NULL;
+	phong = NULL;
 
 	time.start();
 	frame = 0;
@@ -18,6 +19,15 @@ CRenderer::CRenderer(SData *data)
 CRenderer::~CRenderer()
 {
 	delete skybox;
+}
+
+
+
+void CRenderer::compileShaders(void)
+{
+	phong = new CShader;
+	phong->loadShader("phong");
+	phong->compileShader();
 }
 
 
@@ -42,6 +52,8 @@ void CRenderer::countFPS()
 
 void CRenderer::setDisplayMatrices(void)
 {
+	glEnable(GL_NORMALIZE);
+
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE); // W³¹czenie cullingu - rysowania tylko jednej strony wielok¹tów
@@ -70,52 +82,56 @@ void CRenderer::setDisplayMatrices(void)
 
 void CRenderer::setupLights(void)
 {
-	//oswietlenie ambient - wszystkie wierzcho³ki - wy³¹czone
-	float globAmbient[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globAmbient);
-
-	/*if (data->camera->latarka)
-		glEnable(GL_LIGHT0);
-		else
-		glDisable(GL_LIGHT0);
-		float l0_amb[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-		float l0_dif[] = { 0.4f, 0.4f, 0.4f, 1.0f };
-		float l0_spe[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-		//float l0_pos[] = { 2.7f, 2.7f, -1.3f, 1.0f };
-		//float l0_dir[] = { -0.9f, -0.3f, 1.3f};
-		float l0_pos[] = { data->camera->pos.x, data->camera->pos.y, data->camera->pos.z, 1.0f };
-		float l0_dir[] = { data->camera->view.x, data->camera->view.y, data->camera->view.z };
-		glLightfv(GL_LIGHT0, GL_AMBIENT, l0_amb);
-		glLightfv(GL_LIGHT0, GL_DIFFUSE, l0_dif);
-		glLightfv(GL_LIGHT0, GL_SPECULAR, l0_spe);
-		glLightfv(GL_LIGHT0, GL_POSITION, l0_pos);
-		glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, l0_dir);
-		glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 20.0f);*/
+	phong->useShader();
+	//oswietlenie ambient - wszystkie wierzcho³ki
+	float globalAmbient[4] = { 0.00f, 0.00f, 0.00f, 1.0f };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
 
 
 
-	glEnable(GL_LIGHT0);
 #pragma region Swiatlo
+	glEnable(GL_LIGHT0);
 	float l0_amb[] = { 0.2f, 0.2f, 0.2f };
 	float l0_dif[] = { 0.6f, 0.6f, 0.6f };
 	float l0_spe[] = { 0.2f, 0.2f, 0.2f };
-	float l0_pos[] = { 1.0f, 2.0f, 2.0f, 1.0f };
+	float l0_pos[] = { 150.0f, 0.0f, -50.0f, 1.0f };
 	glLightfv(GL_LIGHT0, GL_AMBIENT, l0_amb);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, l0_dif);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, l0_spe);
 	glLightfv(GL_LIGHT0, GL_POSITION, l0_pos);
 #pragma endregion
 
-
-
-
+/*
+	if (data->debugMode)
+	{
+		if (data->flash)
+		{
+			glEnable(GL_LIGHT0);
+			float l0_amb[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+			float l0_dif[] = { 0.4f, 0.4f, 0.4f, 1.0f };
+			float l0_spe[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+			//float l0_pos[] = { 2.7f, 2.7f, -1.3f, 1.0f };
+			//float l0_dir[] = { -0.9f, -0.3f, 1.3f};
+			float l0_pos[] = { data->camera->pos.x, data->camera->pos.y, data->camera->pos.z, 1.0f };
+			float l0_dir[] = { data->camera->view.x, data->camera->view.y, data->camera->view.z };
+			glLightfv(GL_LIGHT0, GL_AMBIENT, l0_amb);
+			glLightfv(GL_LIGHT0, GL_DIFFUSE, l0_dif);
+			glLightfv(GL_LIGHT0, GL_SPECULAR, l0_spe);
+			glLightfv(GL_LIGHT0, GL_POSITION, l0_pos);
+			glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, l0_dir);
+			glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 25.0f);
+			glDisable(GL_LIGHT0);
+		}
+	}
+	*/
 }
 
 
 void CRenderer::drawSky(void)
 {
 	glPushMatrix();
-
+	float ambientSky[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientSky);
 	// Just in case we set all vertices to white.
 	glColor4f(1, 1, 1, 1);
 
@@ -128,28 +144,33 @@ void CRenderer::drawSky(void)
 	glScaled(50, 50, 50);
 
 	skybox->draw();
-
 	glPopMatrix();
 }
 
 
 void CRenderer::drawScene()
 {
+	glPolygonMode(GL_FRONT, GL_FILL);
 
-	//glPolygonMode(GL_FRONT, GL_FILL);
 	countFPS();
 
 	setDisplayMatrices();
 
-	setupLights();
 
+	int loc = glGetUniformLocation(data->phongShaderID, "texture1");
+	glUseProgram(data->phongShaderID);
 	drawSky();
 
+	setupLights();
 
 
 
 
 	glScaled(0.01, 0.01, 0.01);
+
+	if (data->drawEdges)
+		glPolygonMode(GL_FRONT, GL_LINE);
+
 
 
 	// Przesuniecie swiata (przeciwienstwo przesuniecia kamery).
@@ -161,14 +182,10 @@ void CRenderer::drawScene()
 
 
 
-
-	//glPolygonMode(GL_FRONT, GL_LINE);
-
-
 	glPushMatrix();
 	glTranslatef(0, -10, 3);
 	glRotatef(90, 0, 1, 0);
-	glTranslatef( data->camera->pos.x,  data->camera->pos.y,  data->camera->pos.z);
+	glTranslatef(data->camera->pos.x, data->camera->pos.y, data->camera->pos.z);
 	object.draw();
 	glPopMatrix();
 
@@ -183,7 +200,7 @@ void CRenderer::drawScene()
 	glTranslatef(-data->camera->view.x - data->camera->pos.x, -data->camera->view.y - data->camera->pos.y , -data->camera->view.z - data->camera->pos.z);
 	glPopMatrix();
 	*/
-	
+
 
 
 	glPushMatrix();

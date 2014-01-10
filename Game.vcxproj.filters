@@ -19,6 +19,9 @@
     <Filter Include="Tools\Loaders">
       <UniqueIdentifier>{b8bd1463-85a6-4c0b-8256-e1d66db1ee45}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{afcfea69-5721-4e6a-ac3f-4da6d1bdaef2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
@@ -58,6 +61,9 @@
     </ClCompile>
     <ClCompile Include="src\tools\timer.cpp">
       <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\shader.cpp">
+      <Filter>Tools\Loaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -102,6 +108,9 @@
     <ClInclude Include="src\tools\timer.hpp">
       <Filter>Tools</Filter>
     </ClInclude>
+    <ClInclude Include="src\tools\shader.hpp">
+      <Filter>Tools\Loaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\1_back6.bmp">
@@ -122,5 +131,13 @@
     <Image Include="resources\1_top3.bmp">
       <Filter>Resources</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shaders\phong.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="src\shaders\phong.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

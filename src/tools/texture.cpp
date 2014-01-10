@@ -4,16 +4,22 @@
 
 
 
-CTexture::CTexture(void)
+CTexture::CTexture(SData *data)
 {
+	this->data = data;
 	handle = NULL;
 	loaded = false;
 }
 
-CTexture::CTexture(std::string file, int magFilter, int minFilter)
+
+CTexture::CTexture(void)
 {
-	Load(file, magFilter, minFilter);
+	this->data = NULL;
+	handle = NULL;
+	loaded = false;
 }
+
+
 
 CTexture::~CTexture(void)
 {

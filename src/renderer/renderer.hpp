@@ -20,6 +20,7 @@ private:
 	SData			*data;
 	CSkybox			*skybox;
 	CObject			object;
+	CShader			*phong;
 
 	void            countFPS(void);
 	void            setDisplayMatrices(void);
@@ -31,6 +32,7 @@ public:
 	CRenderer(SData*);
 	~CRenderer();
 
+	void			compileShaders(void);
 	bool			loadTextures(void);
 	void            drawScene();
 
