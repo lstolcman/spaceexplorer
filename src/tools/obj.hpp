@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../renderer/rcommon.hpp"
 #include "texture.hpp"
 
 
@@ -7,15 +8,12 @@ class CLoaderOBJ
 {
 	//Fields:
 private:
-	struct SFace {
-		unsigned v[3];
-		unsigned t[3];
-		unsigned n[3];
-	};
 	std::ifstream		obj;
 	std::ifstream		mtl;
 	GLuint				handle;
 	CTexture			tex;
+
+	SObjFile			*objHandle;
 
 public:
 
@@ -26,7 +24,8 @@ private:
 
 
 public:
-	CLoaderOBJ(void);
+	CLoaderOBJ(SObjFile*, std::string);
+	CLoaderOBJ(SObjFile*);
 	~CLoaderOBJ();
 
 	bool				loadObj(std::string);

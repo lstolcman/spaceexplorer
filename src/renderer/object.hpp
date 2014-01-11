@@ -1,16 +1,22 @@
 #pragma once
-#include "../tools/model.hpp"
 #include "../tools/texture.hpp"
 #include "../tools/shader.hpp"
 #include "../tools/obj.hpp"
-
+#include "rcommon.hpp"
 
 class CObject
 {
 	//Fields:
 private:
-	CTexture	*texture;
-	CModel		*model;
+	bool		modelLoaded;
+
+	GLuint		modelListHandle;
+
+	SObjFile	*objFile;
+
+	CTexture	*map_Kd;
+
+
 	CLoaderOBJ	*obj;
 	CShader		*shader;
 	glm::vec3	pos;
@@ -25,12 +31,8 @@ public:
 	CObject(void);
 	~CObject();
 
-
-	bool			bindTexture(CTexture*);
-	bool			bindModel(CModel*);
-	bool			bindShader(CShader*);
-
-	bool			bindObj(CLoaderOBJ*);
+	bool			bindTexture(std::string);
+	bool			bindModel(std::string);
 
 	void			draw(void);
 

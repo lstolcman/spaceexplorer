@@ -19,7 +19,7 @@ private:
 	CTimer			time, time_old;
 	SData			*data;
 	CSkybox			*skybox;
-	CObject			object;
+	CObject			*object;
 	/*
 	CShader			*phong;
 	CShader			*tex;
@@ -35,8 +35,7 @@ public:
 	CRenderer(SData*);
 	~CRenderer();
 
-	void			compileShaders(void);
-	bool			loadTextures(void);
+	bool			loadData(void);
 	void            drawScene();
 
 

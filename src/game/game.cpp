@@ -108,8 +108,7 @@ void CGame::Init(int argc, char **argv)
 
 
 	setMouse();
-	compileShaders();
-	loadTextures();
+	loadData();
 
 	setGlutCallbacks();
 	glutTimerFunc(17, callbackCaptureInput, 0);
@@ -173,9 +172,9 @@ void CGame::setGlutCallbacks(void)
 }
 
 
-void CGame::loadTextures(void)
+void CGame::loadData(void)
 {
-	handlers.renderer->loadTextures();
+	handlers.renderer->loadData();
 }
 
 
@@ -187,12 +186,6 @@ void CGame::setMouse(void)
 	glutSetCursor(GLUT_CURSOR_NONE);
 }
 
-
-
-void CGame::compileShaders(void)
-{
-	handlers.renderer->compileShaders();
-}
 
 
 

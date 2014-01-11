@@ -5,7 +5,13 @@
 
 CSkybox::CSkybox(void)
 {
+	version = "2";
 
+#ifdef _DEBUG
+	size = "512";
+#else
+	size = "2048";
+#endif
 
 }
 
@@ -26,12 +32,12 @@ void CSkybox::load(void)
 	CTimer t;
 	t.start();
 
-	front.Load("resources/skybox/2/m_front5.bmp", GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR); //GL_NEAREST, GL_NEAREST);
-	back.Load("resources/skybox/2/m_back6.bmp", GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR); //GL_NEAREST, GL_NEAREST);
-	right.Load("resources/skybox/2/m_right1.bmp", GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR); //GL_NEAREST, GL_NEAREST);
-	left.Load("resources/skybox/2/m_left2.bmp", GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR); //GL_NEAREST, GL_NEAREST);
-	top.Load("resources/skybox/2/m_top3.bmp", GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR); //GL_NEAREST, GL_NEAREST);
-	bottom.Load("resources/skybox/2/m_bottom4.bmp", GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR); //GL_NEAREST, GL_NEAREST);
+	front.Load("resources/skybox/" + version + "/" + size + "_front5.bmp", GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR); //GL_NEAREST, GL_NEAREST);
+	back.Load("resources/skybox/" + version + "/" + size + "_back6.bmp", GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR); //GL_NEAREST, GL_NEAREST);
+	right.Load("resources/skybox/" + version + "/" + size + "_right1.bmp", GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR); //GL_NEAREST, GL_NEAREST);
+	left.Load("resources/skybox/" + version + "/" + size + "_left2.bmp", GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR); //GL_NEAREST, GL_NEAREST);
+	top.Load("resources/skybox/" + version + "/" + size + "_top3.bmp", GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR); //GL_NEAREST, GL_NEAREST);
+	bottom.Load("resources/skybox/" + version + "/" + size + "_bottom4.bmp", GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR); //GL_NEAREST, GL_NEAREST);
 
 	t.stop();
 	std::cout << "Skybox loaded, took " << t.getElapsedMilliseconds() << "ms" << std::endl;

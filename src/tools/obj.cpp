@@ -5,10 +5,16 @@
 
 
 
-CLoaderOBJ::CLoaderOBJ(void)
+CLoaderOBJ::CLoaderOBJ(SObjFile *obj, std::string file)
 {
+	objHandle = obj;
+	loadObj(file);
+}
 
 
+CLoaderOBJ::CLoaderOBJ(SObjFile *obj)
+{
+	objHandle = obj;
 }
 
 
@@ -21,18 +27,14 @@ CLoaderOBJ::~CLoaderOBJ()
 bool CLoaderOBJ::loadObj(std::string file)
 {
 	std::string line;
-	std::vector<glm::vec3> *v = new std::vector<glm::vec3>();
-	std::vector<glm::vec2> *t = new std::vector<glm::vec2>();
-	std::vector<glm::vec3> *n = new std::vector<glm::vec3>();
-	std::vector<SFace> *f = new std::vector<SFace>();
+	char *map_Kd = (char*)calloc(100, 1); //temp for sscanf %s
 
 
 	obj.open(file+".obj", std::ios::in);
-	if (obj.is_open() == NULL)
+	if (obj.is_open() == false)
 	{
-		std::cout << "Blad otwierania pliku modelu: " << file << std::endl;
-		MessageBox(0, ("Error loading: " + file).c_str(), "Error", MB_OK | MB_ICONERROR);
-		exit(-1);
+		MessageBox(0, ("Error loading: " + file + ".obj").c_str(), "Error", MB_OK | MB_ICONERROR);
+		exit(1);
 		return false;
 	}
 
@@ -43,19 +45,19 @@ bool CLoaderOBJ::loadObj(std::string file)
 		{
 			glm::vec3 *vertex = new glm::vec3;
 			sscanf(line.c_str(), "v %f %f %f", &vertex->x, &vertex->y, &vertex->z);
-			v->push_back(*vertex);
+			objHandle->v->push_back(*vertex);
 		}
 		if (line[0] == 'v' && line[1] == 't')
 		{
 			glm::vec2 *texture = new glm::vec2;
 			sscanf(line.c_str(), "vt %f %f", &texture->x, &texture->y);
-			t->push_back(*texture);
+			objHandle->t->push_back(*texture);
 		}
 		if (line[0] == 'v' && line[1] == 'n')
 		{
 			glm::vec3 *normals = new glm::vec3;
 			sscanf(line.c_str(), "vn %f %f %f", &normals->x, &normals->y, &normals->z);
-			n->push_back(*normals);
+			objHandle->n->push_back(*normals);
 		}
 		if (line[0] == 'f' && line[1] == ' ')
 		{
@@ -65,14 +67,19 @@ bool CLoaderOBJ::loadObj(std::string file)
 				&face->v[1], &face->t[1], &face->n[1],
 				&face->v[2], &face->t[2], &face->n[2]
 				);
-			f->push_back(*face);
+			objHandle->f->push_back(*face);
 		}
 	}
 	obj.close();
 
+
 	mtl.open(file+".mtl", std::ios::in);
-	glm::vec4 amb, dif, spe;
-	char *map_Kd = (char*)calloc(100, 1);
+	if (mtl.is_open() == false)
+	{
+		MessageBox(0, ("Error loading: " + file + ".mtl").c_str(), "Error", MB_OK | MB_ICONERROR);
+		exit(1);
+		return false;
+	}
 
 	//read light attributes
 	while (std::getline(mtl, line))
@@ -80,15 +87,15 @@ bool CLoaderOBJ::loadObj(std::string file)
 
 		if (line[0] == 'K' && line[1] == 'a')
 		{
-			sscanf(line.c_str(), "Ka %f %f %f", &amb.x, &amb.y, &amb.z);
+			sscanf(line.c_str(), "Ka %f %f %f", &objHandle->amb.x, &objHandle->amb.y, &objHandle->amb.z);
 		}
 		if (line[0] == 'K' && line[1] == 'd')
 		{
-			sscanf(line.c_str(), "Kd %f %f %f", &dif.x, &dif.y, &dif.z);
+			sscanf(line.c_str(), "Kd %f %f %f", &objHandle->dif.x, &objHandle->dif.y, &objHandle->dif.z);
 		}
 		if (line[0] == 'K' && line[1] == 's')
 		{
-			sscanf(line.c_str(), "Ks %f %f %f", &spe.x, &spe.y, &spe.z);
+			sscanf(line.c_str(), "Ks %f %f %f", &objHandle->spe.x, &objHandle->spe.y, &objHandle->spe.z);
 		}
 		if (line.find("map_Kd") != std::string::npos)
 		{
@@ -98,6 +105,8 @@ bool CLoaderOBJ::loadObj(std::string file)
 
 	mtl.close();
 
+	objHandle->map_Kd = std::string(map_Kd);
+	/*
 	tex.Load("resources/models/"+std::string(map_Kd));// , GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR);// GL_NEAREST);
 
 	handle = glGenLists(1);
@@ -139,7 +148,10 @@ bool CLoaderOBJ::loadObj(std::string file)
 	delete t;
 	delete f;
 
+	*/
 
+
+	delete map_Kd;
 
 	return true;
 

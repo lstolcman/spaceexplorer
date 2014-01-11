@@ -1,6 +1,5 @@
 #pragma once
 #include "../tools/timer.hpp"
-#include "../tools/model.hpp"
 #include "../tools/texture.hpp"
 
 #include "../tools/obj.hpp"
@@ -19,6 +18,8 @@ private:
 	CTexture	left;
 	CTexture	top;
 	CTexture	bottom;
+	std::string	size;
+	std::string version;
 public:
 
 

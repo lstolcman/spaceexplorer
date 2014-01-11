@@ -22,9 +22,16 @@ CRenderer::~CRenderer()
 }
 
 
-
-void CRenderer::compileShaders(void)
+bool CRenderer::loadData(void)
 {
+	//load data
+	skybox = new CSkybox;
+	skybox->load();
+	object = new CObject;
+	object->bindModel("resources/models/vehicle");
+
+	//compile shaders
+
 	/*
 	phong = new CShader;
 	phong->loadShader("phong");
@@ -33,16 +40,11 @@ void CRenderer::compileShaders(void)
 	tex->loadShader("tex");
 	tex->compileShader();
 	*/
-}
 
 
-bool CRenderer::loadTextures(void)
-{
-	skybox = new CSkybox;
-	skybox->load();
+
 	return true;
 }
-
 
 void CRenderer::countFPS()
 {
@@ -57,8 +59,9 @@ void CRenderer::countFPS()
 
 void CRenderer::setDisplayMatrices(void)
 {
-	glEnable(GL_NORMALIZE);
+	glPolygonMode(GL_FRONT, GL_FILL);
 
+	glEnable(GL_NORMALIZE);
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE); // W³¹czenie cullingu - rysowania tylko jednej strony wielok¹tów
@@ -90,7 +93,7 @@ void CRenderer::setupLights(void)
 	//phong->useShader();
 //	tex->useShader();
 	//oswietlenie ambient - wszystkie wierzcho³ki
-	float globalAmbient[4] = { 0.00f, 0.00f, 0.00f, 1.0f };
+	float globalAmbient[4] = { 0.30f, 0.30f, 0.30f, 1.0f };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
 
 
@@ -156,15 +159,11 @@ void CRenderer::drawSky(void)
 
 void CRenderer::drawScene()
 {
-	glPolygonMode(GL_FRONT, GL_FILL);
 
 	countFPS();
 
 	setDisplayMatrices();
 
-
-	//int loc = glGetUniformLocation(data->phongShaderID, "texture1");
-	//glUseProgram(data->phongShaderID);
 	drawSky();
 
 	setupLights();
@@ -192,7 +191,7 @@ void CRenderer::drawScene()
 	glTranslatef(0, -10, 3);
 	glRotatef(90, 0, 1, 0);
 	glTranslatef(data->camera->pos.x, data->camera->pos.y, data->camera->pos.z);
-	object.draw();
+	object->draw();
 	glPopMatrix();
 
 
