@@ -72,11 +72,12 @@ bool CLoaderOBJ::loadObj(std::string file)
 
 	mtl.open(file+".mtl", std::ios::in);
 	glm::vec4 amb, dif, spe;
-
+	char *map_Kd = (char*)calloc(100, 1);
 
 	//read light attributes
-	while (std::getline(obj, line))
+	while (std::getline(mtl, line))
 	{
+
 		if (line[0] == 'K' && line[1] == 'a')
 		{
 			sscanf(line.c_str(), "Ka %f %f %f", &amb.x, &amb.y, &amb.z);
@@ -89,11 +90,15 @@ bool CLoaderOBJ::loadObj(std::string file)
 		{
 			sscanf(line.c_str(), "Ks %f %f %f", &spe.x, &spe.y, &spe.z);
 		}
+		if (line.find("map_Kd") != std::string::npos)
+		{
+			sscanf(line.c_str(), "map_Kd %s", map_Kd);
+		}
 	}
 
 	mtl.close();
 
-	tex.Load(file + ".bmp", GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR);// GL_NEAREST);
+	tex.Load("resources/models/"+std::string(map_Kd));// , GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR);// GL_NEAREST);
 
 	handle = glGenLists(1);
 	glPushMatrix();

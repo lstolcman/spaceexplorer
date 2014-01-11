@@ -8,7 +8,7 @@ CRenderer::CRenderer(SData *data)
 	this->data = data;
 
 	skybox = NULL;
-	phong = NULL;
+	//phong = NULL;
 
 	time.start();
 	frame = 0;
