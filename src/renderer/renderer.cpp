@@ -25,9 +25,14 @@ CRenderer::~CRenderer()
 
 void CRenderer::compileShaders(void)
 {
+	/*
 	phong = new CShader;
 	phong->loadShader("phong");
 	phong->compileShader();
+	tex = new CShader;
+	tex->loadShader("tex");
+	tex->compileShader();
+	*/
 }
 
 
@@ -82,7 +87,8 @@ void CRenderer::setDisplayMatrices(void)
 
 void CRenderer::setupLights(void)
 {
-	phong->useShader();
+	//phong->useShader();
+//	tex->useShader();
 	//oswietlenie ambient - wszystkie wierzcho³ki
 	float globalAmbient[4] = { 0.00f, 0.00f, 0.00f, 1.0f };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
@@ -94,7 +100,7 @@ void CRenderer::setupLights(void)
 	float l0_amb[] = { 0.2f, 0.2f, 0.2f };
 	float l0_dif[] = { 0.6f, 0.6f, 0.6f };
 	float l0_spe[] = { 0.2f, 0.2f, 0.2f };
-	float l0_pos[] = { 150.0f, 0.0f, -50.0f, 1.0f };
+	float l0_pos[] = { 6000.0f, 0.0f, -2000.0f, 1.0f };
 	glLightfv(GL_LIGHT0, GL_AMBIENT, l0_amb);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, l0_dif);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, l0_spe);
@@ -141,7 +147,7 @@ void CRenderer::drawSky(void)
 	//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
 	glTranslatef(data->camera->pos.x, data->camera->pos.y, data->camera->pos.z);
-	glScaled(50, 50, 50);
+	glScaled(200, 200, 200);
 
 	skybox->draw();
 	glPopMatrix();
@@ -157,8 +163,8 @@ void CRenderer::drawScene()
 	setDisplayMatrices();
 
 
-	int loc = glGetUniformLocation(data->phongShaderID, "texture1");
-	glUseProgram(data->phongShaderID);
+	//int loc = glGetUniformLocation(data->phongShaderID, "texture1");
+	//glUseProgram(data->phongShaderID);
 	drawSky();
 
 	setupLights();

@@ -152,7 +152,7 @@ void CGame::Reshape(int width, int height)
 
 	// Chcemy uzyc kamery perspektywicznej o kacie widzenia 60 stopni
 	// i zasiegu renderowania 0.01-100.0 jednostek.
-	gluPerspective(60.0f, (float)width / height, 0.001f, 100.0f);
+	gluPerspective(60.0f, (float)width / height, 0.001f, 400.0f);
 }
 
 

@@ -207,7 +207,6 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 
 	case 'l':
 	case 'L':
-		data->drawEdges = !data->drawEdges;
 		break;
 
 	case 'm':
@@ -270,7 +269,7 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 
 	case 't':
 	case 'T':
-
+		data->drawEdges = !data->drawEdges;
 		break;
 
 	case 'u':

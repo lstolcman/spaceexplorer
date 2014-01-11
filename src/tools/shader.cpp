@@ -21,6 +21,8 @@ CShader::~CShader()
 
 void CShader::loadShader(std::string shader)
 {
+	vertexFile = shader + ".vert";
+	fragmentFile = shader + ".frag";
 
 	std::string line;
 
@@ -78,7 +80,7 @@ void CShader::compileShader(void)
 
 
 	// Compile Vertex Shader
-	std::cout << "Compiling shader: " << vertexFile << std::endl;
+	std::cout << "Compiling shader " << vertexFile << std::endl;
 	char const *vertexSourcePointer = vertexCode.c_str();
 	glShaderSource(vertexShaderID, 1, &vertexSourcePointer, NULL);
 	glCompileShader(vertexShaderID);
@@ -91,7 +93,7 @@ void CShader::compileShader(void)
 	std::cout << &vertexShaderErrorMessage[0] << std::endl;
 
 	// Compile Fragment Shader
-	std::cout << "Compiling shader: " << fragmentFile << std::endl;
+	std::cout << "Compiling shader " << fragmentFile << std::endl;
 	char const *fragmentSourcePointer = fragmentCode.c_str();
 	glShaderSource(fragmentShaderID, 1, &fragmentSourcePointer, NULL);
 	glCompileShader(fragmentShaderID);

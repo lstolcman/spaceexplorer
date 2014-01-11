@@ -44,6 +44,8 @@ GLuint CTexture::Load(std::string file, int magFilter, int minFilter)
 	// Utworzenie nowego id wolnej tekstury
 	glGenTextures(1, &handle);
 
+
+	glActiveTexture(GL_TEXTURE0);
 	// "Bindowanie" tekstury o nowoutworzonym id
 	glBindTexture(GL_TEXTURE_2D, handle);
 

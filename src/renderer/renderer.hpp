@@ -20,7 +20,10 @@ private:
 	SData			*data;
 	CSkybox			*skybox;
 	CObject			object;
+	/*
 	CShader			*phong;
+	CShader			*tex;
+	*/
 
 	void            countFPS(void);
 	void            setDisplayMatrices(void);
