@@ -20,14 +20,15 @@ CUI::~CUI()
 void CUI::drawUI(void)
 {
 #ifdef _DEBUG
-	float fontColor[4] = { 1.0f, 0.0f, 0.0f, 1.0f };
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, fontColor);
+	float color[4] = { 1.0f, 0.0f, 0.0f, 1.0f };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, color);
 #else
-	float fontColor[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, fontColor);
+	float color[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, color);
 #endif
 
 	glMatrixMode(GL_PROJECTION);
+
 	glPushMatrix();
 	glLoadIdentity();
 	glOrtho(0.0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT), 0.0, -1.0, 10.0);
@@ -45,6 +46,7 @@ void CUI::drawUI(void)
 
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
+
 	glMatrixMode(GL_MODELVIEW);
 	textLines = 0;
 }

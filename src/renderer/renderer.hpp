@@ -7,7 +7,7 @@
 #include "object.hpp"
 #include "skybox.hpp"
 
-//#include "../tools/obj.hpp"
+#include "../tools/obj.hpp"
 #include "../tools/texture.hpp"
 
 
@@ -16,14 +16,16 @@ class CRenderer
 {
 private:
 	unsigned long	frame, frame_old;
-	CTimer			time, time_old;
+	CTimer			fpsTimer, globalTimer;
 	SData			*data;
 	CSkybox			*skybox;
-	CObject			*object;
+	CObject			*object, *a;
+	GLfloat			ang;
 	/*
 	CShader			*phong;
 	CShader			*tex;
 	*/
+	std::vector<glm::vec4>		*asteroids;
 
 	void            countFPS(void);
 	void            setDisplayMatrices(void);

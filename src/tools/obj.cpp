@@ -162,7 +162,6 @@ bool CLoaderOBJ::loadObj(std::string file)
 void CLoaderOBJ::disp(void)
 {
 	glCallList(handle);
-
 }
 
 

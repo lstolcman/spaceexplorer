@@ -50,6 +50,8 @@ bool CObject::bindModel(std::string modelPath)
 		map_Kd = new CTexture;
 		map_Kd->Load("resources/models/" + objFile->map_Kd);
 
+
+
 		modelListHandle = glGenLists(1);
 		glNewList(modelListHandle, GL_COMPILE);
 		glEnable(GL_TEXTURE_2D);
@@ -70,7 +72,7 @@ bool CObject::bindModel(std::string modelPath)
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
 		glEndList();
-		glPopMatrix();
+
 
 		delete objFile->v;
 		delete objFile->n;
@@ -100,7 +102,6 @@ void CObject::draw(void)
 	}
 
 
-	glPushMatrix();
 
 	float o_amb[] = { objFile->amb.x, objFile->amb.y, objFile->amb.z, 1.0f };
 	float o_dif[] = { objFile->dif.x, objFile->dif.y, objFile->dif.z, 1.0f };
@@ -111,7 +112,6 @@ void CObject::draw(void)
 
 	glCallList(modelListHandle);
 
-	glPopMatrix();
 }
 
 

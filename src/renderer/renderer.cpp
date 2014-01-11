@@ -7,19 +7,25 @@ CRenderer::CRenderer(SData *data)
 {
 	srand(static_cast<unsigned>(std::time(0)));
 	this->data = data;
+	asteroids = new std::vector<glm::vec4>;
 
 	skybox = NULL;
 	//phong = NULL;
 
-	time.start();
+	fpsTimer.start();
+	globalTimer.start();
 	frame = 0;
 	frame_old = 0;
 
+
+
+	ang = 0;
 }
 
 
 CRenderer::~CRenderer()
 {
+	delete asteroids;
 	delete skybox;
 }
 
@@ -31,10 +37,15 @@ bool CRenderer::loadData(void)
 	skybox->load();
 	object = new CObject;
 	object->bindModel("resources/models/vehicle");
+	a = new CObject;
+	a->bindModel("resources/models/asteroid");
+
+
 
 	//load map
 	std::string line;
 	std::ifstream map;
+
 	map.open("resources/worldmap.txt", std::ios::in);
 	if (map.is_open() == false)
 	{
@@ -46,6 +57,7 @@ bool CRenderer::loadData(void)
 	while (std::getline(map, line))
 	{
 		glm::vec3 vect;
+		glm::vec4 vect4;
 		if (line.find("player_pos") != std::string::npos)
 		{
 			sscanf(line.c_str(), "player_pos %f %f %f", &vect.x, &vect.y, &vect.z);
@@ -66,11 +78,19 @@ bool CRenderer::loadData(void)
 			sscanf(line.c_str(), "player_speed %f", &vect.x);
 			data->camera->speed = vect.x;
 		}
+		if (line.find("asteroid") != std::string::npos)
+		{
+			std::cout << "linia: " << line << std::endl;
+			glm::vec4 *aster = new glm::vec4;
+			sscanf(line.c_str(), "asteroid %f %f %f %f", &aster->x, &aster->y, &aster->z, &aster->w);
+			//data->asteroids->push_back(*aster);
+			//CObject *object = new CObject;
+			//object->bindModel("resources/models/asteroid");
+			//asteroids->push_back(*object);
+			asteroids->push_back(*aster);
+		}
 	}
-
 	map.close();
-
-
 
 
 	//compile shaders
@@ -93,11 +113,19 @@ bool CRenderer::loadData(void)
 
 void CRenderer::countFPS()
 {
-	if (time.getElapsedMilliseconds() > 1000)
+	if (fpsTimer.getElapsedMilliseconds() > 1000)
 	{
 		data->last_fps = frame - frame_old;
 		frame_old = frame;
-		time.start(); //reset timer to 0
+		fpsTimer.reset(); //reset timer to 0
+	}
+
+	if (globalTimer.getElapsedMilliseconds() > 3)
+	{
+		globalTimer.reset();
+		if (ang > 360)
+			ang = 0;
+		ang+=0.1;
 	}
 }
 
@@ -195,7 +223,7 @@ void CRenderer::drawSky(void)
 	//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
 	glTranslatef(data->camera->pos.x, data->camera->pos.y, data->camera->pos.z);
-	glScaled(200, 200, 200);
+	glScaled(2500, 2500, 2500);
 
 	skybox->draw();
 	glPopMatrix();
@@ -204,6 +232,10 @@ void CRenderer::drawSky(void)
 
 void CRenderer::drawScene()
 {
+	//draw any opengl errors
+	GLenum errCode;
+	if ((errCode = glGetError()) != GL_NO_ERROR)
+		std::cout << "OpenGL Error: " << gluErrorString(errCode) << std::endl;
 
 	countFPS();
 
@@ -235,9 +267,20 @@ void CRenderer::drawScene()
 	glPushMatrix();
 	glTranslatef(0, -10, 3);
 	glRotatef(90, 0, 1, 0);
-	glTranslatef(data->camera->pos.x, data->camera->pos.y, data->camera->pos.z);
 	object->draw();
 	glPopMatrix();
+
+
+
+	for (std::vector<glm::vec4>::iterator i = asteroids->begin(); i != asteroids->end(); i++)
+	{
+		glPushMatrix();
+		glTranslatef(i->x*200, i->y*200, i->z*200);
+		glRotatef(ang, 0, 1, 1);
+		glScalef(20, 20, 20);
+		a->draw();
+		glPopMatrix();
+	}
 
 
 	/* 3rd CAMERA */

@@ -109,8 +109,8 @@ void CGame::Init(int argc, char **argv)
 	setMouse();
 	loadData();
 
-	setGlutCallbacks();
 	glutTimerFunc(17, callbackCaptureInput, 0);
+	setGlutCallbacks();
 	glutMainLoop();
 }
 
@@ -150,7 +150,7 @@ void CGame::Reshape(int width, int height)
 
 	// Chcemy uzyc kamery perspektywicznej o kacie widzenia 60 stopni
 	// i zasiegu renderowania 0.01-100.0 jednostek.
-	gluPerspective(60.0f, (float)width / height, 0.001f, 400.0f);
+	gluPerspective(60.0f, (float)width / height, 0.01f, 5000.0f);
 }
 
 

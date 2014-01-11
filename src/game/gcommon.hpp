@@ -78,8 +78,6 @@ struct SData
 	unsigned last_fps;
 
 
-	std::vector<glm::vec4> asteroid;
-
 
 	SInputState *inputState;
 	SCamera	*camera;
