@@ -35,7 +35,6 @@ CGame::CGame(void)
 	data->drawDebug = false;
 	data->drawFPS = true;
 	data->drawHUD = false;
-	data->flash = false;
 	data->drawEdges = false;
 #ifdef _DEBUG
 	data->fullscreen = false;

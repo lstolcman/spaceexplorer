@@ -1,6 +1,6 @@
 #pragma once
 
-#define PI 3.1415926535
+#define PI 3.1415926535f
 
 enum SKeyState
 {
@@ -53,7 +53,6 @@ struct SCamera
 
 struct SWindow
 {
-	//fixes float-to-int warnings
 	glm::ivec2 size;
 	glm::ivec2 pos;
 };
@@ -72,11 +71,8 @@ struct SData
 	bool drawFPS;
 	bool drawDebug;
 	bool debugMode;
-	bool flash;
 	bool drawEdges;
 	unsigned last_fps;
-
-	GLuint phongShaderID;
 
 	SInputState *inputState;
 	SCamera	*camera;

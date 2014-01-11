@@ -16,6 +16,7 @@ CRenderer::CRenderer(SData *data)
 
 }
 
+
 CRenderer::~CRenderer()
 {
 	delete skybox;
@@ -45,6 +46,7 @@ bool CRenderer::loadData(void)
 
 	return true;
 }
+
 
 void CRenderer::countFPS()
 {

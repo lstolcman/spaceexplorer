@@ -90,7 +90,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\tools\bmp.cpp" />
-    <ClCompile Include="src\tools\model.cpp" />
     <ClCompile Include="src\tools\obj.cpp" />
     <ClCompile Include="src\tools\shader.cpp" />
     <ClCompile Include="src\tools\texture.cpp" />
@@ -104,11 +103,11 @@
     <ClInclude Include="src\game\camera.hpp" />
     <ClInclude Include="src\main.hpp" />
     <ClInclude Include="src\renderer\object.hpp" />
+    <ClInclude Include="src\renderer\rcommon.hpp" />
     <ClInclude Include="src\renderer\renderer.hpp" />
     <ClInclude Include="src\renderer\skybox.hpp" />
     <ClInclude Include="src\stdafx.hpp" />
     <ClInclude Include="src\tools\bmp.hpp" />
-    <ClInclude Include="src\tools\model.hpp" />
     <ClInclude Include="src\tools\obj.hpp" />
     <ClInclude Include="src\tools\shader.hpp" />
     <ClInclude Include="src\tools\texture.hpp" />

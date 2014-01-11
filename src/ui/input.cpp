@@ -226,16 +226,6 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 
 	case 'n':
 	case 'N':
-
-		break;
-
-	case 'o':
-	case 'O':
-
-		break;
-
-	case 'p':
-	case 'P':
 		if (data->fullscreen)
 		{
 			//glutReshapeWindow(data->window.size.x, data->window.size.y);
@@ -252,6 +242,15 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 		}
 		break;
 
+	case 'o':
+	case 'O':
+
+		break;
+
+	case 'p':
+	case 'P':
+		break;
+
 	case 'q':
 	case 'Q':
 
@@ -259,7 +258,6 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 
 	case 'r':
 	case 'R':
-		data->flash = !data->flash;
 		break;
 
 	case 's':
@@ -269,7 +267,6 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 
 	case 't':
 	case 'T':
-		data->drawEdges = !data->drawEdges;
 		break;
 
 	case 'u':
@@ -369,7 +366,6 @@ void CInput::specialKeyDown(int keyid, int x, int y)
 		break;
 
 	case KEY_F2:
-		data->debugMode = !data->debugMode;
 		break;
 
 	case KEY_F3:
@@ -388,9 +384,11 @@ void CInput::specialKeyDown(int keyid, int x, int y)
 		break;
 
 	case KEY_F8:
+		data->drawEdges = !data->drawEdges;
 		break;
 
 	case KEY_F9:
+		data->debugMode = !data->debugMode;
 		break;
 
 

@@ -61,7 +61,7 @@ void CUI::setFont(void* font)
 
 void CUI::printOnScreen(std::string &text)
 {
-	glRasterPos2f(10, 20 + 16 * textLines);
+	glRasterPos2f((GLfloat)10, (GLfloat)20 + 16 * textLines);
 	glutBitmapString(font, (const unsigned char *)text.c_str());
 	++textLines;
 }
@@ -71,7 +71,7 @@ void CUI::printOnScreen(std::string &text)
 
 void CUI::printOnScreen(int x, int y, std::string &text)
 {
-	glRasterPos2f(x, y);
+	glRasterPos2f((GLfloat)x, (GLfloat)y);
 	glutBitmapString(font, (const unsigned char *)text.c_str());
 }
 

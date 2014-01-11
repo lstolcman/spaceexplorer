@@ -10,13 +10,24 @@ CObject::CObject(void)
 	modelLoaded = false;
 	obj = NULL;
 	objFile = new SObjFile;
+
+	objFile->v = new std::vector<glm::vec3>();
+	objFile->t = new std::vector<glm::vec2>();
+	objFile->n = new std::vector<glm::vec3>();
+	objFile->f = new std::vector<SFace>();
 }
 
 
 CObject::~CObject()
 {
 	delete obj;
+
+	delete objFile->v;
+	delete objFile->t;
+	delete objFile->n;
+	delete objFile->f;
 	delete objFile;
+
 	delete map_Kd;
 }
 
@@ -44,7 +55,7 @@ bool CObject::bindModel(std::string modelPath)
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, (*map_Kd)());
 		glBegin(GL_TRIANGLES);
-		for (int i = 0; i < objFile->f->size(); ++i)
+		for (std::size_t i = 0; i < objFile->f->size(); ++i)
 		{
 			for (int j = 0; j < 3; ++j)
 			{
@@ -76,14 +87,6 @@ bool CObject::bindModel(std::string modelPath)
 		return false;
 	}
 
-}
-
-bool CObject::bindShader(CShader *shader)
-{
-	this->shader = shader;
-
-
-	return true;
 }
 
 

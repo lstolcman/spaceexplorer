@@ -9,10 +9,10 @@ struct SFace {
 
 struct SObjFile
 {
-	std::vector<glm::vec3> *v = new std::vector<glm::vec3>();
-	std::vector<glm::vec2> *t = new std::vector<glm::vec2>();
-	std::vector<glm::vec3> *n = new std::vector<glm::vec3>();
-	std::vector<SFace> *f = new std::vector<SFace>();
+	std::vector<glm::vec3> *v;
+	std::vector<glm::vec2> *t;
+	std::vector<glm::vec3> *n;
+	std::vector<SFace> *f;
 	glm::vec3 amb;
 	glm::vec3 dif;
 	glm::vec3 spe;
