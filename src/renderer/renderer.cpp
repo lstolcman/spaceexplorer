@@ -7,7 +7,7 @@ CRenderer::CRenderer(SData *data)
 {
 	srand(static_cast<unsigned>(std::time(0)));
 	this->data = data;
-	asteroids = new std::vector<glm::vec4>;
+	asteroids = new std::vector<SAsteroid>;
 
 	skybox = NULL;
 	//phong = NULL;
@@ -56,33 +56,38 @@ bool CRenderer::loadData(void)
 	//read map file
 	while (std::getline(map, line))
 	{
-		glm::vec3 vect;
-		glm::vec4 vect4;
+		//glm::vec3 plr;
+		//glm::vec3 ast3;
+		//glm::vec4 ast4;
 		if (line.find("player_pos") != std::string::npos)
 		{
-			sscanf(line.c_str(), "player_pos %f %f %f", &vect.x, &vect.y, &vect.z);
-			data->camera->pos = vect;
+			sscanf(line.c_str(), "player_pos %f %f %f", &data->camera->pos.x, &data->camera->pos.y, &data->camera->pos.z);
+			//data->camera->pos = plr;
 		}
 		if (line.find("player_view") != std::string::npos)
 		{
-			sscanf(line.c_str(), "player_view %f %f %f", &vect.x, &vect.y, &vect.z);
-			data->camera->view = vect;
+			sscanf(line.c_str(), "player_view %f %f %f", &data->camera->view.x, &data->camera->view.y, &data->camera->view.z);
+			//data->camera->view = plr;
 		}
 		if (line.find("player_up") != std::string::npos)
 		{
-			sscanf(line.c_str(), "player_up %f %f %f", &vect.x, &vect.y, &vect.z);
-			data->camera->up = vect;
+			sscanf(line.c_str(), "player_up %f %f %f", &data->camera->up.x, &data->camera->up.y, &data->camera->up.z);
+			//data->camera->up = plr;
 		}
 		if (line.find("player_speed") != std::string::npos)
 		{
-			sscanf(line.c_str(), "player_speed %f", &vect.x);
-			data->camera->speed = vect.x;
+			sscanf(line.c_str(), "player_speed %f", &data->camera->speed);
+			//data->camera->speed = plr.x;
 		}
 		if (line.find("asteroid") != std::string::npos)
 		{
 			std::cout << "linia: " << line << std::endl;
-			glm::vec4 *aster = new glm::vec4;
-			sscanf(line.c_str(), "asteroid %f %f %f %f", &aster->x, &aster->y, &aster->z, &aster->w);
+			SAsteroid *aster = new SAsteroid;
+			// asteroid vec3(position) vec4(rotation axis+speed) vec3(scale)
+			sscanf(line.c_str(), "asteroid %f %f %f %f %f %f %f %f %f %f",
+				&aster->pos.x, &aster->pos.y, &aster->pos.z,
+				&aster->rotationAxis.x, &aster->rotationAxis.y, &aster->rotationAxis.z, &aster->rotationSpeed,
+				&aster->scale.x, &aster->scale.y, &aster->scale.z);
 			//data->asteroids->push_back(*aster);
 			//CObject *object = new CObject;
 			//object->bindModel("resources/models/asteroid");
@@ -125,7 +130,7 @@ void CRenderer::countFPS()
 		globalTimer.reset();
 		if (ang > 360)
 			ang = 0;
-		ang+=0.1;
+		ang += 0.1;
 	}
 }
 
@@ -166,7 +171,7 @@ void CRenderer::setupLights(void)
 	//phong->useShader();
 	//	tex->useShader();
 	//oswietlenie ambient - wszystkie wierzcho³ki
-	float globalAmbient[4] = { 0.90f, 0.90f, 0.90f, 1.0f };
+	float globalAmbient[4] = { 0.40f, 0.40f, 0.40f, 0.0f };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
 
 
@@ -183,36 +188,38 @@ void CRenderer::setupLights(void)
 	glLightfv(GL_LIGHT0, GL_POSITION, l0_pos);
 #pragma endregion
 
+
 	/*
-		if (data->debugMode)
-		{
-		if (data->flash)
-		{
-		glEnable(GL_LIGHT0);
-		float l0_amb[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-		float l0_dif[] = { 0.4f, 0.4f, 0.4f, 1.0f };
-		float l0_spe[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-		//float l0_pos[] = { 2.7f, 2.7f, -1.3f, 1.0f };
-		//float l0_dir[] = { -0.9f, -0.3f, 1.3f};
-		float l0_pos[] = { data->camera->pos.x, data->camera->pos.y, data->camera->pos.z, 1.0f };
-		float l0_dir[] = { data->camera->view.x, data->camera->view.y, data->camera->view.z };
-		glLightfv(GL_LIGHT0, GL_AMBIENT, l0_amb);
-		glLightfv(GL_LIGHT0, GL_DIFFUSE, l0_dif);
-		glLightfv(GL_LIGHT0, GL_SPECULAR, l0_spe);
-		glLightfv(GL_LIGHT0, GL_POSITION, l0_pos);
-		glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, l0_dir);
-		glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 25.0f);
-		glDisable(GL_LIGHT0);
-		}
-		}
-		*/
+	if (data->debugMode)
+	{
+	//if (data->flash)
+	{
+	glEnable(GL_LIGHT1);
+	float l0_amb[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+	float l0_dif[] = { 0.4f, 0.4f, 0.4f, 1.0f };
+	float l0_spe[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	//float l0_pos[] = { 2.7f, 2.7f, -1.3f, 1.0f };
+	//float l0_dir[] = { -0.9f, -0.3f, 1.3f};
+	float l0_pos[] = { data->camera->pos.x, data->camera->pos.y, data->camera->pos.z, 1.0f };
+	float l0_dir[] = { data->camera->view.x, data->camera->view.y, data->camera->view.z };
+	glLightfv(GL_LIGHT1, GL_AMBIENT, l0_amb);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, l0_dif);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, l0_spe);
+	glLightfv(GL_LIGHT1, GL_POSITION, l0_pos);
+	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, l0_dir);
+	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 10.0f);
+	glDisable(GL_LIGHT1);
+	}
+	}
+	*/
+
 }
 
 
 void CRenderer::drawSky(void)
 {
 	glPushMatrix();
-	float ambientSky[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	float ambientSky[4] = { 0.9f, 0.9f, 0.9f, 1.0f };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientSky);
 	// Just in case we set all vertices to white.
 	glColor4f(1, 1, 1, 1);
@@ -220,7 +227,7 @@ void CRenderer::drawSky(void)
 
 	// W³¹czamy teksturowanie
 	// Ustawienie sposobu teksturowania - GL_MODULATE sprawia, ¿e œwiat³o ma wp³yw na teksturê; GL_DECAL i GL_REPLACE rysuj¹ teksturê tak jak jest
-	//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
 	glTranslatef(data->camera->pos.x, data->camera->pos.y, data->camera->pos.z);
 	glScaled(2500, 2500, 2500);
@@ -272,12 +279,14 @@ void CRenderer::drawScene()
 
 
 
-	for (std::vector<glm::vec4>::iterator i = asteroids->begin(); i != asteroids->end(); i++)
+	for (std::vector<SAsteroid>::iterator i = asteroids->begin(); i != asteroids->end(); i++)
 	{
 		glPushMatrix();
-		glTranslatef(i->x*200, i->y*200, i->z*200);
-		glRotatef(ang, 0, 1, 1);
-		glScalef(20, 20, 20);
+		glTranslatef(i->pos.x * 500, i->pos.y * 500, i->pos.z * 500);
+		//glRotatef(ang, i->rotation.x, i->rotation.y, i->rotation.z);
+		glScalef(i->scale.x * 100, i->scale.y * 100, i->scale.z * 100);
+		if ((i->rotationAxis.x && i->rotationAxis.y && i->rotationAxis.z) == 0)
+			glRotatef(ang*i->rotationSpeed, i->rotationAxis.x, i->rotationAxis.y, i->rotationAxis.z);
 		a->draw();
 		glPopMatrix();
 	}

@@ -79,11 +79,11 @@ void CInput::mouseButtonPress(int button, int state, int x, int y)
 			break;
 
 		case WHEELSCROLLUP:
-			data->camera->speed += 0.001f;
+			data->camera->speed += 0.01f;
 			break;
 
 		case WHEELSCROLLDOWN:
-			data->camera->speed -= 0.001f;
+			data->camera->speed -= 0.01f;
 			break;
 
 		case HOLDWHEELSCROLLUP:

@@ -2,13 +2,15 @@
 
 #include "../game/gcommon.hpp"
 #include "../tools/timer.hpp"
+#include "../tools/obj.hpp"
+#include "../tools/texture.hpp"
 #include "../game/camera.hpp"
 
 #include "object.hpp"
 #include "skybox.hpp"
+#include "rcommon.hpp"
 
-#include "../tools/obj.hpp"
-#include "../tools/texture.hpp"
+
 
 
 
@@ -25,7 +27,7 @@ private:
 	CShader			*phong;
 	CShader			*tex;
 	*/
-	std::vector<glm::vec4>		*asteroids;
+	std::vector<SAsteroid>		*asteroids;
 
 	void            countFPS(void);
 	void            setDisplayMatrices(void);

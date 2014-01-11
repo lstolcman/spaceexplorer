@@ -128,7 +128,7 @@ void CUI::displayDebug(void)
 		s << "speed=" << data->camera->speed;
 		printOnScreen(s.str());
 		s.str("");
-		s << "velRX:" << data->camera->velRX << "  velRY:" << data->camera->velRY << "  velRZ:" << data->camera->velRZ;
+		s << "velRX:" << data->camera->velRX << "  velRY:" << data->camera->velRY << "  velRZ:" << data->camera->velRZ << "  velM:" << data->camera->velM << "  velS:" << data->camera->velS;
 		printOnScreen(s.str());
 		s.str("");
 		s << std::setprecision(2) << "angleX:" << (data->camera->angleX * 180) / PI

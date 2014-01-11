@@ -90,11 +90,11 @@ void CCamera::cameraMove(void)
 	data->camera->pos.z += per.z * 	data->camera->velS * .1f;
 
 	// Inercja:
-	data->camera->velRX /= 2.2f;
-	data->camera->velRY /= 2.2f;
-	data->camera->velRZ /= 2.2f;
-	data->camera->velM /= 2.2f;
-	data->camera->velS /= 2.2f;
+	data->camera->velRX /= 1.1f;
+	data->camera->velRY /= 1.1f;
+	data->camera->velRZ /= 1.1f;
+	data->camera->velM /= 1.1f;
+	data->camera->velS /= 1.1f;
 
 }
 

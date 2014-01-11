@@ -5,7 +5,7 @@
 
 CSkybox::CSkybox(void)
 {
-	version = "2";
+	version = "3";
 
 #ifdef _DEBUG
 	size = "512";
