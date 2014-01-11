@@ -33,9 +33,9 @@ struct SMouseState
 struct SCamera
 {
 	bool  captureMouse;
-	glm::vec3  pos;
-	glm::vec3  view;
-	glm::vec3  up;
+	glm::vec3 pos;
+	glm::vec3 view;
+	glm::vec3 up;
 	float speed;
 
 	float velRX;
@@ -72,7 +72,14 @@ struct SData
 	bool drawDebug;
 	bool debugMode;
 	bool drawEdges;
+
+
+
 	unsigned last_fps;
+
+
+	std::vector<glm::vec4> asteroid;
+
 
 	SInputState *inputState;
 	SCamera	*camera;

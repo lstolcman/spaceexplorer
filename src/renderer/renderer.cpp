@@ -5,6 +5,7 @@
 
 CRenderer::CRenderer(SData *data)
 {
+	srand(static_cast<unsigned>(std::time(0)));
 	this->data = data;
 
 	skybox = NULL;
@@ -25,11 +26,52 @@ CRenderer::~CRenderer()
 
 bool CRenderer::loadData(void)
 {
-	//load data
+	//load skybox
 	skybox = new CSkybox;
 	skybox->load();
 	object = new CObject;
 	object->bindModel("resources/models/vehicle");
+
+	//load map
+	std::string line;
+	std::ifstream map;
+	map.open("resources/worldmap.txt", std::ios::in);
+	if (map.is_open() == false)
+	{
+		MessageBox(0, "Error loading: resources/worldmap.txt", "Error", MB_OK | MB_ICONERROR);
+		exit(1);
+	}
+
+	//read map file
+	while (std::getline(map, line))
+	{
+		glm::vec3 vect;
+		if (line.find("player_pos") != std::string::npos)
+		{
+			sscanf(line.c_str(), "player_pos %f %f %f", &vect.x, &vect.y, &vect.z);
+			data->camera->pos = vect;
+		}
+		if (line.find("player_view") != std::string::npos)
+		{
+			sscanf(line.c_str(), "player_view %f %f %f", &vect.x, &vect.y, &vect.z);
+			data->camera->view = vect;
+		}
+		if (line.find("player_up") != std::string::npos)
+		{
+			sscanf(line.c_str(), "player_up %f %f %f", &vect.x, &vect.y, &vect.z);
+			data->camera->up = vect;
+		}
+		if (line.find("player_speed") != std::string::npos)
+		{
+			sscanf(line.c_str(), "player_speed %f", &vect.x);
+			data->camera->speed = vect.x;
+		}
+	}
+
+	map.close();
+
+
+
 
 	//compile shaders
 
@@ -41,6 +83,7 @@ bool CRenderer::loadData(void)
 	tex->loadShader("tex");
 	tex->compileShader();
 	*/
+
 
 
 
@@ -93,9 +136,9 @@ void CRenderer::setDisplayMatrices(void)
 void CRenderer::setupLights(void)
 {
 	//phong->useShader();
-//	tex->useShader();
+	//	tex->useShader();
 	//oswietlenie ambient - wszystkie wierzcho³ki
-	float globalAmbient[4] = { 0.30f, 0.30f, 0.30f, 1.0f };
+	float globalAmbient[4] = { 0.90f, 0.90f, 0.90f, 1.0f };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
 
 
@@ -112,29 +155,29 @@ void CRenderer::setupLights(void)
 	glLightfv(GL_LIGHT0, GL_POSITION, l0_pos);
 #pragma endregion
 
-/*
-	if (data->debugMode)
-	{
+	/*
+		if (data->debugMode)
+		{
 		if (data->flash)
 		{
-			glEnable(GL_LIGHT0);
-			float l0_amb[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-			float l0_dif[] = { 0.4f, 0.4f, 0.4f, 1.0f };
-			float l0_spe[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-			//float l0_pos[] = { 2.7f, 2.7f, -1.3f, 1.0f };
-			//float l0_dir[] = { -0.9f, -0.3f, 1.3f};
-			float l0_pos[] = { data->camera->pos.x, data->camera->pos.y, data->camera->pos.z, 1.0f };
-			float l0_dir[] = { data->camera->view.x, data->camera->view.y, data->camera->view.z };
-			glLightfv(GL_LIGHT0, GL_AMBIENT, l0_amb);
-			glLightfv(GL_LIGHT0, GL_DIFFUSE, l0_dif);
-			glLightfv(GL_LIGHT0, GL_SPECULAR, l0_spe);
-			glLightfv(GL_LIGHT0, GL_POSITION, l0_pos);
-			glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, l0_dir);
-			glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 25.0f);
-			glDisable(GL_LIGHT0);
+		glEnable(GL_LIGHT0);
+		float l0_amb[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+		float l0_dif[] = { 0.4f, 0.4f, 0.4f, 1.0f };
+		float l0_spe[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+		//float l0_pos[] = { 2.7f, 2.7f, -1.3f, 1.0f };
+		//float l0_dir[] = { -0.9f, -0.3f, 1.3f};
+		float l0_pos[] = { data->camera->pos.x, data->camera->pos.y, data->camera->pos.z, 1.0f };
+		float l0_dir[] = { data->camera->view.x, data->camera->view.y, data->camera->view.z };
+		glLightfv(GL_LIGHT0, GL_AMBIENT, l0_amb);
+		glLightfv(GL_LIGHT0, GL_DIFFUSE, l0_dif);
+		glLightfv(GL_LIGHT0, GL_SPECULAR, l0_spe);
+		glLightfv(GL_LIGHT0, GL_POSITION, l0_pos);
+		glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, l0_dir);
+		glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 25.0f);
+		glDisable(GL_LIGHT0);
 		}
-	}
-	*/
+		}
+		*/
 }
 
 
