@@ -25,7 +25,7 @@ CGame::CGame(void)
 	data->camera = new SCamera;
 	data->window = new SWindow;
 	data->zNear = 0.001f;
-	data->zFar = 1000.f;
+	data->zFar = 4000.f;
 
 	handlers.camera = new CCamera(data);
 	handlers.input = new CInput(data);
@@ -38,6 +38,7 @@ CGame::CGame(void)
 	data->drawFPS = true;
 	data->drawHUD = false;
 	data->drawEdges = false;
+	data->drawCollisionEdges = false;
 #ifdef _DEBUG
 	data->fullscreen = false;
 	data->debugMode = true;
@@ -111,7 +112,7 @@ void CGame::Init(int argc, char **argv)
 	setMouse();
 	loadData();
 
-	glutTimerFunc(17, callbackCaptureInput, 0);
+	glutTimerFunc(17, callbackUpdate, 0);
 	setGlutCallbacks();
 	glutMainLoop();
 }
@@ -245,14 +246,14 @@ void CGame::callbackSpecialKeyUp(int keyid, int x, int y)
 }
 
 
-void CGame::callbackCaptureInput(int id)
+void CGame::callbackUpdate(int id)
 {
 
 	if (instance->handlers.input->checkInput())
 	{
 		instance->handlers.camera->cameraMove();
 	}
-	glutTimerFunc(17, callbackCaptureInput, 0);
+	glutTimerFunc(17, callbackUpdate, 0);
 
 }
 

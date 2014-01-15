@@ -40,7 +40,7 @@ private:
 	static void     callbackKeyUp(unsigned char, int, int);
 	static void     callbackSpecialKeyPress(int, int, int);
 	static void     callbackSpecialKeyUp(int, int, int);
-	static void     callbackCaptureInput(int);
+	static void     callbackUpdate(int);
 
 	void            Update(void);
 	void            Render(void);

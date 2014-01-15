@@ -202,7 +202,7 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 
 	case 'k':
 	case 'K':
-
+		data->drawCollisionEdges = !data->drawCollisionEdges;
 		break;
 
 	case 'l':

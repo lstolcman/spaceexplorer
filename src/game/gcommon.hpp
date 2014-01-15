@@ -75,7 +75,7 @@ struct SData
 	bool drawDebug;
 	bool debugMode;
 	bool drawEdges;
-
+	bool drawCollisionEdges;
 
 
 	unsigned last_fps;

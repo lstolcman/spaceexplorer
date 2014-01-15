@@ -9,7 +9,7 @@ CCamera::CCamera(SData *data)
 	
 	data->camera->captureMouse   = true;
 
-	data->camera->speed = 0.02f;
+	data->camera->speed = 0.01f;
 
 	data->camera->pos.x = 0.0f;
 	data->camera->pos.y = 0.0f;

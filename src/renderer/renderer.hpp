@@ -21,7 +21,7 @@ private:
 	CTimer			fpsTimer, globalTimer;
 	SData			*data;
 	CSkybox			*skybox;
-	CObject			*object, *a;
+	CObject			*vehicle, *a;
 	GLfloat			ang;
 	/*
 	CShader			*phong;

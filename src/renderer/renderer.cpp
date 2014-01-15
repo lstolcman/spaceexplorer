@@ -35,8 +35,8 @@ bool CRenderer::loadData(void)
 	//load skybox
 	skybox = new CSkybox;
 	skybox->load();
-	object = new CObject;
-	object->bindModel("resources/models/vehicle");
+	vehicle = new CObject;
+	vehicle->bindModel("resources/models/vehicle");
 	a = new CObject;
 	a->bindModel("resources/models/asteroid");
 
@@ -56,28 +56,21 @@ bool CRenderer::loadData(void)
 	//read map file
 	while (std::getline(map, line))
 	{
-		//glm::vec3 plr;
-		//glm::vec3 ast3;
-		//glm::vec4 ast4;
 		if (line.find("player_pos") != std::string::npos)
 		{
 			sscanf(line.c_str(), "player_pos %f %f %f", &data->camera->pos.x, &data->camera->pos.y, &data->camera->pos.z);
-			//data->camera->pos = plr;
 		}
 		if (line.find("player_view") != std::string::npos)
 		{
 			sscanf(line.c_str(), "player_view %f %f %f", &data->camera->view.x, &data->camera->view.y, &data->camera->view.z);
-			//data->camera->view = plr;
 		}
 		if (line.find("player_up") != std::string::npos)
 		{
 			sscanf(line.c_str(), "player_up %f %f %f", &data->camera->up.x, &data->camera->up.y, &data->camera->up.z);
-			//data->camera->up = plr;
 		}
 		if (line.find("player_speed") != std::string::npos)
 		{
 			sscanf(line.c_str(), "player_speed %f", &data->camera->speed);
-			//data->camera->speed = plr.x;
 		}
 		if (line.find("asteroid") != std::string::npos)
 		{
@@ -88,10 +81,6 @@ bool CRenderer::loadData(void)
 				&aster->pos.x, &aster->pos.y, &aster->pos.z,
 				&aster->rotationAxis.x, &aster->rotationAxis.y, &aster->rotationAxis.z, &aster->rotationSpeed,
 				&aster->scale.x, &aster->scale.y, &aster->scale.z);
-			//data->asteroids->push_back(*aster);
-			//CObject *object = new CObject;
-			//object->bindModel("resources/models/asteroid");
-			//asteroids->push_back(*object);
 			asteroids->push_back(*aster);
 		}
 	}
@@ -130,7 +119,7 @@ void CRenderer::countFPS()
 		globalTimer.reset();
 		if (ang > 360)
 			ang = 0;
-		ang += 0.1;
+		ang += (GLfloat)0.1;
 	}
 }
 
@@ -267,13 +256,13 @@ void CRenderer::drawScene()
 	//main vehicle rotation procedure
 	//factors are[according to opengl xyz spec.]
 	//glTranslatef(Z, Y, -X) 
-	glTranslatef(0.6, 0, 0);	
+	glTranslatef(0.6, 0.0, 0.0);	
 	glRotated(0, 1, 0, 0); //rotate +left z-axis
 	glRotated(0, 0, 1, 0);	//rotate +left y-axis
 	glRotated(-10, 0, 0, 1); //rotate -left x-axis
 	//glutWireCube(0.2);
 	glScaled(0.01, 0.01, 0.01);
-	object->draw();
+	vehicle->draw();
 	glTranslatef(-data->camera->view.x - data->camera->pos.x, -data->camera->view.y - data->camera->pos.y , -data->camera->view.z - data->camera->pos.z);
 	glPopMatrix();
 	
@@ -295,13 +284,14 @@ void CRenderer::drawScene()
 	// Rysowanie obiektow na scenie.
 
 
-	glScaled(0.01, 0.01, 0.01);
+	glScaled(0.001, 0.001, 0.001);
 
-	glPushMatrix();
+	/*glPushMatrix();
 	glTranslatef(0, -10, 3);
 	glRotatef(90, 0, 1, 0);
-	object->draw();
+	vehicle->draw();
 	glPopMatrix();
+	*/
 
 
 
@@ -321,6 +311,7 @@ void CRenderer::drawScene()
 
 
 
+	/*
 
 	glPushMatrix();
 	glLineWidth(0.1f);
@@ -334,9 +325,7 @@ void CRenderer::drawScene()
 	glutSolidSphere(0.2, 12, 8);
 	glPopMatrix();
 
-
-
-
+	
 
 #pragma region Szescian
 
@@ -496,6 +485,9 @@ void CRenderer::drawScene()
 
 #pragma endregion
 
+
+
+	*/
 
 	{
 		//reset light
