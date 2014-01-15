@@ -14,6 +14,6 @@ ESC - exit game
 v - draw HUD
 m - capture mouse
 n - minimalize/maximalize
-
+k - draw collision edges
 
 

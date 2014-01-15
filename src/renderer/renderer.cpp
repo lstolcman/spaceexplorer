@@ -219,8 +219,8 @@ void CRenderer::drawSky(void)
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
 	glTranslatef(data->camera->pos.x, data->camera->pos.y, data->camera->pos.z);
-//	glScaled(2500, 2500, 2500);
-	glScaled(data->zFar/2, data->zFar/2, data->zFar/2);
+	//	glScaled(2500, 2500, 2500);
+	glScaled(data->zFar / 2, data->zFar / 2, data->zFar / 2);
 
 	skybox->draw();
 	glPopMatrix();
@@ -245,7 +245,7 @@ void CRenderer::drawScene()
 
 	/* 3rd CAMERA */
 	/* DO NOT PUT THE PROCEDURE BEFORE SCALING THE ENVIRONMENT */
-	
+
 	glPushMatrix();
 	glTranslatef(data->camera->view.x + data->camera->pos.x, data->camera->view.y + data->camera->pos.y, data->camera->view.z + data->camera->pos.z);
 	glRotatef(-((data->camera->angleY * 180) / PI), 0, 1, 0);
@@ -256,22 +256,35 @@ void CRenderer::drawScene()
 	//main vehicle rotation procedure
 	//factors are[according to opengl xyz spec.]
 	//glTranslatef(Z, Y, -X) 
-	glTranslatef(0.6, 0.0, 0.0);	
+	glTranslatef(0.6, 0.0, 0.0);
 	glRotated(0, 1, 0, 0); //rotate +left z-axis
 	glRotated(0, 0, 1, 0);	//rotate +left y-axis
 	glRotated(-10, 0, 0, 1); //rotate -left x-axis
 	//glutWireCube(0.2);
 	glScaled(0.01, 0.01, 0.01);
 	vehicle->draw();
-	glTranslatef(-data->camera->view.x - data->camera->pos.x, -data->camera->view.y - data->camera->pos.y , -data->camera->view.z - data->camera->pos.z);
+
+	if (data->drawCollisionEdges && data->debugMode)
+	{
+		float amb[] = { 0, 0, 0.5, 1.0f };
+		float dif[] = { 0, 0, 0.5, 1.0f };
+		float spe[] = { 0, 0, 0.5, 1.0f };
+		glMaterialfv(GL_FRONT, GL_AMBIENT, amb);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, dif);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, spe);
+		glScaled(1, 0.2, 1);
+		glutWireSphere(20, 20, 20);
+	}
+
+	glTranslatef(-data->camera->view.x - data->camera->pos.x, -data->camera->view.y - data->camera->pos.y, -data->camera->view.z - data->camera->pos.z);
 	glPopMatrix();
-	
+
 	/* 3rd CAMERA end */
 
 
 
 
-	if (data->drawEdges)
+	if (data->drawEdges && data->debugMode)
 		glPolygonMode(GL_FRONT, GL_LINE);
 
 
@@ -304,6 +317,23 @@ void CRenderer::drawScene()
 		if ((i->rotationAxis.x && i->rotationAxis.y && i->rotationAxis.z) == 0)
 			glRotatef(ang*i->rotationSpeed, i->rotationAxis.x, i->rotationAxis.y, i->rotationAxis.z);
 		a->draw();
+
+
+		if (data->drawCollisionEdges && data->debugMode)
+		{
+
+			glPushMatrix();
+			float amb[] = { 0, 0.5, 0, 1.0f };
+			float dif[] = { 0, 0.5, 0, 1.0f };
+			float spe[] = { 0, 0.5, 0, 1.0f };
+			glMaterialfv(GL_FRONT, GL_AMBIENT, amb);
+			glMaterialfv(GL_FRONT, GL_DIFFUSE, dif);
+			glMaterialfv(GL_FRONT, GL_SPECULAR, spe);
+			glScaled(1.6, 0.9, 1);
+			glutWireSphere(12, 20, 20);
+			glPopMatrix();
+		}
+
 		glPopMatrix();
 	}
 
@@ -325,9 +355,9 @@ void CRenderer::drawScene()
 	glutSolidSphere(0.2, 12, 8);
 	glPopMatrix();
 
-	
 
-#pragma region Szescian
+
+	#pragma region Szescian
 
 	glPushMatrix();
 
@@ -425,11 +455,11 @@ void CRenderer::drawScene()
 
 	glPopMatrix();
 
-#pragma endregion
+	#pragma endregion
 
 
 
-#pragma region Walec
+	#pragma region Walec
 
 	glPushMatrix();
 
@@ -448,12 +478,12 @@ void CRenderer::drawScene()
 	// Powierzchnia boczna
 	glBegin(GL_QUAD_STRIP);
 	for (int i = 0; i <= Np; ++i) {
-		float x = sin(2.0f * PI * ((float)i / Np));
-		float z = cos(2.0f * PI * ((float)i / Np));
-		glNormal3f(x, 0.0f, z);
-		glVertex3f(x, 1.0f, z);
-		glNormal3f(x, 0.0f, z);
-		glVertex3f(x, -1.0f, z);
+	float x = sin(2.0f * PI * ((float)i / Np));
+	float z = cos(2.0f * PI * ((float)i / Np));
+	glNormal3f(x, 0.0f, z);
+	glVertex3f(x, 1.0f, z);
+	glNormal3f(x, 0.0f, z);
+	glVertex3f(x, -1.0f, z);
 	}
 	glEnd();
 
@@ -462,10 +492,10 @@ void CRenderer::drawScene()
 	glNormal3f(0.0f, 1.0f, 0.0f);
 	glVertex3f(0.0f, 1.0f, 0.0f);
 	for (int i = 0; i <= Np; ++i) {
-		float x = sin(2.0f * PI * ((float)i / Np));
-		float z = cos(2.0f * PI * ((float)i / Np));
-		glNormal3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(x, 1.0f, z);
+	float x = sin(2.0f * PI * ((float)i / Np));
+	float z = cos(2.0f * PI * ((float)i / Np));
+	glNormal3f(0.0f, 1.0f, 0.0f);
+	glVertex3f(x, 1.0f, z);
 	}
 	glEnd();
 
@@ -474,16 +504,16 @@ void CRenderer::drawScene()
 	glNormal3f(0.0f, -1.0f, 0.0f);
 	glVertex3f(0.0f, -1.0f, 0.0f);
 	for (int i = Np; i >= 0; --i) {
-		float x = sin(2.0f * PI * ((float)i / Np));
-		float z = cos(2.0f * PI * ((float)i / Np));
-		glNormal3f(0.0f, -1.0f, 0.0f);
-		glVertex3f(x, -1.0f, z);
+	float x = sin(2.0f * PI * ((float)i / Np));
+	float z = cos(2.0f * PI * ((float)i / Np));
+	glNormal3f(0.0f, -1.0f, 0.0f);
+	glVertex3f(x, -1.0f, z);
 	}
 	glEnd();
 
 	glPopMatrix();
 
-#pragma endregion
+	#pragma endregion
 
 
 
