@@ -66,6 +66,9 @@ struct SInputState
 
 struct SData
 {
+	float zNear;
+	float zFar;
+
 	bool fullscreen;
 	bool drawHUD;
 	bool drawFPS;

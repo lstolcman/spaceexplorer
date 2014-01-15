@@ -230,7 +230,8 @@ void CRenderer::drawSky(void)
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
 	glTranslatef(data->camera->pos.x, data->camera->pos.y, data->camera->pos.z);
-	glScaled(2500, 2500, 2500);
+//	glScaled(2500, 2500, 2500);
+	glScaled(data->zFar/2, data->zFar/2, data->zFar/2);
 
 	skybox->draw();
 	glPopMatrix();
@@ -253,9 +254,33 @@ void CRenderer::drawScene()
 	setupLights();
 
 
+	/* 3rd CAMERA */
+	/* DO NOT PUT THE PROCEDURE BEFORE SCALING THE ENVIRONMENT */
+	
+	glPushMatrix();
+	glTranslatef(data->camera->view.x + data->camera->pos.x, data->camera->view.y + data->camera->pos.y, data->camera->view.z + data->camera->pos.z);
+	glRotatef(-((data->camera->angleY * 180) / PI), 0, 1, 0);
+	glRotatef(-((data->camera->angleX * 180) / PI), 0, 0, 1);
+	glRotatef(180, 1, 0, 0);
+	glRotatef(90, 0, 0, 1);
 
-
+	//main vehicle rotation procedure
+	//factors are[according to opengl xyz spec.]
+	//glTranslatef(Z, Y, -X) 
+	glTranslatef(0.6, 0, 0);	
+	glRotated(0, 1, 0, 0); //rotate +left z-axis
+	glRotated(0, 0, 1, 0);	//rotate +left y-axis
+	glRotated(-10, 0, 0, 1); //rotate -left x-axis
+	//glutWireCube(0.2);
 	glScaled(0.01, 0.01, 0.01);
+	object->draw();
+	glTranslatef(-data->camera->view.x - data->camera->pos.x, -data->camera->view.y - data->camera->pos.y , -data->camera->view.z - data->camera->pos.z);
+	glPopMatrix();
+	
+	/* 3rd CAMERA end */
+
+
+
 
 	if (data->drawEdges)
 		glPolygonMode(GL_FRONT, GL_LINE);
@@ -270,6 +295,7 @@ void CRenderer::drawScene()
 	// Rysowanie obiektow na scenie.
 
 
+	glScaled(0.01, 0.01, 0.01);
 
 	glPushMatrix();
 	glTranslatef(0, -10, 3);
@@ -292,16 +318,7 @@ void CRenderer::drawScene()
 	}
 
 
-	/* 3rd CAMERA */
-	/*
-	glPushMatrix();
-	glTranslatef(data->camera->view.x + data->camera->pos.x, data->camera->view.y + data->camera->pos.y, data->camera->view.z + data->camera->pos.z);
-	glRotatef(-((data->camera->angleY * 180) / PI), 0, 1, 0);
-	glRotatef(-((data->camera->angleX * 180) / PI), 0, 0, 1);
-	glutWireCube(0.2);
-	glTranslatef(-data->camera->view.x - data->camera->pos.x, -data->camera->view.y - data->camera->pos.y , -data->camera->view.z - data->camera->pos.z);
-	glPopMatrix();
-	*/
+
 
 
 
