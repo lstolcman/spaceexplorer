@@ -35,6 +35,7 @@ CGame::CGame(void)
 	///
 
 	data->drawDebug = false;
+	data->debugInsertAsteroid = false;
 	data->drawFPS = true;
 	data->drawHUD = false;
 	data->drawEdges = false;
@@ -71,6 +72,8 @@ CGame::~CGame(void)
 
 void CGame::Init(int argc, char **argv)
 {
+	srand(time(0));
+
 	glutInit(&argc, argv);
 	glutInitContextVersion(3, 0);
 	glutInitWindowSize(data->window->size.x, data->window->size.y);

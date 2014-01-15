@@ -66,14 +66,18 @@ struct SInputState
 
 struct SData
 {
+	bool drawDebug;
+	bool debugMode;
+	bool debugInsertAsteroid;
+
+
 	float zNear;
 	float zFar;
 
 	bool fullscreen;
 	bool drawHUD;
 	bool drawFPS;
-	bool drawDebug;
-	bool debugMode;
+
 	bool drawEdges;
 	bool drawCollisionEdges;
 

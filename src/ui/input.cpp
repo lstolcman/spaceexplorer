@@ -79,11 +79,11 @@ void CInput::mouseButtonPress(int button, int state, int x, int y)
 			break;
 
 		case WHEELSCROLLUP:
-			data->camera->speed += 0.01f;
+			data->camera->speed += 0.1f;
 			break;
 
 		case WHEELSCROLLDOWN:
-			data->camera->speed -= 0.01f;
+			data->camera->speed -= 0.1f;
 			break;
 
 		case HOLDWHEELSCROLLUP:
@@ -202,7 +202,10 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 
 	case 'k':
 	case 'K':
-		data->drawCollisionEdges = !data->drawCollisionEdges;
+		if (data->debugMode)
+		{
+			data->drawCollisionEdges = !data->drawCollisionEdges;
+		}
 		break;
 
 	case 'l':
@@ -300,7 +303,10 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 		break;
 
 	case ' ':
-
+		if (data->debugMode)
+		{
+			data->debugInsertAsteroid = true;
+		}
 		break;
 
 
@@ -384,10 +390,19 @@ void CInput::specialKeyDown(int keyid, int x, int y)
 		break;
 
 	case KEY_F8:
-		data->drawEdges = !data->drawEdges;
+		if (data->debugMode)
+		{
+			data->drawEdges = !data->drawEdges;
+		}
 		break;
 
 	case KEY_F9:
+		if (data->debugMode)
+		{
+			data->drawDebug = false;
+			data->drawEdges = false;
+			data->drawCollisionEdges = false;
+		}
 		data->debugMode = !data->debugMode;
 		break;
 
@@ -400,7 +415,10 @@ void CInput::specialKeyDown(int keyid, int x, int y)
 		break;
 
 	case KEY_F12:
-		data->drawDebug = !data->drawDebug;
+		if (data->debugMode)
+		{
+			data->drawDebug = !data->drawDebug;
+		}
 		break;
 
 	}

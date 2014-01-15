@@ -62,6 +62,9 @@
     <ClCompile Include="src\tools\shader.cpp">
       <Filter>Tools\Loaders</Filter>
     </ClCompile>
+    <ClCompile Include="src\tools\rng.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\main.hpp" />
@@ -107,6 +110,9 @@
     </ClInclude>
     <ClInclude Include="src\renderer\rcommon.hpp">
       <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\rng.hpp">
+      <Filter>Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

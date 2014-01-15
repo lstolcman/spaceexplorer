@@ -86,6 +86,22 @@ bool CRenderer::loadData(void)
 	}
 	map.close();
 
+	for (unsigned i = 0; i < 100; ++i)
+	{
+
+		SAsteroid *aster = new SAsteroid;
+		aster->pos = glm::fvec3(rng(-200, 200), rng(-200, 200), rng(-200, 200));
+
+		aster->rotationAxis = glm::fvec3(rng("nz", -1, 1), rng("nz", -1, 1), rng("nz", -1, 1));// rand() % 2 + 1, rand() % 2 + 1, rand() % 2 + 1);
+		//aster->rotationAxis = glm::fvec3(1, 0, 0);
+		float scale = 1 + rand() % 100 / 20;
+
+		aster->scale = glm::fvec3(scale + rand() % 20 / 5, scale + rand() % 20 / 5, scale + rand() % 20 / 5);
+		//aster->scale = glm::fvec3(1, 1, 1);
+		aster->rotationSpeed = rng(1, 20);
+		asteroids->push_back(*aster);
+	}
+
 
 	//compile shaders
 
@@ -297,7 +313,6 @@ void CRenderer::drawScene()
 	// Rysowanie obiektow na scenie.
 
 
-	glScaled(0.001, 0.001, 0.001);
 
 	/*glPushMatrix();
 	glTranslatef(0, -10, 3);
@@ -306,7 +321,15 @@ void CRenderer::drawScene()
 	glPopMatrix();
 	*/
 
+	if (data->debugInsertAsteroid && data->debugMode)
+	{
+		data->debugInsertAsteroid = false;
 
+
+		std::cout << "insert: asteroid" << std::endl;
+	}
+
+	glScaled(0.001, 0.001, 0.001);
 
 	for (std::vector<SAsteroid>::iterator i = asteroids->begin(); i != asteroids->end(); i++)
 	{

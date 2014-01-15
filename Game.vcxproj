@@ -91,6 +91,7 @@
     </ClCompile>
     <ClCompile Include="src\tools\bmp.cpp" />
     <ClCompile Include="src\tools\obj.cpp" />
+    <ClCompile Include="src\tools\rng.cpp" />
     <ClCompile Include="src\tools\shader.cpp" />
     <ClCompile Include="src\tools\texture.cpp" />
     <ClCompile Include="src\tools\timer.cpp" />
@@ -109,6 +110,7 @@
     <ClInclude Include="src\stdafx.hpp" />
     <ClInclude Include="src\tools\bmp.hpp" />
     <ClInclude Include="src\tools\obj.hpp" />
+    <ClInclude Include="src\tools\rng.hpp" />
     <ClInclude Include="src\tools\shader.hpp" />
     <ClInclude Include="src\tools\texture.hpp" />
     <ClInclude Include="src\tools\timer.hpp" />

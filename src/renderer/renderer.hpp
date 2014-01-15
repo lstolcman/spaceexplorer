@@ -2,6 +2,7 @@
 
 #include "../game/gcommon.hpp"
 #include "../tools/timer.hpp"
+#include "../tools/rng.hpp"
 #include "../tools/obj.hpp"
 #include "../tools/texture.hpp"
 #include "../game/camera.hpp"
@@ -19,6 +20,7 @@ class CRenderer
 private:
 	unsigned long	frame, frame_old;
 	CTimer			fpsTimer, globalTimer;
+	CRng			rng;
 	SData			*data;
 	CSkybox			*skybox;
 	CObject			*vehicle, *a;
