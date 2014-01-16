@@ -26,6 +26,7 @@ CRenderer::CRenderer(SData *data)
 CRenderer::~CRenderer()
 {
 	delete asteroids;
+	delete worldmap;
 	delete skybox;
 }
 
@@ -41,7 +42,13 @@ bool CRenderer::loadData(void)
 	a->bindModel("resources/models/asteroid");
 
 
+	worldmap = new CWoldmap;
 
+	worldmap->loadPlayerPos(data->camera);
+	worldmap->loadAsteroids(asteroids);
+
+
+	/*
 	//load map
 	std::string line;
 	std::ifstream map;
@@ -86,11 +93,11 @@ bool CRenderer::loadData(void)
 	}
 	map.close();
 
-	for (unsigned i = 0; i < 100; ++i)
+	for (unsigned i = 0; i < 500; ++i)
 	{
 
 		SAsteroid *aster = new SAsteroid;
-		aster->pos = glm::fvec3(rng(-200, 200), rng(-200, 200), rng(-200, 200));
+		aster->pos = glm::fvec3(rng(-300, 300), rng(-300, 300), rng(-300, 300));
 
 		aster->rotationAxis = glm::fvec3(rng("nz", -1, 1), rng("nz", -1, 1), rng("nz", -1, 1));// rand() % 2 + 1, rand() % 2 + 1, rand() % 2 + 1);
 		//aster->rotationAxis = glm::fvec3(1, 0, 0);
@@ -98,10 +105,10 @@ bool CRenderer::loadData(void)
 
 		aster->scale = glm::fvec3(scale + rand() % 20 / 5, scale + rand() % 20 / 5, scale + rand() % 20 / 5);
 		//aster->scale = glm::fvec3(1, 1, 1);
-		aster->rotationSpeed = rng(1, 20);
+		aster->rotationSpeed = rng("d", 1, 2) > 0 ? rng(3, 20) : -rng(3, 20);
 		asteroids->push_back(*aster);
 	}
-
+	*/
 
 	//compile shaders
 
@@ -135,7 +142,7 @@ void CRenderer::countFPS()
 		globalTimer.reset();
 		if (ang > 360)
 			ang = 0;
-		ang += (GLfloat)0.1;
+		ang += (GLfloat)0.2;
 	}
 }
 
@@ -352,7 +359,7 @@ void CRenderer::drawScene()
 			glMaterialfv(GL_FRONT, GL_AMBIENT, amb);
 			glMaterialfv(GL_FRONT, GL_DIFFUSE, dif);
 			glMaterialfv(GL_FRONT, GL_SPECULAR, spe);
-			glScaled(1.6, 0.9, 1);
+			glScaled(1.3, 0.8, 1);
 			glutWireSphere(12, 20, 20);
 			glPopMatrix();
 		}

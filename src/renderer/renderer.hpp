@@ -1,15 +1,19 @@
 #pragma once
 
+#include "rcommon.hpp"
 #include "../game/gcommon.hpp"
+
+#include "object.hpp"
+#include "skybox.hpp"
+
 #include "../tools/timer.hpp"
 #include "../tools/rng.hpp"
 #include "../tools/obj.hpp"
 #include "../tools/texture.hpp"
+#include "../tools/worldmap.hpp"
 #include "../game/camera.hpp"
 
-#include "object.hpp"
-#include "skybox.hpp"
-#include "rcommon.hpp"
+
 
 
 
@@ -23,6 +27,7 @@ private:
 	CRng			rng;
 	SData			*data;
 	CSkybox			*skybox;
+	CWoldmap		*worldmap;
 	CObject			*vehicle, *a;
 	GLfloat			ang;
 	/*

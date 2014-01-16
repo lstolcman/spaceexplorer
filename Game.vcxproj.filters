@@ -65,6 +65,9 @@
     <ClCompile Include="src\tools\rng.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
+    <ClCompile Include="src\tools\worldmap.cpp">
+      <Filter>Tools\Loaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\main.hpp" />
@@ -113,6 +116,9 @@
     </ClInclude>
     <ClInclude Include="src\tools\rng.hpp">
       <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\worldmap.hpp">
+      <Filter>Tools\Loaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

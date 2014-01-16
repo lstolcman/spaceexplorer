@@ -95,6 +95,7 @@
     <ClCompile Include="src\tools\shader.cpp" />
     <ClCompile Include="src\tools\texture.cpp" />
     <ClCompile Include="src\tools\timer.cpp" />
+    <ClCompile Include="src\tools\worldmap.cpp" />
     <ClCompile Include="src\ui\input.cpp" />
     <ClCompile Include="src\ui\ui.cpp" />
   </ItemGroup>
@@ -114,6 +115,7 @@
     <ClInclude Include="src\tools\shader.hpp" />
     <ClInclude Include="src\tools\texture.hpp" />
     <ClInclude Include="src\tools\timer.hpp" />
+    <ClInclude Include="src\tools\worldmap.hpp" />
     <ClInclude Include="src\ui\input.hpp" />
     <ClInclude Include="src\ui\ui.hpp" />
   </ItemGroup>

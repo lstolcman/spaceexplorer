@@ -13,6 +13,9 @@ src/html
 *.sdf
 *.opensdf
 *.suo
+*.exe
+*.dll
+*.zip
 
 TODO
 

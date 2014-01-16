@@ -3,13 +3,21 @@
 
 
 /*
-petla gry:
+
+game loop:
 {
 //events:
+input keyboard
+input mouse
 
 //logic:
+collisions
+menu-game/in-game/end-game
 
-//rendering: world, skydome/box,
+//rendering:
+world
+skydome
+vehicle
 }
 
 */
