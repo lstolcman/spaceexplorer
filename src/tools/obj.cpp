@@ -26,9 +26,10 @@ CLoaderOBJ::~CLoaderOBJ()
 
 bool CLoaderOBJ::loadObj(std::string file)
 {
+	CTimer t;
 	std::string line;
 	char *map_Kd = (char*)calloc(100, 1); //temp for sscanf %s
-
+	t.start();
 
 	obj.open(file+".obj", std::ios::in);
 	if (obj.is_open() == false)
@@ -106,6 +107,9 @@ bool CLoaderOBJ::loadObj(std::string file)
 	mtl.close();
 
 	objHandle->map_Kd = std::string(map_Kd);
+
+	t.stop();
+	std::cout << "model: " << file << " " << t.getElapsedMilliseconds() << "ms" << std::endl;
 	/*
 	tex.Load("resources/models/"+std::string(map_Kd));// , GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR);// GL_NEAREST);
 

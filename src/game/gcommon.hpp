@@ -29,6 +29,15 @@ struct SMouseState
 
 
 
+struct SAsteroid
+{
+	glm::vec3 pos;
+	glm::vec3 rotationAxis;
+	float rotationSpeed;
+	glm::vec3 scale;
+};
+
+
 
 struct SCamera
 {
@@ -70,7 +79,7 @@ struct SData
 	bool debugMode;
 	bool debugInsertAsteroid;
 
-
+	//clipping planes
 	float zNear;
 	float zFar;
 
@@ -85,6 +94,7 @@ struct SData
 	unsigned last_fps;
 
 
+	std::vector<SAsteroid>		*asteroids;
 
 	SInputState *inputState;
 	SCamera	*camera;

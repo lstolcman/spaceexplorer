@@ -32,13 +32,13 @@ CGame::CGame(void)
 	data->inputState = new SInputState;
 	data->camera = new SCamera;
 	data->window = new SWindow;
-	data->zNear = 0.001f;
-	data->zFar = 4000.f;
+	data->asteroids = new std::vector<SAsteroid>;
 
 	handlers.camera = new CCamera(data);
 	handlers.input = new CInput(data);
-	handlers.ui = new CUI(data);
 	handlers.renderer = new CRenderer(data);
+	handlers.ui = new CUI(data);
+	handlers.logic = new CLogic(data);
 
 	///
 
@@ -60,6 +60,10 @@ CGame::CGame(void)
 	data->window->pos.y = 300;
 	data->window->size.x = 640;
 	data->window->size.y = 360;
+
+	data->zNear = 0.001f;
+	data->zFar = 4000.f;
+
 	data->last_fps = 0;
 
 }
@@ -71,9 +75,12 @@ CGame::~CGame(void)
 	delete handlers.camera;
 	delete handlers.ui;
 	delete handlers.input;
+	delete handlers.logic;
 
+	delete data->asteroids;
 	delete data->camera;
 	delete data->inputState;
+	delete data->window;
 	delete data;
 }
 
@@ -123,7 +130,7 @@ void CGame::Init(int argc, char **argv)
 	setMouse();
 	loadData();
 
-	glutTimerFunc(17, callbackUpdate, 0);
+
 	setGlutCallbacks();
 	glutMainLoop();
 }
@@ -131,6 +138,11 @@ void CGame::Init(int argc, char **argv)
 
 void CGame::Update(void)
 {
+	if (instance->handlers.input->checkInput())
+	{
+		instance->handlers.camera->cameraMove();
+	}
+	handlers.logic->detectCollision();
 }
 
 
@@ -182,6 +194,10 @@ void CGame::setGlutCallbacks(void)
 	glutKeyboardUpFunc(callbackKeyUp);
 	glutSpecialFunc(callbackSpecialKeyPress);
 	glutSpecialUpFunc(callbackSpecialKeyUp);
+
+
+	glutTimerFunc(17, callbackUpdate, 0);
+	
 }
 
 
@@ -198,7 +214,6 @@ void CGame::setMouse(void)
 	data->inputState->mouse.y = glutGet(GLUT_WINDOW_HEIGHT) / 2;
 	glutSetCursor(GLUT_CURSOR_NONE);
 }
-
 
 
 
@@ -260,11 +275,12 @@ void CGame::callbackSpecialKeyUp(int keyid, int x, int y)
 void CGame::callbackUpdate(int id)
 {
 
-	if (instance->handlers.input->checkInput())
-	{
-		instance->handlers.camera->cameraMove();
-	}
+	instance->Update();
 	glutTimerFunc(17, callbackUpdate, 0);
 
 }
+
+
+
+
 

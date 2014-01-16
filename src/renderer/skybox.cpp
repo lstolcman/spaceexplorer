@@ -40,7 +40,7 @@ void CSkybox::load(void)
 	bottom.Load("resources/skybox/" + version + "/" + size + "_bottom4.bmp", GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR); //GL_NEAREST, GL_NEAREST);
 
 	t.stop();
-	std::cout << "Skybox loaded, took " << t.getElapsedMilliseconds() << "ms" << std::endl;
+	std::cout << "skybox: " << t.getElapsedMilliseconds() << "ms" << std::endl;
 }
 
 

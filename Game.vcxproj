@@ -81,6 +81,7 @@
   <ItemGroup>
     <ClCompile Include="src\game\game.cpp" />
     <ClCompile Include="src\game\camera.cpp" />
+    <ClCompile Include="src\logic\logic.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\renderer\object.cpp" />
     <ClCompile Include="src\renderer\renderer.cpp" />
@@ -103,6 +104,7 @@
     <ClInclude Include="src\game\game.hpp" />
     <ClInclude Include="src\game\gcommon.hpp" />
     <ClInclude Include="src\game\camera.hpp" />
+    <ClInclude Include="src\logic\logic.hpp" />
     <ClInclude Include="src\main.hpp" />
     <ClInclude Include="src\renderer\object.hpp" />
     <ClInclude Include="src\renderer\rcommon.hpp" />

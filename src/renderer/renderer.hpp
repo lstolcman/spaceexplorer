@@ -34,7 +34,7 @@ private:
 	CShader			*phong;
 	CShader			*tex;
 	*/
-	std::vector<SAsteroid>		*asteroids;
+	
 
 	void            countFPS(void);
 	void            setDisplayMatrices(void);

@@ -22,6 +22,9 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{afcfea69-5721-4e6a-ac3f-4da6d1bdaef2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Logic">
+      <UniqueIdentifier>{88c98082-3c0f-48e7-a1a8-93811bfc3d7b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
@@ -67,6 +70,9 @@
     </ClCompile>
     <ClCompile Include="src\tools\worldmap.cpp">
       <Filter>Tools\Loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="src\logic\logic.cpp">
+      <Filter>Logic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +125,9 @@
     </ClInclude>
     <ClInclude Include="src\tools\worldmap.hpp">
       <Filter>Tools\Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\logic\logic.hpp">
+      <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

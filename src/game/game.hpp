@@ -3,6 +3,7 @@
 #include "../ui/ui.hpp"
 #include "../ui/input.hpp"
 #include "../renderer/renderer.hpp"
+#include "../logic/logic.hpp"
 #include "camera.hpp"
 #include "gcommon.hpp"
 
@@ -20,6 +21,7 @@ private:
 		CCamera			*camera;
 		CRenderer		*renderer;
 		CUI				*ui;
+		CLogic			*logic;
 	} handlers;
 
 	SData				*data;

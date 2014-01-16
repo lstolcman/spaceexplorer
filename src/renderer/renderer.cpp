@@ -7,7 +7,7 @@ CRenderer::CRenderer(SData *data)
 {
 	srand(static_cast<unsigned>(std::time(0)));
 	this->data = data;
-	asteroids = new std::vector<SAsteroid>;
+
 
 	skybox = NULL;
 	//phong = NULL;
@@ -25,7 +25,6 @@ CRenderer::CRenderer(SData *data)
 
 CRenderer::~CRenderer()
 {
-	delete asteroids;
 	delete worldmap;
 	delete skybox;
 }
@@ -45,70 +44,26 @@ bool CRenderer::loadData(void)
 	worldmap = new CWoldmap;
 
 	worldmap->loadPlayerPos(data->camera);
-	worldmap->loadAsteroids(asteroids);
+	worldmap->loadAsteroids(data->asteroids);
 
 
-	/*
-	//load map
-	std::string line;
-	std::ifstream map;
-
-	map.open("resources/worldmap.txt", std::ios::in);
-	if (map.is_open() == false)
+	for (unsigned i = 0; i < 2000; ++i)
 	{
-		MessageBox(0, "Error loading: resources/worldmap.txt", "Error", MB_OK | MB_ICONERROR);
-		exit(1);
-	}
-
-	//read map file
-	while (std::getline(map, line))
-	{
-		if (line.find("player_pos") != std::string::npos)
-		{
-			sscanf(line.c_str(), "player_pos %f %f %f", &data->camera->pos.x, &data->camera->pos.y, &data->camera->pos.z);
-		}
-		if (line.find("player_view") != std::string::npos)
-		{
-			sscanf(line.c_str(), "player_view %f %f %f", &data->camera->view.x, &data->camera->view.y, &data->camera->view.z);
-		}
-		if (line.find("player_up") != std::string::npos)
-		{
-			sscanf(line.c_str(), "player_up %f %f %f", &data->camera->up.x, &data->camera->up.y, &data->camera->up.z);
-		}
-		if (line.find("player_speed") != std::string::npos)
-		{
-			sscanf(line.c_str(), "player_speed %f", &data->camera->speed);
-		}
-		if (line.find("asteroid") != std::string::npos)
-		{
-			std::cout << "linia: " << line << std::endl;
-			SAsteroid *aster = new SAsteroid;
-			// asteroid vec3(position) vec4(rotation axis+speed) vec3(scale)
-			sscanf(line.c_str(), "asteroid %f %f %f %f %f %f %f %f %f %f",
-				&aster->pos.x, &aster->pos.y, &aster->pos.z,
-				&aster->rotationAxis.x, &aster->rotationAxis.y, &aster->rotationAxis.z, &aster->rotationSpeed,
-				&aster->scale.x, &aster->scale.y, &aster->scale.z);
-			asteroids->push_back(*aster);
-		}
-	}
-	map.close();
-
-	for (unsigned i = 0; i < 500; ++i)
-	{
-
 		SAsteroid *aster = new SAsteroid;
 		aster->pos = glm::fvec3(rng(-300, 300), rng(-300, 300), rng(-300, 300));
 
-		aster->rotationAxis = glm::fvec3(rng("nz", -1, 1), rng("nz", -1, 1), rng("nz", -1, 1));// rand() % 2 + 1, rand() % 2 + 1, rand() % 2 + 1);
+		//aster->rotationAxis = glm::fvec3(rng("nz", -1, 1), rng("nz", -1, 1), rng("nz", -1, 1));// rand() % 2 + 1, rand() % 2 + 1, rand() % 2 + 1);
+		aster->rotationAxis = glm::vec3((rand() % 2), (rand() % 2), (rand() % 2));
 		//aster->rotationAxis = glm::fvec3(1, 0, 0);
-		float scale = 1 + rand() % 100 / 20;
+		float scale = ( rand() % 100 / 100)+1000;
 
-		aster->scale = glm::fvec3(scale + rand() % 20 / 5, scale + rand() % 20 / 5, scale + rand() % 20 / 5);
+		//aster->scale = glm::fvec3(scale + rand() % 20 / 5, scale + rand() % 20 / 5, scale + rand() % 20 / 5);
+		aster->scale = glm::fvec3(1, 1, 1);
 		//aster->scale = glm::fvec3(1, 1, 1);
-		aster->rotationSpeed = rng("d", 1, 2) > 0 ? rng(3, 20) : -rng(3, 20);
-		asteroids->push_back(*aster);
+		aster->rotationSpeed = rand() % 2 == 0 ? (rand() % 1000 / 1000.0 ) : -(rand() % 1000 / 1000.0 );
+		data->asteroids->push_back(*aster);
 	}
-	*/
+	
 
 	//compile shaders
 
@@ -183,7 +138,8 @@ void CRenderer::setupLights(void)
 	//phong->useShader();
 	//	tex->useShader();
 	//oswietlenie ambient - wszystkie wierzcho³ki
-	float globalAmbient[4] = { 0.40f, 0.40f, 0.40f, 0.0f };
+	//float globalAmbient[4] = { 0.40f, 0.40f, 0.40f, 1.0f };
+	float globalAmbient[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
 
 
@@ -295,7 +251,7 @@ void CRenderer::drawScene()
 		glMaterialfv(GL_FRONT, GL_AMBIENT, amb);
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, dif);
 		glMaterialfv(GL_FRONT, GL_SPECULAR, spe);
-		glScaled(1, 0.2, 1);
+		//glScaled(1, 0.2, 1);
 		glutWireSphere(20, 20, 20);
 	}
 
@@ -338,7 +294,7 @@ void CRenderer::drawScene()
 
 	glScaled(0.001, 0.001, 0.001);
 
-	for (std::vector<SAsteroid>::iterator i = asteroids->begin(); i != asteroids->end(); i++)
+	for (std::vector<SAsteroid>::iterator i = data->asteroids->begin(); i != data->asteroids->end(); i++)
 	{
 		glPushMatrix();
 		glTranslatef(i->pos.x * 500, i->pos.y * 500, i->pos.z * 500);
@@ -359,7 +315,7 @@ void CRenderer::drawScene()
 			glMaterialfv(GL_FRONT, GL_AMBIENT, amb);
 			glMaterialfv(GL_FRONT, GL_DIFFUSE, dif);
 			glMaterialfv(GL_FRONT, GL_SPECULAR, spe);
-			glScaled(1.3, 0.8, 1);
+			glScaled(1.2, 1.2, 1.2);
 			glutWireSphere(12, 20, 20);
 			glPopMatrix();
 		}
