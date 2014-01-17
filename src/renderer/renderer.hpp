@@ -28,7 +28,7 @@ private:
 	SData			*data;
 	CSkybox			*skybox;
 	CWoldmap		*worldmap;
-	CObject			*vehicle, *a;
+	CObject			*vehicle, *a, *a_60tris;
 	GLfloat			ang;
 	/*
 	CShader			*phong;

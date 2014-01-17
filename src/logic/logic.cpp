@@ -62,7 +62,7 @@ void CLogic::detectCollision(void)
 
 	for (std::vector<SAsteroid>::iterator i = data->asteroids->begin(); i != data->asteroids->end(); ++i)
 	{
-		if (i->distance < 2)
+		if (i->distance < 1.5)
 		{
 			i->collision = true;
 			data->debugCollision = true;

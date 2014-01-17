@@ -40,6 +40,8 @@ bool CRenderer::loadData(void)
 	vehicle->bindModel("resources/models/vehicle");
 	a = new CObject;
 	a->bindModel("resources/models/asteroid");
+	a_60tris = new CObject;
+	a_60tris->bindModel("resources/models/asteroid-60");
 
 
 	worldmap = new CWoldmap;
@@ -48,7 +50,7 @@ bool CRenderer::loadData(void)
 	worldmap->loadAsteroids(data->asteroids);
 
 
-	/*
+	
 	for (unsigned i = 0; i < 2000; ++i)
 	{
 		SAsteroid *aster = new SAsteroid;
@@ -66,7 +68,7 @@ bool CRenderer::loadData(void)
 		aster->distance = 0;
 		data->asteroids->push_back(*aster);
 	}
-	*/
+	
 
 	//compile shaders
 
@@ -354,10 +356,15 @@ void CRenderer::drawScene()
 		glPushMatrix();
 		glTranslatef(i->pos.x*1000 , i->pos.y*1000 , i->pos.z *1000);
 		//glRotatef(ang, i->rotation.x, i->rotation.y, i->rotation.z);
-		glScalef(i->scale.x * 100, i->scale.y * 100, i->scale.z * 100);
+		glScalef(i->scale.x * 500, i->scale.y * 500, i->scale.z * 500);
 		if ((i->rotationAxis.x && i->rotationAxis.y && i->rotationAxis.z) == 0)
 			glRotatef(ang*i->rotationSpeed, i->rotationAxis.x, i->rotationAxis.y, i->rotationAxis.z);
-		a->draw();
+
+		//level of detail
+		if (i->distance < 50)
+			a->draw();
+		else
+			a_60tris->draw();
 
 
 		if (data->drawCollisionEdges && data->debugMode)
