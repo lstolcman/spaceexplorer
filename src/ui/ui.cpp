@@ -114,16 +114,16 @@ void CUI::displayDebug(void)
 		if (data->drawCollisionEdges)
 		{
 			std::stringstream s;
-			if (data->debugCollision)
-				s << "Collision";
-			s << data->p.x << "x" << data->p.y << "x" << data->p.z << " d:" << data->p.w;
+
 			printOnScreen(200, 20, std::string(s.str()));
 
 			int asti = 0;
 			for (std::vector<SAsteroid>::iterator i = data->asteroids->begin(); i != data->asteroids->end(); ++i)
 			{
 				s.str("");
-				s << data->p.x << "x" << data->p.y << "x" << data->p.z << " d:" << data->p.w;
+				s << i->pos.x << "x" << i->pos.y << "x" << i->pos.z << " d:" << i->distance;
+				if (i->collision)
+					s << "\tCollision";
 				printOnScreen(500, 20+asti*16, s.str());
 				++asti;
 			}

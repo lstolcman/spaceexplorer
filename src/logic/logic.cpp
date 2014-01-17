@@ -52,26 +52,27 @@ void CLogic::detectCollision(void)
 
 	for (std::vector<SAsteroid>::iterator i = data->asteroids->begin(); i != data->asteroids->end(); ++i)
 	{
+
 		asteroidPos = i->pos;
-		//asteroidScale = i->scale;
-		//playerPos = data->camera->pos;
-		//vehiclePos = playerPos * glm::vec3(0.6, 0, 0);
 		vehiclePos = data->camera->pos+data->camera->view;
 		distanceVec = asteroidPos - vehiclePos;
 
-		distance = sqrt(distanceVec.x*distanceVec.x + distanceVec.y*distanceVec.y + distanceVec.z*distanceVec.z);
-		data->p.x = asteroidPos.x;
-		data->p.y = asteroidPos.y;
-		data->p.z = asteroidPos.z;
-		data->p.w = distance;
-		if (distance < 2)// vehicleScale.x + asteroidScale.x)
+		i->distance = sqrt(distanceVec.x*distanceVec.x + distanceVec.y*distanceVec.y + distanceVec.z*distanceVec.z);
+	}
+
+	for (std::vector<SAsteroid>::iterator i = data->asteroids->begin(); i != data->asteroids->end(); ++i)
+	{
+		if (i->distance < 2)
 		{
+			i->collision = true;
 			data->debugCollision = true;
 		}
 		else
+		{
+			i->collision = false;
 			data->debugCollision = false;
+		}
 	}
-
 
 }
 

@@ -327,6 +327,7 @@ void CRenderer::drawScene()
 
 	if (data->debugInsertAsteroid && data->debugMode)
 	{
+
 		data->debugInsertAsteroid = false;
 
 		SAsteroid *aster = new SAsteroid;

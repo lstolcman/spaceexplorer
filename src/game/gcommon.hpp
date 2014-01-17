@@ -36,6 +36,7 @@ struct SAsteroid
 	float rotationSpeed;
 	glm::vec3 scale;
 	float distance;
+	bool collision;
 };
 
 
