@@ -111,54 +111,61 @@ void CUI::displayDebug(void)
 	if (data->debugMode)
 	{
 		printOnScreen(100, 20, std::string("Debug mode"));
-	}
-	if (data->drawDebug)
-	{
-		std::stringstream s;
-		s << std::fixed << std::setprecision(4);
-		s << "pos=" << data->camera->pos.x << "x" << data->camera->pos.y << "x" << data->camera->pos.z;
-		printOnScreen(s.str());
-		s.str("");
-		s << "view=" << data->camera->view.x << "x" << data->camera->view.y << "x" << data->camera->view.z;
-		printOnScreen(s.str());
-		s.str("");
-		s << "up=" << data->camera->up.x << "x" << data->camera->up.y << "x" << data->camera->up.z;
-		printOnScreen(s.str());
-		s.str("");
-		s << "speed=" << data->camera->speed;
-		printOnScreen(s.str());
-		s.str("");
-		s << "velRX:" << data->camera->velRX << "  velRY:" << data->camera->velRY << "  velRZ:" << data->camera->velRZ << "  velM:" << data->camera->velM << "  velS:" << data->camera->velS;
-		printOnScreen(s.str());
-		s.str("");
-		s << std::setprecision(2) << "angleX:" << (data->camera->angleX * 180) / PI
-			<< "  angleY:" << (data->camera->angleY * 180) / PI
-			<< "  angleZ:" << (data->camera->angleZ * 180) / PI;
-		printOnScreen(s.str());
-		s.str("");
-		s << "Keys: ";
-		for (int i = 0; i < 93; ++i)
-		if (data->inputState->keys[i + 32] == KEYDOWN)
-			s << char(i + 32) << " ";
-		printOnScreen(s.str());
-		s.str("");
-		s << "Mouse: ";
-		if (data->inputState->mouse.state == KEYDOWN)
+		if (data->debugCollision)
 		{
-			switch (data->inputState->mouse.button)
-			{
-			case LEFT_BUTTON:
-				s << "LEFT ";
-				break;
-			case MIDDLE_BUTTON:
-				s << "MIDDLE ";
-				break;
-			case RIGHT_BUTTON:
-				s << "RIGHT ";
-				break;
-			}
+			std::stringstream s;
+			s << "Collision " << data->p.x << "x" << data->p.y << "x" << data->p.z;
+			printOnScreen(200, 20, std::string(s.str()));
 		}
-		printOnScreen(s.str());
+
+		if (data->drawDebug)
+		{
+			std::stringstream s;
+			s << std::fixed << std::setprecision(4);
+			s << "pos=" << data->camera->pos.x << "x" << data->camera->pos.y << "x" << data->camera->pos.z;
+			printOnScreen(s.str());
+			s.str("");
+			s << "view=" << data->camera->view.x << "x" << data->camera->view.y << "x" << data->camera->view.z;
+			printOnScreen(s.str());
+			s.str("");
+			s << "up=" << data->camera->up.x << "x" << data->camera->up.y << "x" << data->camera->up.z;
+			printOnScreen(s.str());
+			s.str("");
+			s << "speed=" << data->camera->speed;
+			printOnScreen(s.str());
+			s.str("");
+			s << "velRX:" << data->camera->velRX << "  velRY:" << data->camera->velRY << "  velRZ:" << data->camera->velRZ << "  velM:" << data->camera->velM << "  velS:" << data->camera->velS;
+			printOnScreen(s.str());
+			s.str("");
+			s << std::setprecision(2) << "angleX:" << (data->camera->angleX * 180) / PI
+				<< "  angleY:" << (data->camera->angleY * 180) / PI
+				<< "  angleZ:" << (data->camera->angleZ * 180) / PI;
+			printOnScreen(s.str());
+			s.str("");
+			s << "Keys: ";
+			for (int i = 0; i < 93; ++i)
+			if (data->inputState->keys[i + 32] == KEYDOWN)
+				s << char(i + 32) << " ";
+			printOnScreen(s.str());
+			s.str("");
+			s << "Mouse: ";
+			if (data->inputState->mouse.state == KEYDOWN)
+			{
+				switch (data->inputState->mouse.button)
+				{
+				case LEFT_BUTTON:
+					s << "LEFT ";
+					break;
+				case MIDDLE_BUTTON:
+					s << "MIDDLE ";
+					break;
+				case RIGHT_BUTTON:
+					s << "RIGHT ";
+					break;
+				}
+			}
+			printOnScreen(s.str());
+		}
 	}
 }
 

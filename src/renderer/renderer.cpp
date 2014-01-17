@@ -36,6 +36,7 @@ bool CRenderer::loadData(void)
 	skybox = new CSkybox;
 	skybox->load();
 	vehicle = new CObject;
+
 	vehicle->bindModel("resources/models/vehicle");
 	a = new CObject;
 	a->bindModel("resources/models/asteroid");
@@ -131,6 +132,7 @@ void CRenderer::setDisplayMatrices(void)
 		data->camera->pos.x + data->camera->view.x, data->camera->pos.y + data->camera->view.y, data->camera->pos.z + data->camera->view.z,
 		data->camera->up.x, data->camera->up.y, data->camera->up.z
 		);
+
 
 }
 
@@ -259,12 +261,17 @@ void CRenderer::drawScene()
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, dif);
 		glMaterialfv(GL_FRONT, GL_SPECULAR, spe);
 		//glScaled(1, 0.2, 1);
-		//glutWireSphere(20, 20, 20);
+		glPushMatrix();
+		glTranslatef(data->camera->view.x + data->camera->pos.x, data->camera->view.y + data->camera->pos.y, data->camera->view.z + data->camera->pos.z);
+		glutWireSphere(0.5, 20, 20);
+		glPopMatrix();
 
+		/*
 		glPushMatrix();
 		glTranslatef(data->camera->view.x + data->camera->pos.x, data->camera->view.y + data->camera->pos.y, data->camera->view.z + data->camera->pos.z);
 		glutWireSphere(0.4, 15, 15);
 		glPopMatrix();
+		*/
 
 	}
 
@@ -322,8 +329,21 @@ void CRenderer::drawScene()
 	{
 		data->debugInsertAsteroid = false;
 
+		SAsteroid *aster = new SAsteroid;
+		aster->pos = data->camera->pos;
 
-		std::cout << "insert: asteroid" << std::endl;
+		aster->rotationAxis = glm::vec3(1, 0, 0);
+		aster->scale = glm::fvec3(1, 1, 1);
+		aster->rotationSpeed = 1;
+		aster->distance = 0;
+		data->asteroids->push_back(*aster);
+
+
+		std::stringstream s;
+
+		s << "insert aster." << data->camera->pos.x << "x" << data->camera->pos.y << "x" << data->camera->pos.z;
+
+		std::cout << s.str() <<  std::endl;
 	}
 
 	glScaled(0.001, 0.001, 0.001);
@@ -331,7 +351,7 @@ void CRenderer::drawScene()
 	for (std::vector<SAsteroid>::iterator i = data->asteroids->begin(); i != data->asteroids->end(); i++)
 	{
 		glPushMatrix();
-		glTranslatef(i->pos.x * 500, i->pos.y * 500, i->pos.z * 500);
+		glTranslatef(i->pos.x*1000 , i->pos.y*1000 , i->pos.z *1000);
 		//glRotatef(ang, i->rotation.x, i->rotation.y, i->rotation.z);
 		glScalef(i->scale.x * 100, i->scale.y * 100, i->scale.z * 100);
 		if ((i->rotationAxis.x && i->rotationAxis.y && i->rotationAxis.z) == 0)
