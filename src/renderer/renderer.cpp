@@ -47,6 +47,7 @@ bool CRenderer::loadData(void)
 	worldmap->loadAsteroids(data->asteroids);
 
 
+	/*
 	for (unsigned i = 0; i < 2000; ++i)
 	{
 		SAsteroid *aster = new SAsteroid;
@@ -61,9 +62,10 @@ bool CRenderer::loadData(void)
 		aster->scale = glm::fvec3(1, 1, 1);
 		//aster->scale = glm::fvec3(1, 1, 1);
 		aster->rotationSpeed = rand() % 2 == 0 ? (rand() % 1000 / 1000.0 ) : -(rand() % 1000 / 1000.0 );
+		aster->distance = 0;
 		data->asteroids->push_back(*aster);
 	}
-	
+	*/
 
 	//compile shaders
 
@@ -235,13 +237,18 @@ void CRenderer::drawScene()
 	//main vehicle rotation procedure
 	//factors are[according to opengl xyz spec.]
 	//glTranslatef(Z, Y, -X) 
-	glTranslatef(0.6, 0.0, 0.0);
+	//glTranslatef(0.6, 0.0, 0.0);
 	glRotated(0, 1, 0, 0); //rotate +left z-axis
 	glRotated(0, 0, 1, 0);	//rotate +left y-axis
 	glRotated(-10, 0, 0, 1); //rotate -left x-axis
 	//glutWireCube(0.2);
-	glScaled(0.01, 0.01, 0.01);
+	glScaled(0.03, 0.03, 0.03);
 	vehicle->draw();
+
+
+
+	glTranslatef(-data->camera->view.x - data->camera->pos.x, -data->camera->view.y - data->camera->pos.y, -data->camera->view.z - data->camera->pos.z);
+	glPopMatrix();
 
 	if (data->drawCollisionEdges && data->debugMode)
 	{
@@ -252,14 +259,41 @@ void CRenderer::drawScene()
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, dif);
 		glMaterialfv(GL_FRONT, GL_SPECULAR, spe);
 		//glScaled(1, 0.2, 1);
-		glutWireSphere(20, 20, 20);
+		//glutWireSphere(20, 20, 20);
+
+		glPushMatrix();
+		glTranslatef(data->camera->view.x + data->camera->pos.x, data->camera->view.y + data->camera->pos.y, data->camera->view.z + data->camera->pos.z);
+		glutWireSphere(0.4, 15, 15);
+		glPopMatrix();
+
 	}
 
-	glTranslatef(-data->camera->view.x - data->camera->pos.x, -data->camera->view.y - data->camera->pos.y, -data->camera->view.z - data->camera->pos.z);
-	glPopMatrix();
+
+
+
+
+
+
 
 	/* 3rd CAMERA end */
 
+
+	/*
+	//bounding sphere from player-pos to vehicle-pos
+	glPushMatrix();
+	glTranslatef(data->camera->view.x + data->camera->pos.x, data->camera->view.y + data->camera->pos.y, data->camera->view.z + data->camera->pos.z);
+	glRotatef(-((data->camera->angleY * 180) / PI), 0, 1, 0);
+	glRotatef(-((data->camera->angleX * 180) / PI), 0, 0, 1);
+
+	//main vehicle rotation procedure
+	//factors are[according to opengl xyz spec.]
+	//glTranslatef(Z, Y, -X) 
+	glTranslatef(0.0, -0.7, 0.0);
+	//glutWireCube(0.2);
+	//glScaled(0.01, 0.01, 0.01);
+	glutWireSphere(0.2, 15, 15);
+	glPopMatrix();
+	*/
 
 
 
