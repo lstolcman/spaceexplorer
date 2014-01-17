@@ -80,7 +80,7 @@ struct SData
 	bool debugMode;
 	bool debugInsertAsteroid;
 	bool debugCollision;
-	glm::fvec3 p;
+	glm::fvec4 p;
 
 	//clipping planes
 	float zNear;

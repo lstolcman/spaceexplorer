@@ -111,11 +111,22 @@ void CUI::displayDebug(void)
 	if (data->debugMode)
 	{
 		printOnScreen(100, 20, std::string("Debug mode"));
-		if (data->debugCollision)
+		if (data->drawCollisionEdges)
 		{
 			std::stringstream s;
-			s << "Collision " << data->p.x << "x" << data->p.y << "x" << data->p.z;
+			if (data->debugCollision)
+				s << "Collision";
+			s << data->p.x << "x" << data->p.y << "x" << data->p.z << " d:" << data->p.w;
 			printOnScreen(200, 20, std::string(s.str()));
+
+			int asti = 0;
+			for (std::vector<SAsteroid>::iterator i = data->asteroids->begin(); i != data->asteroids->end(); ++i)
+			{
+				s.str("");
+				s << data->p.x << "x" << data->p.y << "x" << data->p.z << " d:" << data->p.w;
+				printOnScreen(500, 20+asti*16, s.str());
+				++asti;
+			}
 		}
 
 		if (data->drawDebug)
