@@ -102,10 +102,10 @@ void CWoldmap::loadAsteroids(std::vector<SAsteroid> *asteroids)
 				std::cout << "linia: " << line << std::endl;
 				SAsteroid *aster = new SAsteroid;
 				// asteroid vec3(position) vec4(rotation axis+speed) vec3(scale)
-				sscanf(line.c_str(), "asteroid %f %f %f %f %f %f %f %f %f %f",
+				sscanf(line.c_str(), "asteroid %f %f %f %f %f %f %f %f",
 					&aster->pos.x, &aster->pos.y, &aster->pos.z,
 					&aster->rotationAxis.x, &aster->rotationAxis.y, &aster->rotationAxis.z, &aster->rotationSpeed,
-					&aster->scale.x, &aster->scale.y, &aster->scale.z);
+					&aster->scale);
 				asteroids->push_back(*aster);
 			}
 		}

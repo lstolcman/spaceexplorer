@@ -20,6 +20,11 @@ private:
 	glm::fvec3		vehicleScale;
 	glm::fvec3		distanceVec;
 	float			distance;
+	float			radiusLOD; //defines vehicle radius + asteroid radius to calculate lod
+
+
+	float vehicleRadius;	
+	float asteroidRadius;	//radius of asteroid scaled 1.0
 
 public:
 

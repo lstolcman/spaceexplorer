@@ -34,8 +34,9 @@ struct SAsteroid
 	glm::vec3 pos;
 	glm::vec3 rotationAxis;
 	float rotationSpeed;
-	glm::vec3 scale;
+	float scale;
 	float distance;
+	float radiusLOD;
 	bool collision;
 };
 

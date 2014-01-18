@@ -9,6 +9,8 @@
 CLogic::CLogic(SData *data)
 {
 	this->data = data;
+	vehicleRadius = 2.0f;
+	asteroidRadius = 12.0f;
 }
 
 
@@ -50,26 +52,33 @@ if (xd*xd + yd*yd) < (Diameter*Diameter)
 void CLogic::detectCollision(void)
 {
 
+
 	for (std::vector<SAsteroid>::iterator i = data->asteroids->begin(); i != data->asteroids->end(); ++i)
 	{
 
 		asteroidPos = i->pos;
-		vehiclePos = data->camera->pos+data->camera->view;
+		vehiclePos = data->camera->pos + data->camera->view;
 		distanceVec = asteroidPos - vehiclePos;
 
 		i->distance = sqrt(distanceVec.x*distanceVec.x + distanceVec.y*distanceVec.y + distanceVec.z*distanceVec.z);
 	}
 
+
+
+	//check last collision first!!!!
 	for (std::vector<SAsteroid>::iterator i = data->asteroids->begin(); i != data->asteroids->end(); ++i)
 	{
-		if (i->distance < 1.5)
+		radiusLOD = (asteroidRadius*i->scale) + vehicleRadius;
+		if (i->distance < radiusLOD)
 		{
 			i->collision = true;
+			i->radiusLOD = radiusLOD;
 			data->debugCollision = true;
 		}
 		else
 		{
 			i->collision = false;
+			i->radiusLOD = radiusLOD;
 			data->debugCollision = false;
 		}
 	}

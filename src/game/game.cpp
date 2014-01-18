@@ -66,7 +66,6 @@ CGame::CGame(void)
 	data->zFar = 4000.f;
 
 	data->last_fps = 0;
-
 }
 
 

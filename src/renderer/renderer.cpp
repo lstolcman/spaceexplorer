@@ -38,10 +38,14 @@ bool CRenderer::loadData(void)
 	vehicle = new CObject;
 
 	vehicle->bindModel("resources/models/vehicle");
-	a = new CObject;
-	a->bindModel("resources/models/asteroid");
-	a_60tris = new CObject;
-	a_60tris->bindModel("resources/models/asteroid-60");
+	a_12k_tris = new CObject;
+	a_12k_tris->bindModel("resources/models/asteroid-12k");
+	a_6k_tris = new CObject;
+	a_2k_tris = new CObject;
+	a_60_tris = new CObject;
+	a_6k_tris->bindModel("resources/models/asteroid-6k");
+	a_2k_tris->bindModel("resources/models/asteroid-2k");
+	a_60_tris->bindModel("resources/models/asteroid-60");
 
 
 	worldmap = new CWoldmap;
@@ -50,25 +54,26 @@ bool CRenderer::loadData(void)
 	worldmap->loadAsteroids(data->asteroids);
 
 
-	
-	for (unsigned i = 0; i < 2000; ++i)
+
+	for (unsigned i = 0; i < 500; ++i)
 	{
-		SAsteroid *aster = new SAsteroid;
-		aster->pos = glm::fvec3(rng(-300, 300), rng(-300, 300), rng(-300, 300));
+	SAsteroid *aster = new SAsteroid;
+	aster->pos = glm::fvec3(rng(-300, 300), rng(-300, 300), rng(-300, 300));
 
-		//aster->rotationAxis = glm::fvec3(rng("nz", -1, 1), rng("nz", -1, 1), rng("nz", -1, 1));// rand() % 2 + 1, rand() % 2 + 1, rand() % 2 + 1);
-		aster->rotationAxis = glm::vec3((rand() % 2), (rand() % 2), (rand() % 2));
-		//aster->rotationAxis = glm::fvec3(1, 0, 0);
-		float scale = ( rand() % 100 / 100)+1000;
+	//aster->rotationAxis = glm::fvec3(rng("nz", -1, 1), rng("nz", -1, 1), rng("nz", -1, 1));// rand() % 2 + 1, rand() % 2 + 1, rand() % 2 + 1);
+	aster->rotationAxis = glm::vec3((rand() % 2), (rand() % 2), (rand() % 2));
+	//aster->rotationAxis = glm::fvec3(1, 0, 0);
+	float scale = ( rand() % 100 / 100)+1000;
 
-		//aster->scale = glm::fvec3(scale + rand() % 20 / 5, scale + rand() % 20 / 5, scale + rand() % 20 / 5);
-		aster->scale = glm::fvec3(1, 1, 1);
-		//aster->scale = glm::fvec3(1, 1, 1);
-		aster->rotationSpeed = rand() % 2 == 0 ? (rand() % 1000 / 1000.0 ) : -(rand() % 1000 / 1000.0 );
-		aster->distance = 0;
-		data->asteroids->push_back(*aster);
+	//aster->scale = glm::fvec3(scale + rand() % 20 / 5, scale + rand() % 20 / 5, scale + rand() % 20 / 5);
+	aster->scale = 1.0;
+	//aster->scale = glm::fvec3(1, 1, 1);
+	aster->rotationSpeed = rand() % 2 == 0 ? (rand() % 1000 / 1000.0 ) : -(rand() % 1000 / 1000.0 );
+	aster->distance = 0;
+	data->asteroids->push_back(*aster);
 	}
-	
+
+
 
 	//compile shaders
 
@@ -249,7 +254,20 @@ void CRenderer::drawScene()
 	glScaled(0.03, 0.03, 0.03);
 	vehicle->draw();
 
-
+	/*glPushMatrix();
+	float amb[] = { 0, 0.5, 0, 1.0f };
+	float dif[] = { 0, 0.5, 0, 1.0f };
+	float spe[] = { 0, 0.5, 0, 1.0f };
+	glMaterialfv(GL_FRONT, GL_AMBIENT, amb);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, dif);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, spe);
+	glLineWidth(5);
+	glBegin(GL_LINES);
+	glVertex3f(0, 20, 0);
+	glVertex3f(0, -20, 0);
+	glEnd();
+	glPopMatrix();
+	*/
 
 	glTranslatef(-data->camera->view.x - data->camera->pos.x, -data->camera->view.y - data->camera->pos.y, -data->camera->view.z - data->camera->pos.z);
 	glPopMatrix();
@@ -296,7 +314,7 @@ void CRenderer::drawScene()
 
 	//main vehicle rotation procedure
 	//factors are[according to opengl xyz spec.]
-	//glTranslatef(Z, Y, -X) 
+	//glTranslatef(Z, Y, -X)
 	glTranslatef(0.0, -0.7, 0.0);
 	//glutWireCube(0.2);
 	//glScaled(0.01, 0.01, 0.01);
@@ -336,7 +354,7 @@ void CRenderer::drawScene()
 		aster->pos = data->camera->pos;
 
 		aster->rotationAxis = glm::vec3(1, 0, 0);
-		aster->scale = glm::fvec3(1, 1, 1);
+		aster->scale = 1.0;
 		aster->rotationSpeed = 1;
 		aster->distance = 0;
 		data->asteroids->push_back(*aster);
@@ -346,7 +364,7 @@ void CRenderer::drawScene()
 
 		s << "insert aster." << data->camera->pos.x << "x" << data->camera->pos.y << "x" << data->camera->pos.z;
 
-		std::cout << s.str() <<  std::endl;
+		std::cout << s.str() << std::endl;
 	}
 
 	glScaled(0.001, 0.001, 0.001);
@@ -354,17 +372,24 @@ void CRenderer::drawScene()
 	for (std::vector<SAsteroid>::iterator i = data->asteroids->begin(); i != data->asteroids->end(); i++)
 	{
 		glPushMatrix();
-		glTranslatef(i->pos.x*1000 , i->pos.y*1000 , i->pos.z *1000);
+		glTranslatef(i->pos.x * 1000, i->pos.y * 1000, i->pos.z * 1000);
 		//glRotatef(ang, i->rotation.x, i->rotation.y, i->rotation.z);
-		glScalef(i->scale.x * 500, i->scale.y * 500, i->scale.z * 500);
+		//glScalef(i->scale.x * 100, i->scale.y * 100, i->scale.z * 100);
+		glScalef(i->scale * 1000, i->scale * 1000, i->scale * 1000);
 		if ((i->rotationAxis.x && i->rotationAxis.y && i->rotationAxis.z) == 0)
 			glRotatef(ang*i->rotationSpeed, i->rotationAxis.x, i->rotationAxis.y, i->rotationAxis.z);
 
+
 		//level of detail
-		if (i->distance < 50)
-			a->draw();
-		else
-			a_60tris->draw();
+		if ((i->distance - i->radiusLOD) < 50)
+			a_12k_tris->draw();
+		else if ((i->distance - i->radiusLOD) < 100)
+			a_6k_tris->draw();
+		else if ((i->distance - i->radiusLOD) < 200)
+			a_2k_tris->draw();
+		else 
+			a_60_tris->draw();
+
 
 
 		if (data->drawCollisionEdges && data->debugMode)
@@ -377,10 +402,27 @@ void CRenderer::drawScene()
 			glMaterialfv(GL_FRONT, GL_AMBIENT, amb);
 			glMaterialfv(GL_FRONT, GL_DIFFUSE, dif);
 			glMaterialfv(GL_FRONT, GL_SPECULAR, spe);
-			glScaled(1.2, 1.2, 1.2);
 			glutWireSphere(12, 20, 20);
 			glPopMatrix();
 		}
+
+
+
+		/*
+		glPushMatrix();
+		float amb[] = { 0, 0.5, 0, 1.0f };
+		float dif[] = { 0, 0.5, 0, 1.0f };
+		float spe[] = { 0, 0.5, 0, 1.0f };
+		glMaterialfv(GL_FRONT, GL_AMBIENT, amb);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, dif);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, spe);
+		glLineWidth(5);
+		glBegin(GL_LINES);
+		glVertex3f(-14,0,0);
+		glVertex3f(14,0,0);
+		glEnd();
+		glPopMatrix();
+		*/
 
 		glPopMatrix();
 	}
