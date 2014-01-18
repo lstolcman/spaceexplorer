@@ -17,6 +17,7 @@ private:
 	SObjFile			*objHandle;
 
 public:
+	bool				loadTex;
 
 
 	//Members:

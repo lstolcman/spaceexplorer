@@ -54,12 +54,12 @@ void CSkybox::draw(void)
 	glColor4f(1, 1, 1, 1);
 
 
-	/*float m_amb[] = { 0.7f, 0.7f, 0.7f, 1.0f };
+	float m_amb[] = { 0.7f, 0.7f, 0.7f, 1.0f };
 	float m_dif[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	float m_spe[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	glMaterialfv(GL_FRONT, GL_AMBIENT, m_amb);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, m_dif);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);*/
+	glMaterialfv(GL_FRONT, GL_SPECULAR, m_spe);
 
 
 #pragma region skybox

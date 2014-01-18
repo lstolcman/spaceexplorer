@@ -113,8 +113,6 @@ void CLogic::playSounds(void)
 		playMs = 3000;
 
 
-	std::cout << "\nevery: " << playMs << "\n";
-
 	if ((unsigned)timer.getElapsedMilliseconds() > playMs)
 	{
 		distSound->play();

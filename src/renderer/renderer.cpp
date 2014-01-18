@@ -47,6 +47,11 @@ bool CRenderer::loadData(void)
 	a_2k_tris->bindModel("resources/models/asteroid-2k");
 	a_60_tris->bindModel("resources/models/asteroid-60");
 
+	carrier = new CObject;
+
+	carrier->bindModel("resources/models/starshipr");
+	///carrier->bindModel("resources/models/poa");
+
 
 	worldmap = new CWoldmap;
 
@@ -151,15 +156,15 @@ void CRenderer::setupLights(void)
 	//	tex->useShader();
 	//oswietlenie ambient - wszystkie wierzcho³ki
 	//float globalAmbient[4] = { 0.40f, 0.40f, 0.40f, 1.0f };
-	float globalAmbient[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	float globalAmbient[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
 
 
 
 #pragma region Swiatlo
 	glEnable(GL_LIGHT0);
-	float l0_amb[] = { 0.2f, 0.2f, 0.2f };
-	float l0_dif[] = { 0.6f, 0.6f, 0.6f };
+	float l0_amb[] = { 0.4f, 0.4f, 0.4f };
+	float l0_dif[] = { 0.5f, 0.5f, 0.5f };
 	float l0_spe[] = { 0.2f, 0.2f, 0.2f };
 	float l0_pos[] = { 6000.0f, 0.0f, -2000.0f, 1.0f };
 	glLightfv(GL_LIGHT0, GL_AMBIENT, l0_amb);
@@ -298,8 +303,14 @@ void CRenderer::drawScene()
 
 
 
+	glPushMatrix();
 
+	glColor3b(0, 1, 1);
+	//glRotated(180, 1, 0, 0);
+	//glScaled(80, 80, 80);
+	carrier->draw();
 
+	glPopMatrix();
 
 
 

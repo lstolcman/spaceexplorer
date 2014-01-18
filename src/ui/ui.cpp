@@ -27,6 +27,7 @@ void CUI::drawUI(void)
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, color);
 #endif
 
+	glDisable(GL_DEPTH_TEST);
 	glMatrixMode(GL_PROJECTION);
 
 	glPushMatrix();
@@ -48,6 +49,7 @@ void CUI::drawUI(void)
 	glPopMatrix();
 
 	glMatrixMode(GL_MODELVIEW);
+	glEnable(GL_DEPTH_TEST);
 	textLines = 0;
 }
 

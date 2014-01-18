@@ -47,24 +47,35 @@ bool CObject::bindModel(std::string modelPath)
 
 	if (obj->loadObj(modelPath) == true)
 	{
-		map_Kd = new CTexture;
-		map_Kd->Load("resources/models/" + objFile->map_Kd);
 
+		if (obj->loadTex)
+		{
+			map_Kd = new CTexture;
+			map_Kd->Load("resources/models/" + objFile->map_Kd);
+		}
 
 
 		modelListHandle = glGenLists(1);
 		glNewList(modelListHandle, GL_COMPILE);
-		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, (*map_Kd)());
+		if (obj->loadTex)
+		{
+			glEnable(GL_TEXTURE_2D);
+			glBindTexture(GL_TEXTURE_2D, (*map_Kd)());
+		}
 		glBegin(GL_TRIANGLES);
 		for (std::size_t i = 0; i < objFile->f->size(); ++i)
 		{
 			for (int j = 0; j < 3; ++j)
 			{
 				glm::vec3 *cv = &(*objFile->v)[((*objFile->f)[i].v[j] - 1)];
-				glm::vec2 *ct = &(*objFile->t)[((*objFile->f)[i].t[j] - 1)];
 				glm::vec3 *cn = &(*objFile->n)[((*objFile->f)[i].n[j] - 1)];
-				glTexCoord2f(ct->x, ct->y);
+
+				if (obj->loadTex)
+				{
+					glm::vec2 *ct = &(*objFile->t)[((*objFile->f)[i].t[j] - 1)];
+					glTexCoord2f(ct->x, ct->y);
+				}
+
 				glNormal3f(cn->x, cn->y, cn->z);
 				glVertex3f(cv->x, cv->y, cv->z);
 			}

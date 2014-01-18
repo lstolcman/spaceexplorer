@@ -30,8 +30,9 @@ bool CLoaderOBJ::loadObj(std::string file)
 	std::string line;
 	char *map_Kd = (char*)calloc(100, 1); //temp for sscanf %s
 	t.start();
+	loadTex = false;
 
-	obj.open(file+".obj", std::ios::in);
+	obj.open(file + ".obj", std::ios::in);
 	if (obj.is_open() == false)
 	{
 		MessageBox(0, ("Error loading: " + file + ".obj").c_str(), "Error", MB_OK | MB_ICONERROR);
@@ -62,52 +63,72 @@ bool CLoaderOBJ::loadObj(std::string file)
 		}
 		if (line[0] == 'f' && line[1] == ' ')
 		{
-			SFace *face = new SFace;
-			sscanf(line.c_str(), "f %d/%d/%d %d/%d/%d %d/%d/%d",
-				&face->v[0], &face->t[0], &face->n[0],
-				&face->v[1], &face->t[1], &face->n[1],
-				&face->v[2], &face->t[2], &face->n[2]
-				);
-			objHandle->f->push_back(*face);
+			if (line.find("//") != std::string::npos)  //no texture, face format: f %d//%d ...
+			{
+				loadTex = false;
+				SFace *face = new SFace;
+				sscanf(line.c_str(), "f %d//%d %d//%d %d//%d",
+					&face->v[0], /*&face->t[0],*/ &face->n[0],
+					&face->v[1], /*&face->t[1],*/ &face->n[1],
+					&face->v[2], /*&face->t[2],*/ &face->n[2]
+					);
+				objHandle->f->push_back(*face);
+			}
+			else
+			{
+				loadTex = true;
+				SFace *face = new SFace;
+				sscanf(line.c_str(), "f %d/%d/%d %d/%d/%d %d/%d/%d",
+					&face->v[0], &face->t[0], &face->n[0],
+					&face->v[1], &face->t[1], &face->n[1],
+					&face->v[2], &face->t[2], &face->n[2]
+					);
+				objHandle->f->push_back(*face);
+			}
 		}
 	}
 	obj.close();
 
 
-	mtl.open(file+".mtl", std::ios::in);
-	if (mtl.is_open() == false)
-	{
-		MessageBox(0, ("Error loading: " + file + ".mtl").c_str(), "Error", MB_OK | MB_ICONERROR);
-		exit(1);
-		return false;
-	}
-
-	//read light attributes
-	while (std::getline(mtl, line))
+	if (loadTex)
 	{
 
-		if (line[0] == 'K' && line[1] == 'a')
+		mtl.open(file + ".mtl", std::ios::in);
+		if (mtl.is_open() == false)
 		{
-			sscanf(line.c_str(), "Ka %f %f %f", &objHandle->amb.x, &objHandle->amb.y, &objHandle->amb.z);
+			MessageBox(0, ("Error loading: " + file + ".mtl").c_str(), "Error", MB_OK | MB_ICONERROR);
+			exit(1);
+			return false;
 		}
-		if (line[0] == 'K' && line[1] == 'd')
+
+		//read light attributes
+		while (std::getline(mtl, line))
 		{
-			sscanf(line.c_str(), "Kd %f %f %f", &objHandle->dif.x, &objHandle->dif.y, &objHandle->dif.z);
+
+			if (line[0] == 'K' && line[1] == 'a')
+			{
+				sscanf(line.c_str(), "Ka %f %f %f", &objHandle->amb.x, &objHandle->amb.y, &objHandle->amb.z);
+			}
+			if (line[0] == 'K' && line[1] == 'd')
+			{
+				sscanf(line.c_str(), "Kd %f %f %f", &objHandle->dif.x, &objHandle->dif.y, &objHandle->dif.z);
+			}
+			if (line[0] == 'K' && line[1] == 's')
+			{
+				sscanf(line.c_str(), "Ks %f %f %f", &objHandle->spe.x, &objHandle->spe.y, &objHandle->spe.z);
+			}
+			if (line.find("map_Kd") != std::string::npos)
+			{
+				sscanf(line.c_str(), "map_Kd %s", map_Kd);
+			}
+
 		}
-		if (line[0] == 'K' && line[1] == 's')
-		{
-			sscanf(line.c_str(), "Ks %f %f %f", &objHandle->spe.x, &objHandle->spe.y, &objHandle->spe.z);
-		}
-		if (line.find("map_Kd") != std::string::npos)
-		{
-			sscanf(line.c_str(), "map_Kd %s", map_Kd);
-		}
+
+		mtl.close();
+
+		objHandle->map_Kd = std::string(map_Kd);
+
 	}
-
-	mtl.close();
-
-	objHandle->map_Kd = std::string(map_Kd);
-
 	t.stop();
 	std::cout << "model: " << file << " " << t.getElapsedMilliseconds() << "ms" << std::endl;
 	/*
@@ -132,15 +153,15 @@ bool CLoaderOBJ::loadObj(std::string file)
 	glBegin(GL_TRIANGLES);
 	for (int i = 0; i < f->size(); ++i)
 	{
-		for (int j = 0; j < 3; ++j)
-		{
-			glm::vec3 *cv = &(*v)[((*f)[i].v[j] - 1)];
-			glm::vec2 *ct = &(*t)[((*f)[i].t[j] - 1)];
-			glm::vec3 *cn = &(*n)[((*f)[i].n[j] - 1)];
-			glTexCoord2f(ct->x, ct->y);
-			glNormal3f(cn->x, cn->y, cn->z);
-			glVertex3f(cv->x, cv->y, cv->z);
-		}
+	for (int j = 0; j < 3; ++j)
+	{
+	glm::vec3 *cv = &(*v)[((*f)[i].v[j] - 1)];
+	glm::vec2 *ct = &(*t)[((*f)[i].t[j] - 1)];
+	glm::vec3 *cn = &(*n)[((*f)[i].n[j] - 1)];
+	glTexCoord2f(ct->x, ct->y);
+	glNormal3f(cn->x, cn->y, cn->z);
+	glVertex3f(cv->x, cv->y, cv->z);
+	}
 	}
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
