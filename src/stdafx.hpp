@@ -20,10 +20,12 @@
 
 #define GLEW_STATIC
 #pragma comment(lib,"glew32s.lib")
+#pragma comment(lib,"audiere.lib")
 
 #else
 
 #pragma comment(lib,"glew32.lib")
+#pragma comment(lib,"audiere.lib")
 
 #endif
 
@@ -32,6 +34,9 @@
 #include <GL/freeglut.h>
 
 #include <glm/glm.hpp>
+
+#include <audiere.h>
+
 
 #include <iostream>
 #include <algorithm>

@@ -55,6 +55,7 @@ bool CRenderer::loadData(void)
 
 
 
+	/*
 	for (unsigned i = 0; i < 500; ++i)
 	{
 	SAsteroid *aster = new SAsteroid;
@@ -72,7 +73,7 @@ bool CRenderer::loadData(void)
 	aster->distance = 0;
 	data->asteroids->push_back(*aster);
 	}
-
+	*/
 
 
 	//compile shaders
@@ -381,11 +382,11 @@ void CRenderer::drawScene()
 
 
 		//level of detail
-		if ((i->distance - i->radiusLOD) < 50)
+		if ((i->distance - i->radiusLOD) < 100)
 			a_12k_tris->draw();
-		else if ((i->distance - i->radiusLOD) < 100)
-			a_6k_tris->draw();
 		else if ((i->distance - i->radiusLOD) < 200)
+			a_6k_tris->draw();
+		else if ((i->distance - i->radiusLOD) < 300)
 			a_2k_tris->draw();
 		else 
 			a_60_tris->draw();

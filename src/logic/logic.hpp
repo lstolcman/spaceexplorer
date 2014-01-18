@@ -1,7 +1,7 @@
 #pragma once
 
 #include "./game/gcommon.hpp"
-
+#include "../tools/timer.hpp"
 
 class CLogic
 {
@@ -26,6 +26,11 @@ private:
 	float vehicleRadius;	
 	float asteroidRadius;	//radius of asteroid scaled 1.0
 
+
+	audiere::SoundEffectPtr distSound;
+
+	CTimer					timer;
+
 public:
 
 
@@ -38,6 +43,8 @@ public:
 	~CLogic();
 
 	void			detectCollision(void);
+	void			loadSounds(void);
+	void			playSounds(void);
 
 };
 

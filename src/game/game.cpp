@@ -116,6 +116,11 @@ void CGame::Init(int argc, char **argv)
 	}
 	std::cout << "Using GLEW " << glewGetString(GLEW_VERSION) << std::endl;
 
+
+	data->audioDevice = audiere::OpenDevice();
+
+
+
 	if (data->fullscreen)
 		glutFullScreen();
 
@@ -138,6 +143,7 @@ void CGame::Init(int argc, char **argv)
 
 void CGame::Update(void)
 {
+	handlers.logic->playSounds();
 	if (instance->handlers.input->checkInput())
 	{
 		instance->handlers.camera->cameraMove();
@@ -204,6 +210,7 @@ void CGame::setGlutCallbacks(void)
 void CGame::loadData(void)
 {
 	handlers.renderer->loadData();
+	handlers.logic->loadSounds();
 }
 
 

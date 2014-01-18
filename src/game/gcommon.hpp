@@ -98,12 +98,17 @@ struct SData
 
 	unsigned last_fps;
 
+	float	vehicleNearestAsteroid; //distance for nearest asteroid
 
 	std::vector<SAsteroid>		*asteroids;
 
 	SInputState *inputState;
 	SCamera	*camera;
 	SWindow *window;
+
+
+
+	audiere::AudioDevicePtr		audioDevice;
 };
 
 

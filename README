@@ -2,6 +2,7 @@ third-party libraries needed to compile:
 ./3rd/glew-1.10.0
 ./3rd/freeglut-2.8.1
 ./3rd/glm
+./audiere-1.9.4-win32
 
 key controls:
 

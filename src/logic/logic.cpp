@@ -11,12 +11,13 @@ CLogic::CLogic(SData *data)
 	this->data = data;
 	vehicleRadius = 2.0f;
 	asteroidRadius = 12.0f;
+
+	timer.start();
 }
 
 
 CLogic::~CLogic()
 {
-
 }
 
 
@@ -51,6 +52,7 @@ if (xd*xd + yd*yd) < (Diameter*Diameter)
 */
 void CLogic::detectCollision(void)
 {
+	data->vehicleNearestAsteroid = 10000.0f;
 
 
 	for (std::vector<SAsteroid>::iterator i = data->asteroids->begin(); i != data->asteroids->end(); ++i)
@@ -61,8 +63,10 @@ void CLogic::detectCollision(void)
 		distanceVec = asteroidPos - vehiclePos;
 
 		i->distance = sqrt(distanceVec.x*distanceVec.x + distanceVec.y*distanceVec.y + distanceVec.z*distanceVec.z);
-	}
 
+		if (i->distance < data->vehicleNearestAsteroid)
+			data->vehicleNearestAsteroid = i->distance;
+	}
 
 
 	//check last collision first!!!!
@@ -86,7 +90,37 @@ void CLogic::detectCollision(void)
 }
 
 
+void CLogic::loadSounds(void)
+{
+	distSound = audiere::OpenSoundEffect(data->audioDevice, "resources/sounds/distance.wav", audiere::MULTIPLE);
 
+	distSound->setVolume(0.30f);
+}
+
+void CLogic::playSounds(void)
+{
+	unsigned playMs;
+
+	if (data->vehicleNearestAsteroid < 20)
+		playMs = 100;
+	else if (data->vehicleNearestAsteroid < 25)
+		playMs = 200;
+	else if (data->vehicleNearestAsteroid < 35)
+		playMs = 500;
+	else if (data->vehicleNearestAsteroid < 45)
+		playMs = 1500;
+	else
+		playMs = 3000;
+
+
+	std::cout << "\nevery: " << playMs << "\n";
+
+	if ((unsigned)timer.getElapsedMilliseconds() > playMs)
+	{
+		distSound->play();
+		timer.reset();
+	}
+}
 
 
 

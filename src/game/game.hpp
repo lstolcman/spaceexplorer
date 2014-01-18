@@ -27,6 +27,9 @@ private:
 	SData				*data;
 
 
+
+
+
 public:
 
 
