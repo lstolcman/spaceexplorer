@@ -93,8 +93,11 @@ void CCamera::cameraMove(void)
 	data->camera->velRX /= 1.1f;
 	data->camera->velRY /= 1.1f;
 	data->camera->velRZ /= 1.1f;
-	data->camera->velM /= 1.1f;
-	data->camera->velS /= 1.1f;
+	if (data->debugMode)
+	{
+		data->camera->velM /= 1.1f;
+		data->camera->velS /= 1.1f;
+	}
 
 }
 

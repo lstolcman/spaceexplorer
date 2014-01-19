@@ -102,7 +102,7 @@ void CWoldmap::loadAsteroids(std::vector<SAsteroid> *asteroids)
 
 			if (line.find("asteroid") != std::string::npos)
 			{
-				std::cout << "linia: " << line << std::endl;
+				//std::cout << "linia: " << line << std::endl;
 				SAsteroid *aster = new SAsteroid;
 				// asteroid vec3(position) vec4(rotation axis+speed) vec3(scale)
 				sscanf(line.c_str(), "asteroid %f %f %f %f %f %f %f %f",
@@ -131,13 +131,13 @@ void CWoldmap::writeMap(std::vector<SAsteroid> *asteroids, SCamera *camera)
 		exit(1);
 	}
 		std::stringstream s;
-		s << "player_pos" << std::fixed << std::setprecision(2)
+		s << "player_pos " << std::fixed << std::setprecision(2)
 			<< camera->pos.x << " " << camera->pos.y << " " << camera->pos.z << std::endl;
-		s << "player_view" << std::fixed << std::setprecision(2)
+		s << "player_view " << std::fixed << std::setprecision(2)
 			<< camera->view.x << " " << camera->view.y << " " << camera->view.z << std::endl;
-		s << "player_up" << std::fixed << std::setprecision(2)
+		s << "player_up " << std::fixed << std::setprecision(2)
 			<< camera->up.x << " " << camera->up.y << " " << camera->up.z << std::endl;
-		s << "player_speed" << std::fixed << std::setprecision(2)
+		s << "player_speed " << std::fixed << std::setprecision(2)
 			<< camera->speed << std::endl;
 		player << s.str();
 		player.flush();
@@ -171,7 +171,6 @@ void CWoldmap::writeMap(std::vector<SAsteroid> *asteroids, SCamera *camera)
 	}
 
 
-	map << "// a(asteroid)	pos_x	pos_y	pos_z	rotation_speed	scale" << std::endl;
 	for (std::vector<SAsteroid>::iterator i = asteroids->begin(); i != asteroids->end(); ++i)
 	{
 		std::stringstream s;

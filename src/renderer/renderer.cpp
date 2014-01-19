@@ -40,13 +40,16 @@ bool CRenderer::loadData(void)
 	vehicle->bindModel("resources/models/vehicle");
 	a_12k_tris = new CObject;
 	a_12k_tris->bindModel("resources/models/asteroid-12k");
+	/*
+	a_18k_tris = new CObject;
+	a_18k_tris->bindModel("resources/models/asteroid-18k");
 	a_6k_tris = new CObject;
 	a_2k_tris = new CObject;
 	a_60_tris = new CObject;
 	a_6k_tris->bindModel("resources/models/asteroid-6k");
 	a_2k_tris->bindModel("resources/models/asteroid-2k");
 	a_60_tris->bindModel("resources/models/asteroid-60");
-
+	*/
 	carrier = new CObject;
 
 	//carrier->bindModel("resources/models/starshipr");
@@ -205,11 +208,16 @@ void CRenderer::drawSky(void)
 
 void CRenderer::drawScene()
 {
-	if (data->endGame == 0)
+	//draw any opengl errors
+	GLenum errCode;
+	if ((errCode = glGetError()) != GL_NO_ERROR)
+		std::cout << "OpenGL Error: " << gluErrorString(errCode) << std::endl;
+
+	if (data->endGame == 0) // game running
 	{
 
 		glScalef(0.01, 0.01, 0.01);
-		if (data->writeMap)
+		if (data->writeMap && data->debugMode)
 		{
 			data->writeMap = false;
 
@@ -219,10 +227,6 @@ void CRenderer::drawScene()
 		}
 
 
-		//draw any opengl errors
-		GLenum errCode;
-		if ((errCode = glGetError()) != GL_NO_ERROR)
-			std::cout << "OpenGL Error: " << gluErrorString(errCode) << std::endl;
 
 		countFPS();
 
@@ -304,7 +308,14 @@ void CRenderer::drawScene()
 		glRotated(90, 0, 1, 0);
 		glScaled(50, 50, 50);
 		carrier->draw();
-
+		float amb[] = { 0.4, 0, 0.0, 1.0f };
+		float dif[] = { 0.4, 0, 0.0, 1.0f };
+		float spe[] = { 0.4, 0, 0.0, 1.0f };
+		glMaterialfv(GL_FRONT, GL_AMBIENT, amb);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, dif);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, spe);
+		glRotated(ang, 1, 1, 1);
+		glutWireSphere(6, 10, 10);
 		glPopMatrix();
 
 
@@ -388,14 +399,15 @@ void CRenderer::drawScene()
 
 
 			//level of detail
-			//if (i->distance < 30)
+			//if (i->distance < 20)
+				//a_6k_tris->draw();
+			//else /*if (i->distance < 500)*/
+				//a_12k_tris->draw();
+			/*else if(i->distance < 900)
+				a_6k_tris->draw();
+			else 
+				a_12k_tris->draw();*/
 				a_12k_tris->draw();
-			//else if (i->distance < 600)
-			//	a_6k_tris->draw();
-			//else if ((i->distance - i->radiusLOD) < 300)
-			//else	a_2k_tris->draw();
-			//else 
-			//	a_60_tris->draw();
 
 
 

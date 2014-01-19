@@ -7,14 +7,25 @@ third-party libraries needed to compile:
 key controls:
 
 F1 - draw FPS
-F8 - draw edges
-F9 - enable debug mode
-F12 - draw debug info
 ESC - exit game
 
-v - draw HUD
-m - capture mouse
+[not working] v - draw HUD 
 n - minimalize/maximalize
+
+m - capture mouse
+
+
+F9 - enable debug mode
+debug mode options:
+
+F8 - draw edges
+F12 - draw debug info
 k - draw collision edges
+space - add asteroid
+b - write map and vehicle position to file worldmap.txt
+
+
+
+
 
 

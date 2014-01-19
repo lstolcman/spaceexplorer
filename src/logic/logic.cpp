@@ -64,9 +64,9 @@ void CLogic::generateAsteroids(void)
 	{
 		SAsteroid *aster = new SAsteroid;
 		aster->pos = //glm::fvec3(rng(-500, 500), rng(-500, 500), rng(-500, 500));
-		glm::fvec3((rand() % 2 == 0 ? rng(-500, -10) : rng(500, 10)),
-					(rand() % 2 == 0 ? rng(-500, -10) : rng(500, 10)),
-					(rand() % 2 == 0 ? rng(-500, -10) : rng(500, 10)));
+			glm::fvec3((rand() % 2 == 0 ? rng(-500, -10) : rng(500, 10)),
+			(rand() % 2 == 0 ? rng(-500, -10) : rng(500, 10)),
+			(rand() % 2 == 0 ? rng(-500, -10) : rng(500, 10)));
 
 		//aster->rotationAxis = glm::fvec3(rng("nz", -1, 1), rng("nz", -1, 1), rng("nz", -1, 1));// rand() % 2 + 1, rand() % 2 + 1, rand() % 2 + 1);
 		aster->rotationAxis = glm::vec3(1/*(rand() % 2)*/, (rand() % 2), (rand() % 2));
@@ -85,18 +85,18 @@ void CLogic::generateAsteroids(void)
 	//check if asteroid are not too close
 	/*for (std::vector<SAsteroid>::iterator x = data->asteroids->begin(); x != data->asteroids->end(); ++x)
 	{
-		for (std::vector<SAsteroid>::iterator y = data->asteroids->begin(); y != data->asteroids->end(); ++y)
-		{
-			distanceVec = x->pos - y->pos;
+	for (std::vector<SAsteroid>::iterator y = data->asteroids->begin(); y != data->asteroids->end(); ++y)
+	{
+	distanceVec = x->pos - y->pos;
 
-			distance = sqrt(distanceVec.x*distanceVec.x + distanceVec.y*distanceVec.y + distanceVec.z*distanceVec.z);
+	distance = sqrt(distanceVec.x*distanceVec.x + distanceVec.y*distanceVec.y + distanceVec.z*distanceVec.z);
 
-			if (distance < (asteroidRadius*x->scale + asteroidRadius*y->scale)) // colliding each other
-			{
-				data->asteroids->erase(x);
-				break;
-			}
-		}
+	if (distance < (asteroidRadius*x->scale + asteroidRadius*y->scale)) // colliding each other
+	{
+	data->asteroids->erase(x);
+	break;
+	}
+	}
 	}*/
 
 
@@ -106,6 +106,14 @@ void CLogic::generateAsteroids(void)
 
 void CLogic::detectCollision(void)
 {
+	//distance from carrier
+	distanceVec = (data->camera->pos + data->camera->view) - glm::vec3(1500, -128, -18);
+
+	if (sqrt(distanceVec.x*distanceVec.x + distanceVec.y*distanceVec.y + distanceVec.z*distanceVec.z) < 400 && !data->debugMode)
+		data->endGame = 2;
+
+
+
 	data->vehicleNearestAsteroidDistance = 10000.0f;
 	//data->vehicleNearestAsteroidScale = 0.5f;
 
@@ -134,7 +142,10 @@ void CLogic::detectCollision(void)
 		if (i->distance < radiusLOD)
 		{
 			i->collision = true;
-			data->endGame = 1;
+
+			if (!data->debugMode)  
+				data->endGame = 1;
+
 			i->radiusLOD = radiusLOD;
 			data->debugCollision = true;
 		}
@@ -157,19 +168,19 @@ void CLogic::loadSounds(void)
 	distSound->setVolume(0.30f);
 	std::cout << "sound: resources/sounds/distance.wav " << t.getElapsedMilliseconds() << "ms" << std::endl;
 	t.reset();
-	looseSound= audiere::OpenSoundEffect(data->audioDevice, "resources/sounds/theend.mp3", audiere::MULTIPLE);
-	looseSound->setVolume(0.80f);
+	looseSound = audiere::OpenSoundEffect(data->audioDevice, "resources/sounds/theend.mp3", audiere::MULTIPLE);
+	looseSound->setVolume(1.00f);
 	std::cout << "sound: resources/sounds/theend.mp3 " << t.getElapsedMilliseconds() << "ms" << std::endl;
 	t.reset();
 	winSound = audiere::OpenSoundEffect(data->audioDevice, "resources/sounds/win.mp3", audiere::MULTIPLE);
 	winSound->setVolume(0.70f);
 	std::cout << "sound: resources/sounds/win.mp3 " << t.getElapsedMilliseconds() << "ms" << std::endl;
 	t.reset();
-	ambSound= audiere::OpenSoundEffect(data->audioDevice, "resources/sounds/tokyo.mp3", audiere::MULTIPLE);
+	ambSound = audiere::OpenSoundEffect(data->audioDevice, "resources/sounds/tokyo.mp3", audiere::MULTIPLE);
 	ambSound->setVolume(ambSoundVol);
 	std::cout << "sound: resources/sounds/tokyo.mp3 " << t.getElapsedMilliseconds() << "ms" << std::endl;
 	t.reset();
-	explSound= audiere::OpenSoundEffect(data->audioDevice, "resources/sounds/explosion.mp3", audiere::MULTIPLE);
+	explSound = audiere::OpenSoundEffect(data->audioDevice, "resources/sounds/explosion.mp3", audiere::MULTIPLE);
 	explSound->setVolume(0.5);
 	std::cout << "sound: resources/sounds/explosion.mp3 " << t.getElapsedMilliseconds() << "ms" << std::endl;
 	t.stop();
@@ -179,7 +190,7 @@ void CLogic::playSounds(void)
 {
 	unsigned playMs;
 
-	if (data->vehicleNearestAsteroidDistance < 30*data->vehicleNearestAsteroidScale)
+	if (data->vehicleNearestAsteroidDistance < 30 * data->vehicleNearestAsteroidScale)
 		playMs = 100;
 	else if (data->vehicleNearestAsteroidDistance < 35 * data->vehicleNearestAsteroidScale)
 		playMs = 200;
@@ -208,18 +219,18 @@ void CLogic::playSounds(void)
 		ambSound->stop();
 	}
 
-	if (data->endGame == 1 && loose == false ) //loose
+	if (data->endGame == 1 && loose == false) //loose
 	{
 		distSound->setVolume(0.0);
 		explSound->play();
 		looseSound->play();
 		loose = true;
 	}
-	if (data->endGame == 2 && win== false ) //win
+	if (data->endGame == 2 && win == false) //win
 	{
 		distSound->setVolume(0.0);
 		winSound->play();
-		win= true;
+		win = true;
 	}
 }
 

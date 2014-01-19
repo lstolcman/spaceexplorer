@@ -36,29 +36,29 @@ void CInput::mouseButtonPress(int button, int state, int x, int y)
 	switch (state)
 	{
 	case KEYUP:
-		std::cout << " s: UP"; break;
+	std::cout << " s: UP"; break;
 	case KEYDOWN:
-		std::cout << " s: DOWN"; break;
+	std::cout << " s: DOWN"; break;
 	};
 	switch (button)
 	{
 	case LEFT_BUTTON:
-		std::cout << " b: LEFT"; break;
+	std::cout << " b: LEFT"; break;
 	case MIDDLE_BUTTON:
-		std::cout << " b: MIDDLE"; break;
+	std::cout << " b: MIDDLE"; break;
 	case RIGHT_BUTTON:
-		std::cout << " b: RIGHT"; break;
+	std::cout << " b: RIGHT"; break;
 	case WHEELSCROLLUP:
-		std::cout << " s: WHEEL SCROLL UP"; data->camera->speed += 0.005f; break;
+	std::cout << " s: WHEEL SCROLL UP"; data->camera->speed += 0.005f; break;
 	case WHEELSCROLLDOWN:
-		std::cout << " s: WHEEL SCROLL DOWN";  data->camera->speed -= 0.005f; break;
+	std::cout << " s: WHEEL SCROLL DOWN";  data->camera->speed -= 0.005f; break;
 	case HOLDWHEELSCROLLUP:
-		std::cout << " s: HOLD WHEEL SCROLL UP"; break;
+	std::cout << " s: HOLD WHEEL SCROLL UP"; break;
 	case HOLDWHEELSCROLLDOWN:
-		std::cout << " s: HOLD WHEEL SCROLL DOWN"; break;
+	std::cout << " s: HOLD WHEEL SCROLL DOWN"; break;
 	};
 	std::cout << "\t\t\r";
-#endif
+	#endif
 	*/
 
 
@@ -79,11 +79,13 @@ void CInput::mouseButtonPress(int button, int state, int x, int y)
 			break;
 
 		case WHEELSCROLLUP:
-			data->camera->speed += 1.0f;
+			if (data->debugMode)
+				data->camera->speed += 1.0f;
 			break;
 
 		case WHEELSCROLLDOWN:
-			data->camera->speed -= 1.0f;
+			if (data->debugMode)
+				data->camera->speed -= 1.0f;
 			break;
 
 		case HOLDWHEELSCROLLUP:
@@ -110,40 +112,40 @@ void CInput::mouseMove(int x, int y)
 	switch (data->inputState->mouse.state)
 	{
 	case KEYUP:
-		std::cout << " s: UP"; break;
+	std::cout << " s: UP"; break;
 	case KEYDOWN:
-		std::cout << " s: DOWN"; break;
+	std::cout << " s: DOWN"; break;
 	};
 	switch (data->inputState->mouse.button)
 	{
 	case LEFT_BUTTON:
-		std::cout << " b: LEFT"; break;
+	std::cout << " b: LEFT"; break;
 	case MIDDLE_BUTTON:
-		std::cout << " b: MIDDLE"; break;
+	std::cout << " b: MIDDLE"; break;
 	case RIGHT_BUTTON:
-		std::cout << " b: RIGHT"; break;
+	std::cout << " b: RIGHT"; break;
 	case WHEELSCROLLUP:
-		std::cout << " s: WHEEL SCROLL UP"; break;
+	std::cout << " s: WHEEL SCROLL UP"; break;
 	case WHEELSCROLLDOWN:
-		std::cout << " s: WHEEL SCROLL DOWN"; break;
+	std::cout << " s: WHEEL SCROLL DOWN"; break;
 	case HOLDWHEELSCROLLUP:
-		std::cout << " s: HOLD WHEEL SCROLL UP"; break;
+	std::cout << " s: HOLD WHEEL SCROLL UP"; break;
 	case HOLDWHEELSCROLLDOWN:
-		std::cout << " s: HOLD WHEEL SCROLL DOWN"; break;
+	std::cout << " s: HOLD WHEEL SCROLL DOWN"; break;
 	};
 	std::cout << "\t\t\r";
-#endif
+	#endif
 	*/
 
 }
 
 void CInput::keyDown(unsigned char keyid, int x, int y)
 {
-	
-	#ifdef _DEBUG
+
+#ifdef _DEBUG
 	std::cout << "keyDown " << keyid << "(" << (int)keyid << ") " << x << "x" << y << "\t\t\t\r";
-	#endif
-	
+#endif
+
 
 	switch (keyid)
 	{
@@ -179,7 +181,17 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 	case 'f':
 	case 'F':
 		if (data->camera->speed > 0.0f)
-			data->camera->speed -= 1.0f;
+		{
+
+			data->camera->speed -= 2.0f;
+			data->camera->velM = data->camera->speed;
+		}
+		else
+		{
+
+			data->camera->speed = 0.0f;
+			data->camera->velM = data->camera->speed;
+		}
 		break;
 
 	case 'g':
@@ -263,8 +275,16 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 
 	case 'r':
 	case 'R':
-		if (data->camera->speed < 4.0f)
-			data->camera->speed += 1.0f;
+		if (data->camera->speed < 8.0f)
+		{
+			data->camera->speed += 2.0f;
+			data->camera->velM = data->camera->speed;
+		}
+		else
+		{
+			data->camera->speed = 8.0f;
+			data->camera->velM = data->camera->speed;
+		}
 		break;
 
 	case 's':
@@ -364,9 +384,9 @@ bool CInput::isKeyDown(int keyid)
 
 void CInput::specialKeyDown(int keyid, int x, int y)
 {
-	#ifdef _DEBUG
+#ifdef _DEBUG
 	std::cout << "specialKeyDown " << keyid << "(" << (int)keyid << ") " << x << "x" << y << "\t\t\t\r";
-	#endif
+#endif
 
 	switch (keyid)
 	{
@@ -419,10 +439,7 @@ void CInput::specialKeyDown(int keyid, int x, int y)
 		break;
 
 	case KEY_F12:
-		if (data->debugMode)
-		{
-			data->drawDebug = !data->drawDebug;
-		}
+		data->drawDebug = !data->drawDebug;
 		break;
 
 	}
@@ -432,9 +449,9 @@ void CInput::specialKeyDown(int keyid, int x, int y)
 
 void CInput::specialKeyUp(int keyid, int x, int y)
 {
-	#ifdef _DEBUG
+#ifdef _DEBUG
 	std::cout << "specialKeyUp " << keyid << "(" << (int)keyid << ") " << x << "x" << y << "\t\t\t\r";
-	#endif
+#endif
 	data->inputState->specialKeys[keyid] = KEYUP;
 }
 
@@ -480,73 +497,86 @@ bool CInput::checkInput()
 {
 	if (captureMouse)
 	{
-		data->camera->velRY = -mouseSensitivity * (glutGet(GLUT_WINDOW_WIDTH) / 2 - data->inputState->mouse.x);
+		if (data->debugMode)
+		{
+			data->camera->velRY = -mouseSensitivity * (glutGet(GLUT_WINDOW_WIDTH) / 2 - data->inputState->mouse.x);
+			data->camera->velRX = mouseSensitivity *0.5* (glutGet(GLUT_WINDOW_HEIGHT) / 2 - data->inputState->mouse.y);
+		}
+		else
+		{
+			data->camera->velRY = -mouseSensitivity *0.3* (glutGet(GLUT_WINDOW_WIDTH) / 2 - data->inputState->mouse.x);
+			data->camera->velRX = mouseSensitivity *0.3*0.5* (glutGet(GLUT_WINDOW_HEIGHT) / 2 - data->inputState->mouse.y);
+		}
 		/*if (data->inputState->keys['a'] == KEYDOWN)
+		{
+		data->camera->velS = -data->camera->speed;
+		}
+		if (data->inputState->keys['d'] == KEYDOWN)
+		{
+		data->camera->velS = data->camera->speed;
+		}*/
+		/*data->camera->velRY = -mouseSensitivity* (glutGet(GLUT_WINDOW_WIDTH) / 2 - data->inputState->mouse.x);
+		if (data->camera->velRY >0)
+		{
+		if (data->camera->velRZ < 0.2)
+		data->camera->velRZ += 0.01;
+		}
+		else if (data->camera->velRY < 0)
+		{
+		if (data->camera->velRZ > -0.2)
+		data->camera->velRZ -= 0.01;
+		}
+		else
+		{
+		if (data->camera->velRZ > -0.2)
+		data->camera->velRZ += 0.01;
+
+		if (data->camera->velRZ < 0.2)
+		data->camera->velRZ -= 0.01;
+		}
+		*/
+		glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2);
+	}
+
+	if (data->debugMode)
+	{
+
+		if (data->inputState->keys['w'] == KEYDOWN)
+		{
+			data->camera->velM = data->camera->speed;
+		}
+		if (data->inputState->keys['s'] == KEYDOWN)
+		{
+			data->camera->velM = -data->camera->speed;
+		}
+
+		if (data->inputState->keys['a'] == KEYDOWN)
 		{
 			data->camera->velS = -data->camera->speed;
 		}
 		if (data->inputState->keys['d'] == KEYDOWN)
 		{
 			data->camera->velS = data->camera->speed;
-		}*/
-		/*data->camera->velRY = -mouseSensitivity* (glutGet(GLUT_WINDOW_WIDTH) / 2 - data->inputState->mouse.x);
-		if (data->camera->velRY >0)
-		{
-			if (data->camera->velRZ < 0.2)
-			data->camera->velRZ += 0.01;
 		}
-		else if (data->camera->velRY < 0)
+		if (data->inputState->keys['q'] == KEYDOWN)
 		{
-			if (data->camera->velRZ > -0.2)
-				data->camera->velRZ -= 0.01;
+			data->camera->velRZ = -data->camera->speed;
 		}
-		else
+		if (data->inputState->keys['e'] == KEYDOWN)
 		{
-			if (data->camera->velRZ > -0.2)
-				data->camera->velRZ += 0.01;
-
-			if (data->camera->velRZ < 0.2)
-				data->camera->velRZ -= 0.01;
+			data->camera->velRZ = data->camera->speed;
 		}
-		*/
-		data->camera->velRX = mouseSensitivity *0.5* (glutGet(GLUT_WINDOW_HEIGHT) / 2 - data->inputState->mouse.y);
-		glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2);
-	}
-
-	if (data->inputState->keys['w'] == KEYDOWN)
-	{
-		data->camera->velM = data->camera->speed;
-	}
-	if (data->inputState->keys['s'] == KEYDOWN)
-	{
-		data->camera->velM = -data->camera->speed;
-	}
-	/*
-	if (data->inputState->keys['a'] == KEYDOWN)
-	{
-		data->camera->velS = -data->camera->speed;
-	}
-	if (data->inputState->keys['d'] == KEYDOWN)
-	{
-		data->camera->velS = data->camera->speed;
-	}
-	if (data->inputState->keys['q'] == KEYDOWN)
-	{
-		data->camera->velRZ = -data->camera->speed;
-	}
-	if (data->inputState->keys['e'] == KEYDOWN)
-	{
-		data->camera->velRZ = data->camera->speed;
-	}
-	if (data->inputState->keys['f'] == KEYDOWN)
-	{
+		/*
+		if (data->inputState->keys['f'] == KEYDOWN)
+		{
 		data->camera->velRX = -data->camera->speed;
-	}
-	if (data->inputState->keys['c'] == KEYDOWN)
-	{
+		}
+		if (data->inputState->keys['c'] == KEYDOWN)
+		{
 		data->camera->velRX = data->camera->speed;
+		}
+		s*/
 	}
-	*/
 	return true;
 }
 
