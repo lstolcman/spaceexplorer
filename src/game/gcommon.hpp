@@ -110,6 +110,8 @@ struct SData
 	SWindow *window;
 
 
+	unsigned endGame;
+
 
 	audiere::AudioDevicePtr		audioDevice;
 };

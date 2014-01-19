@@ -13,6 +13,7 @@ private:
 	void*			font;
 	SData			*data;
 	unsigned		textLines;
+	CTexture		*win, *loose;
 
 public:
 
@@ -31,6 +32,7 @@ public:
 
 	void			drawUI(void);
 	void			setFont(void*);
+	void			loadUIData(void);
 
 };
 

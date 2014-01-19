@@ -9,11 +9,15 @@ CUI::CUI(SData *data)
 	this->data = data;
 	font = GLUT_BITMAP_HELVETICA_12;
 	textLines = 0;
+	win = new CTexture;
+	loose = new CTexture;
 }
 
 
 CUI::~CUI()
 {
+	delete win;
+	delete loose;
 }
 
 
@@ -84,6 +88,7 @@ void CUI::printOnScreen(int x, int y, std::string &text)
 
 void CUI::displayHUD(void)
 {
+	/*
 	if (data->drawHUD)
 	{
 		unsigned width = glutGet(GLUT_WINDOW_WIDTH);
@@ -104,6 +109,49 @@ void CUI::displayHUD(void)
 		glVertex2f(200, 100);
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
+	}
+	*/
+	if (data->endGame == 1) //loose
+	{
+		unsigned width = glutGet(GLUT_WINDOW_WIDTH);
+		unsigned height = glutGet(GLUT_WINDOW_HEIGHT);
+
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, (*loose)());
+		glBegin(GL_QUADS);
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glTexCoord2f(1, 1);
+		glVertex2f(0, 0);
+		glTexCoord2f(1, 0);
+		glVertex2f(0, height);
+		glTexCoord2f(0, 0);
+		glVertex2f(width, height);
+		glTexCoord2f(0, 1);
+		glVertex2f(width, 0);
+		glEnd();
+		glDisable(GL_TEXTURE_2D);
+
+	}
+	if (data->endGame == 2) //win
+	{
+		unsigned width = glutGet(GLUT_WINDOW_WIDTH);
+		unsigned height = glutGet(GLUT_WINDOW_HEIGHT);
+
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, (*win)());
+		glBegin(GL_QUADS);
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glTexCoord2f(0, 0);
+		glVertex2f(0, 0);
+		glTexCoord2f(0, 1);
+		glVertex2f(0, width);
+		glTexCoord2f(1, 1);
+		glVertex2f(height, width);
+		glTexCoord2f(1, 0);
+		glVertex2f(height, 0);
+		glEnd();
+		glDisable(GL_TEXTURE_2D);
+
 	}
 }
 
@@ -193,6 +241,13 @@ void CUI::displayFPS(void)
 		s << "FPS: " << data->last_fps;
 		printOnScreen(s.str());
 	}
+}
+
+
+void CUI::loadUIData(void)
+{
+	win->Load("resources/win.bmp");
+	loose->Load("resources/loose.bmp");
 }
 
 

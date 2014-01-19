@@ -130,6 +130,7 @@ void CLogic::detectCollision(void)
 		if (i->distance < radiusLOD)
 		{
 			i->collision = true;
+			data->endGame = 1;
 			i->radiusLOD = radiusLOD;
 			data->debugCollision = true;
 		}
@@ -167,7 +168,7 @@ void CLogic::playSounds(void)
 		playMs = 3000;
 
 
-	if ((unsigned)timer.getElapsedMilliseconds() > playMs)
+	if ((unsigned)timer.getElapsedMilliseconds() > playMs && data->endGame == 0)
 	{
 		distSound->play();
 		timer.reset();

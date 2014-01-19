@@ -178,6 +178,8 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 
 	case 'f':
 	case 'F':
+		if (data->camera->speed > 0.0f)
+			data->camera->speed -= 1.0f;
 		break;
 
 	case 'g':
@@ -261,6 +263,8 @@ void CInput::keyDown(unsigned char keyid, int x, int y)
 
 	case 'r':
 	case 'R':
+		if (data->camera->speed < 4.0f)
+			data->camera->speed += 1.0f;
 		break;
 
 	case 's':
@@ -477,7 +481,35 @@ bool CInput::checkInput()
 	if (captureMouse)
 	{
 		data->camera->velRY = -mouseSensitivity * (glutGet(GLUT_WINDOW_WIDTH) / 2 - data->inputState->mouse.x);
-		data->camera->velRX = mouseSensitivity * (glutGet(GLUT_WINDOW_HEIGHT) / 2 - data->inputState->mouse.y);
+		/*if (data->inputState->keys['a'] == KEYDOWN)
+		{
+			data->camera->velS = -data->camera->speed;
+		}
+		if (data->inputState->keys['d'] == KEYDOWN)
+		{
+			data->camera->velS = data->camera->speed;
+		}*/
+		/*data->camera->velRY = -mouseSensitivity* (glutGet(GLUT_WINDOW_WIDTH) / 2 - data->inputState->mouse.x);
+		if (data->camera->velRY >0)
+		{
+			if (data->camera->velRZ < 0.2)
+			data->camera->velRZ += 0.01;
+		}
+		else if (data->camera->velRY < 0)
+		{
+			if (data->camera->velRZ > -0.2)
+				data->camera->velRZ -= 0.01;
+		}
+		else
+		{
+			if (data->camera->velRZ > -0.2)
+				data->camera->velRZ += 0.01;
+
+			if (data->camera->velRZ < 0.2)
+				data->camera->velRZ -= 0.01;
+		}
+		*/
+		data->camera->velRX = mouseSensitivity *0.5* (glutGet(GLUT_WINDOW_HEIGHT) / 2 - data->inputState->mouse.y);
 		glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2);
 	}
 
@@ -489,6 +521,7 @@ bool CInput::checkInput()
 	{
 		data->camera->velM = -data->camera->speed;
 	}
+	/*
 	if (data->inputState->keys['a'] == KEYDOWN)
 	{
 		data->camera->velS = -data->camera->speed;
@@ -513,7 +546,7 @@ bool CInput::checkInput()
 	{
 		data->camera->velRX = data->camera->speed;
 	}
-
+	*/
 	return true;
 }
 

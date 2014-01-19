@@ -72,6 +72,7 @@ CGame::CGame(void)
 	data->vehicleNearestAsteroidScale = 1.0f;
 
 	data->writeMap = false;
+	data->endGame = 0;
 }
 
 
@@ -221,6 +222,7 @@ void CGame::loadData(void)
 	handlers.renderer->loadData();
 	handlers.logic->loadSounds();
 	handlers.logic->generateAsteroids();
+	handlers.ui->loadUIData();
 }
 
 
