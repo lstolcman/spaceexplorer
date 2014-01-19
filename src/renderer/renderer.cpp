@@ -388,12 +388,12 @@ void CRenderer::drawScene()
 
 
 			//level of detail
-			if ((i->distance - i->radiusLOD) < 300)
+			//if (i->distance < 30)
 				a_12k_tris->draw();
-			else if ((i->distance - i->radiusLOD) < 600)
-				a_6k_tris->draw();
+			//else if (i->distance < 600)
+			//	a_6k_tris->draw();
 			//else if ((i->distance - i->radiusLOD) < 300)
-			else	a_2k_tris->draw();
+			//else	a_2k_tris->draw();
 			//else 
 			//	a_60_tris->draw();
 

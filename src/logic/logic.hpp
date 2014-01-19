@@ -30,8 +30,18 @@ private:
 	CRng					rng;
 
 	audiere::SoundEffectPtr distSound;
+	audiere::SoundEffectPtr looseSound;
+	audiere::SoundEffectPtr winSound;
+	audiere::SoundEffectPtr ambSound;
+	audiere::SoundEffectPtr explSound;
+
+	float ambSoundVol;
+
 
 	CTimer					timer;
+
+
+	bool loose, win, amb;
 
 public:
 

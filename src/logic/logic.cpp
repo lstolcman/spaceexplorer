@@ -13,6 +13,10 @@ CLogic::CLogic(SData *data)
 	asteroidRadius = 12.0f;
 
 	timer.start();
+	loose = false;
+	win = false;
+	amb = false;
+	ambSoundVol = 0.9;
 }
 
 
@@ -147,9 +151,28 @@ void CLogic::detectCollision(void)
 
 void CLogic::loadSounds(void)
 {
+	CTimer t;
+	t.start();
 	distSound = audiere::OpenSoundEffect(data->audioDevice, "resources/sounds/distance.wav", audiere::MULTIPLE);
-
 	distSound->setVolume(0.30f);
+	std::cout << "sound: resources/sounds/distance.wav " << t.getElapsedMilliseconds() << "ms" << std::endl;
+	t.reset();
+	looseSound= audiere::OpenSoundEffect(data->audioDevice, "resources/sounds/theend.mp3", audiere::MULTIPLE);
+	looseSound->setVolume(0.80f);
+	std::cout << "sound: resources/sounds/theend.mp3 " << t.getElapsedMilliseconds() << "ms" << std::endl;
+	t.reset();
+	winSound = audiere::OpenSoundEffect(data->audioDevice, "resources/sounds/win.mp3", audiere::MULTIPLE);
+	winSound->setVolume(0.70f);
+	std::cout << "sound: resources/sounds/win.mp3 " << t.getElapsedMilliseconds() << "ms" << std::endl;
+	t.reset();
+	ambSound= audiere::OpenSoundEffect(data->audioDevice, "resources/sounds/tokyo.mp3", audiere::MULTIPLE);
+	ambSound->setVolume(ambSoundVol);
+	std::cout << "sound: resources/sounds/tokyo.mp3 " << t.getElapsedMilliseconds() << "ms" << std::endl;
+	t.reset();
+	explSound= audiere::OpenSoundEffect(data->audioDevice, "resources/sounds/explosion.mp3", audiere::MULTIPLE);
+	explSound->setVolume(0.5);
+	std::cout << "sound: resources/sounds/explosion.mp3 " << t.getElapsedMilliseconds() << "ms" << std::endl;
+	t.stop();
 }
 
 void CLogic::playSounds(void)
@@ -172,6 +195,31 @@ void CLogic::playSounds(void)
 	{
 		distSound->play();
 		timer.reset();
+	}
+
+	if (amb == false)
+	{
+		ambSound->play();
+		amb = true;
+	}
+
+	if (data->endGame != 0)
+	{
+		ambSound->stop();
+	}
+
+	if (data->endGame == 1 && loose == false ) //loose
+	{
+		distSound->setVolume(0.0);
+		explSound->play();
+		looseSound->play();
+		loose = true;
+	}
+	if (data->endGame == 2 && win== false ) //win
+	{
+		distSound->setVolume(0.0);
+		winSound->play();
+		win= true;
 	}
 }
 
