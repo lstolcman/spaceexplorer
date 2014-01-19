@@ -66,6 +66,12 @@ CGame::CGame(void)
 	data->zFar = 4000.f;
 
 	data->last_fps = 0;
+	data->genAsteroids = 0;
+
+	data->vehicleNearestAsteroidDistance = 10000.0f;
+	data->vehicleNearestAsteroidScale = 1.0f;
+
+	data->writeMap = false;
 }
 
 
@@ -121,8 +127,6 @@ void CGame::Init(int argc, char **argv)
 
 
 
-	if (data->fullscreen)
-		glutFullScreen();
 
 
 
@@ -134,6 +138,11 @@ void CGame::Init(int argc, char **argv)
 
 	setMouse();
 	loadData();
+
+
+	if (data->fullscreen)
+		glutFullScreen();
+
 
 
 	setGlutCallbacks();
@@ -211,6 +220,7 @@ void CGame::loadData(void)
 {
 	handlers.renderer->loadData();
 	handlers.logic->loadSounds();
+	handlers.logic->generateAsteroids();
 }
 
 

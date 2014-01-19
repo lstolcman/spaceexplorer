@@ -2,6 +2,7 @@
 
 #include "./game/gcommon.hpp"
 #include "../tools/timer.hpp"
+#include "../tools/rng.hpp"
 
 class CLogic
 {
@@ -26,6 +27,7 @@ private:
 	float vehicleRadius;	
 	float asteroidRadius;	//radius of asteroid scaled 1.0
 
+	CRng					rng;
 
 	audiere::SoundEffectPtr distSound;
 
@@ -42,6 +44,7 @@ public:
 	CLogic(SData*);
 	~CLogic();
 
+	void			generateAsteroids(void);
 	void			detectCollision(void);
 	void			loadSounds(void);
 	void			playSounds(void);

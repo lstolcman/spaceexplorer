@@ -9,33 +9,26 @@ CWoldmap::CWoldmap(void)
 {
 	commentBlock = false;
 	commentLine = false;
-	//load map
 
-	map.open("resources/worldmap.txt", std::ios::in);
-	if (map.is_open() == false)
-	{
-		MessageBox(0, "Error loading: resources/worldmap.txt", "Error", MB_OK | MB_ICONERROR);
-		exit(1);
-	}
 
-	player.open("resources/player.txt", std::ios::in);
-	if (map.is_open() == false)
-	{
-		MessageBox(0, "Error loading: resources/player.txt", "Error", MB_OK | MB_ICONERROR);
-		exit(1);
-	}
 }
 
 CWoldmap::~CWoldmap(void)
 {
-	map.close();
-	player.close();
+
 }
 
 
 
 void CWoldmap::loadPlayerPos(SCamera *camera)
 {
+
+	player.open("resources/player.txt", std::ios::in);
+	if (player.is_open() == false)
+	{
+		MessageBox(0, "Error loading: resources/player.txt", "Error", MB_OK | MB_ICONERROR);
+		exit(1);
+	}
 	//read player pos 
 	while (std::getline(player, line))
 	{
@@ -74,10 +67,20 @@ void CWoldmap::loadPlayerPos(SCamera *camera)
 
 		commentLine = false;
 	}
+
+	player.close();
 }
 
 void CWoldmap::loadAsteroids(std::vector<SAsteroid> *asteroids)
 {
+	map.open("resources/worldmap.txt", std::ios::in);
+	if (map.is_open() == false)
+	{
+		MessageBox(0, "Error loading: resources/worldmap.txt", "Error", MB_OK | MB_ICONERROR);
+		exit(1);
+	}
+
+
 	//read map file
 	while (std::getline(map, line))
 	{
@@ -112,8 +115,77 @@ void CWoldmap::loadAsteroids(std::vector<SAsteroid> *asteroids)
 
 		commentLine = false;
 	}
+
+
+	map.close();
 }
 
+
+void CWoldmap::writeMap(std::vector<SAsteroid> *asteroids, SCamera *camera)
+{
+
+	player.open("resources/player.txt", std::ios::out|std::ios::trunc);
+	if (player.is_open() == false)
+	{
+		MessageBox(0, "Error loading: resources/player.txt", "Error", MB_OK | MB_ICONERROR);
+		exit(1);
+	}
+		std::stringstream s;
+		s << "player_pos" << std::fixed << std::setprecision(2)
+			<< camera->pos.x << " " << camera->pos.y << " " << camera->pos.z << std::endl;
+		s << "player_view" << std::fixed << std::setprecision(2)
+			<< camera->view.x << " " << camera->view.y << " " << camera->view.z << std::endl;
+		s << "player_up" << std::fixed << std::setprecision(2)
+			<< camera->up.x << " " << camera->up.y << " " << camera->up.z << std::endl;
+		s << "player_speed" << std::fixed << std::setprecision(2)
+			<< camera->speed << std::endl;
+		player << s.str();
+		player.flush();
+
+
+
+			if (line.find("player_pos") != std::string::npos)
+			{
+				sscanf(line.c_str(), "player_pos %f %f %f", &camera->pos.x, &camera->pos.y, &camera->pos.z);
+			}
+			if (line.find("player_view") != std::string::npos)
+			{
+				sscanf(line.c_str(), "player_view %f %f %f", &camera->view.x, &camera->view.y, &camera->view.z);
+			}
+			if (line.find("player_up") != std::string::npos)
+			{
+				sscanf(line.c_str(), "player_up %f %f %f", &camera->up.x, &camera->up.y, &camera->up.z);
+			}
+			if (line.find("player_speed") != std::string::npos)
+			{
+				sscanf(line.c_str(), "player_speed %f", &camera->speed);
+			}
+	player.close();
+
+
+	map.open("resources/worldmap.txt", std::ios::out|std::ios::trunc);
+	if (map.is_open() == false)
+	{
+		MessageBox(0, "Error loading: resources/worldmap.txt", "Error", MB_OK | MB_ICONERROR);
+		exit(1);
+	}
+
+
+	map << "// a(asteroid)	pos_x	pos_y	pos_z	rotation_speed	scale" << std::endl;
+	for (std::vector<SAsteroid>::iterator i = asteroids->begin(); i != asteroids->end(); ++i)
+	{
+		std::stringstream s;
+		s << "asteroid " 
+			<< std::fixed << std::setprecision(2)
+			<< i->pos.x << " " << i->pos.y << " " << i->pos.z << " " \
+			<< i->rotationAxis.x << " " << i->rotationAxis.y << " " << i->rotationAxis.z << " " \
+			<< i->rotationSpeed << " " << i->scale << "\n";
+		map << s.str();
+			map.flush();
+	}
+
+	map.close();
+}
 
 
 

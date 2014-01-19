@@ -95,12 +95,15 @@ struct SData
 	bool drawEdges;
 	bool drawCollisionEdges;
 
+	bool writeMap;
 
 	unsigned last_fps;
 
-	float	vehicleNearestAsteroid; //distance for nearest asteroid
+	float	vehicleNearestAsteroidDistance; //distance for nearest asteroid
+	float	vehicleNearestAsteroidScale;
 
 	std::vector<SAsteroid>		*asteroids;
+	unsigned					genAsteroids;
 
 	SInputState *inputState;
 	SCamera	*camera;

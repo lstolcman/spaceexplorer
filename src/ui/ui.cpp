@@ -123,7 +123,8 @@ void CUI::displayDebug(void)
 			for (std::vector<SAsteroid>::iterator i = data->asteroids->begin(); i != data->asteroids->end(); ++i)
 			{
 				s.str("");
-				s << i->pos.x << "A: x" << i->pos.y << "x" << i->pos.z << " d:" << i->distance << " near:" << data->vehicleNearestAsteroid;
+				s << i->pos.x << "A: x" << i->pos.y << "x" << i->pos.z << " d:" << i->distance
+					<< " near:" << data->vehicleNearestAsteroidDistance << "scale:" << data->vehicleNearestAsteroidScale;
 				if (i->collision)
 					s << "\tCollision";
 				printOnScreen(500, 20+asti*16, s.str());

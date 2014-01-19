@@ -50,9 +50,60 @@ if (xd*xd + yd*yd) < (Diameter*Diameter)
 
 
 */
+
+
+
+void CLogic::generateAsteroids(void)
+{
+
+	for (unsigned i = 0; i < data->genAsteroids; ++i)
+	{
+		SAsteroid *aster = new SAsteroid;
+		aster->pos = //glm::fvec3(rng(-500, 500), rng(-500, 500), rng(-500, 500));
+		glm::fvec3((rand() % 2 == 0 ? rng(-500, -10) : rng(500, 10)),
+					(rand() % 2 == 0 ? rng(-500, -10) : rng(500, 10)),
+					(rand() % 2 == 0 ? rng(-500, -10) : rng(500, 10)));
+
+		//aster->rotationAxis = glm::fvec3(rng("nz", -1, 1), rng("nz", -1, 1), rng("nz", -1, 1));// rand() % 2 + 1, rand() % 2 + 1, rand() % 2 + 1);
+		aster->rotationAxis = glm::vec3(1/*(rand() % 2)*/, (rand() % 2), (rand() % 2));
+		//aster->rotationAxis = glm::fvec3(1, 0, 0);
+
+		//aster->scale = glm::fvec3(scale + rand() % 20 / 5, scale + rand() % 20 / 5, scale + rand() % 20 / 5);
+		aster->scale = rand() % 5 + 1;
+		//aster->scale = glm::fvec3(1, 1, 1);
+		aster->rotationSpeed = rand() % 2 == 0 ? (rand() % 1000 / 1000.0) + 0.01 : -(rand() % 1000 / 1000.0) + 0.01;
+		aster->distance = 0;
+
+
+		data->asteroids->push_back(*aster);
+	}
+
+	//check if asteroid are not too close
+	/*for (std::vector<SAsteroid>::iterator x = data->asteroids->begin(); x != data->asteroids->end(); ++x)
+	{
+		for (std::vector<SAsteroid>::iterator y = data->asteroids->begin(); y != data->asteroids->end(); ++y)
+		{
+			distanceVec = x->pos - y->pos;
+
+			distance = sqrt(distanceVec.x*distanceVec.x + distanceVec.y*distanceVec.y + distanceVec.z*distanceVec.z);
+
+			if (distance < (asteroidRadius*x->scale + asteroidRadius*y->scale)) // colliding each other
+			{
+				data->asteroids->erase(x);
+				break;
+			}
+		}
+	}*/
+
+
+}
+
+
+
 void CLogic::detectCollision(void)
 {
-	data->vehicleNearestAsteroid = 10000.0f;
+	data->vehicleNearestAsteroidDistance = 10000.0f;
+	//data->vehicleNearestAsteroidScale = 0.5f;
 
 
 	for (std::vector<SAsteroid>::iterator i = data->asteroids->begin(); i != data->asteroids->end(); ++i)
@@ -64,8 +115,11 @@ void CLogic::detectCollision(void)
 
 		i->distance = sqrt(distanceVec.x*distanceVec.x + distanceVec.y*distanceVec.y + distanceVec.z*distanceVec.z);
 
-		if (i->distance < data->vehicleNearestAsteroid)
-			data->vehicleNearestAsteroid = i->distance;
+		if (i->distance < data->vehicleNearestAsteroidDistance)
+		{
+			data->vehicleNearestAsteroidDistance = i->distance;
+			data->vehicleNearestAsteroidScale = i->scale;
+		}
 	}
 
 
@@ -101,13 +155,13 @@ void CLogic::playSounds(void)
 {
 	unsigned playMs;
 
-	if (data->vehicleNearestAsteroid < 20)
+	if (data->vehicleNearestAsteroidDistance < 30*data->vehicleNearestAsteroidScale)
 		playMs = 100;
-	else if (data->vehicleNearestAsteroid < 25)
+	else if (data->vehicleNearestAsteroidDistance < 35 * data->vehicleNearestAsteroidScale)
 		playMs = 200;
-	else if (data->vehicleNearestAsteroid < 35)
+	else if (data->vehicleNearestAsteroidDistance < 45 * data->vehicleNearestAsteroidScale)
 		playMs = 500;
-	else if (data->vehicleNearestAsteroid < 45)
+	else if (data->vehicleNearestAsteroidDistance < 55 * data->vehicleNearestAsteroidScale)
 		playMs = 1500;
 	else
 		playMs = 3000;

@@ -49,7 +49,8 @@ bool CRenderer::loadData(void)
 
 	carrier = new CObject;
 
-	carrier->bindModel("resources/models/starshipr");
+	//carrier->bindModel("resources/models/starshipr");
+	carrier->bindModel("resources/models/SS1");
 	///carrier->bindModel("resources/models/poa");
 
 
@@ -58,27 +59,6 @@ bool CRenderer::loadData(void)
 	worldmap->loadPlayerPos(data->camera);
 	worldmap->loadAsteroids(data->asteroids);
 
-
-
-	/*
-	for (unsigned i = 0; i < 500; ++i)
-	{
-	SAsteroid *aster = new SAsteroid;
-	aster->pos = glm::fvec3(rng(-300, 300), rng(-300, 300), rng(-300, 300));
-
-	//aster->rotationAxis = glm::fvec3(rng("nz", -1, 1), rng("nz", -1, 1), rng("nz", -1, 1));// rand() % 2 + 1, rand() % 2 + 1, rand() % 2 + 1);
-	aster->rotationAxis = glm::vec3((rand() % 2), (rand() % 2), (rand() % 2));
-	//aster->rotationAxis = glm::fvec3(1, 0, 0);
-	float scale = ( rand() % 100 / 100)+1000;
-
-	//aster->scale = glm::fvec3(scale + rand() % 20 / 5, scale + rand() % 20 / 5, scale + rand() % 20 / 5);
-	aster->scale = 1.0;
-	//aster->scale = glm::fvec3(1, 1, 1);
-	aster->rotationSpeed = rand() % 2 == 0 ? (rand() % 1000 / 1000.0 ) : -(rand() % 1000 / 1000.0 );
-	aster->distance = 0;
-	data->asteroids->push_back(*aster);
-	}
-	*/
 
 
 	//compile shaders
@@ -225,6 +205,17 @@ void CRenderer::drawSky(void)
 
 void CRenderer::drawScene()
 {
+	glScalef(0.01, 0.01, 0.01);
+	if (data->writeMap)
+	{
+		data->writeMap = false;
+
+		worldmap->writeMap(data->asteroids, data->camera);
+
+		std::cout << "\nwrite map file\n";
+	}
+
+
 	//draw any opengl errors
 	GLenum errCode;
 	if ((errCode = glGetError()) != GL_NO_ERROR)
@@ -306,8 +297,9 @@ void CRenderer::drawScene()
 	glPushMatrix();
 
 	glColor3b(0, 1, 1);
-	//glRotated(180, 1, 0, 0);
-	//glScaled(80, 80, 80);
+	glTranslated(1500, -128, -18);
+	glRotated(90, 0, 1, 0);
+	glScaled(50, 50, 50);
 	carrier->draw();
 
 	glPopMatrix();
@@ -365,9 +357,9 @@ void CRenderer::drawScene()
 		SAsteroid *aster = new SAsteroid;
 		aster->pos = data->camera->pos;
 
-		aster->rotationAxis = glm::vec3(1, 0, 0);
-		aster->scale = 1.0;
-		aster->rotationSpeed = 1;
+		aster->rotationAxis = glm::vec3(1, rand()%2, rand()%2);
+		aster->scale = (rand() % 10) / 2 + 1;
+		aster->rotationSpeed = (rand() % 8)/2 + 1;
 		aster->distance = 0;
 		data->asteroids->push_back(*aster);
 
@@ -397,16 +389,15 @@ void CRenderer::drawScene()
 			a_12k_tris->draw();
 		else if ((i->distance - i->radiusLOD) < 200)
 			a_6k_tris->draw();
-		else if ((i->distance - i->radiusLOD) < 300)
-			a_2k_tris->draw();
-		else 
-			a_60_tris->draw();
+		//else if ((i->distance - i->radiusLOD) < 300)
+		else	a_2k_tris->draw();
+		//else 
+		//	a_60_tris->draw();
 
 
 
-		if (data->drawCollisionEdges && data->debugMode)
+		if (data->drawCollisionEdges && data->debugMode && i->distance < i->scale*80)
 		{
-
 			glPushMatrix();
 			float amb[] = { 0, 0.5, 0, 1.0f };
 			float dif[] = { 0, 0.5, 0, 1.0f };

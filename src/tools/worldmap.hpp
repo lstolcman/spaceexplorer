@@ -11,8 +11,8 @@ class CWoldmap
 	//Fields:
 private:
 	std::string		line;
-	std::ifstream	map;
-	std::ifstream	player;
+	std::fstream	map;
+	std::fstream	player;
 	bool			commentBlock;
 	bool			commentLine;
 public:
@@ -27,6 +27,7 @@ public:
 	~CWoldmap();
 	void			loadPlayerPos(SCamera*);
 	void			loadAsteroids(std::vector<SAsteroid>*);
+	void			writeMap(std::vector<SAsteroid>*, SCamera*);
 };
 
 
