@@ -11,9 +11,10 @@ ESC - exit game
 
 [not working] v - draw HUD 
 n - minimalize/maximalize
-
 m - capture mouse
 
+r - speed up
+f - speed down
 
 F9 - enable debug mode
 debug mode options:
