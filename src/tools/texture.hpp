@@ -1,7 +1,7 @@
 #pragma once
 #include "../game/gcommon.hpp"
 #include "../tools/timer.hpp"
-#include "../tools/bmp.hpp"
+#include "../tools/bitmap.hpp"
 
 
 

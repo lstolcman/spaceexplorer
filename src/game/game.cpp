@@ -98,8 +98,20 @@ void CGame::Init(int argc, char **argv)
 
 	glutInit(&argc, argv);
 	glutInitContextVersion(3, 0);
-	glutInitWindowSize(data->window->size.x, data->window->size.y);
-	glutInitWindowPosition(data->window->pos.x, data->window->pos.y);
+
+	//if (data->fullscreen)
+	//{
+	//glutInitWindowSize(glutGet(GLUT_SCREEN_WIDTH), glutGet(GLUT_SCREEN_HEIGHT));
+	//glutInitWindowPosition(0, 0);
+	//}
+	//else
+	//{
+	glutInitWindowSize(1, 1);
+	glutInitWindowPosition(1, 1);
+	//glutInitWindowSize(data->window->size.x, data->window->size.y);
+	//glutInitWindowPosition(data->window->pos.x, data->window->pos.y);
+	//}
+
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 	glutCreateWindow("Space Explorer");
 
@@ -128,6 +140,8 @@ void CGame::Init(int argc, char **argv)
 
 
 
+	//if (data->fullscreen)
+
 
 
 
@@ -141,19 +155,19 @@ void CGame::Init(int argc, char **argv)
 	loadData();
 
 
-	if (data->fullscreen)
-		glutFullScreen();
-
-
-
 	setGlutCallbacks();
+
+	glutFullScreen();
+
 	glutMainLoop();
 }
 
 
 void CGame::Update(void)
 {
-	handlers.logic->playSounds();
+	if (!data->debugMode)
+		handlers.logic->playSounds();
+
 	if (instance->handlers.input->checkInput())
 	{
 		instance->handlers.camera->cameraMove();
@@ -213,14 +227,17 @@ void CGame::setGlutCallbacks(void)
 
 
 	glutTimerFunc(17, callbackUpdate, 0);
-	
+
 }
 
 
 void CGame::loadData(void)
 {
 	handlers.renderer->loadData();
-	handlers.logic->loadSounds();
+
+	if (!data->debugMode)
+		handlers.logic->loadSounds();
+
 	handlers.logic->generateAsteroids();
 	handlers.ui->loadUIData();
 }

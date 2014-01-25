@@ -206,7 +206,7 @@ void CRenderer::drawSky(void)
 }
 
 
-void CRenderer::drawScene()
+void CRenderer::drawScene(void)
 {
 	//draw any opengl errors
 	GLenum errCode;

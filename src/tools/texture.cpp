@@ -34,8 +34,8 @@ GLuint CTexture::Load(std::string file, int magFilter, int minFilter)
 {
 	CTimer t;
 	t.start();
-	CLoaderBMP *texture = new CLoaderBMP;
-	if (!texture->loadBMP(file))
+	CLoaderBitmap *texture = new CLoaderBitmap;
+	if (!texture->loadBitmap(file))
 	{
 		MessageBox(0, ("Error loading: "+file).c_str(), "Error", MB_OK | MB_ICONERROR);
 		exit(-1);
@@ -61,16 +61,18 @@ GLuint CTexture::Load(std::string file, int magFilter, int minFilter)
 	if (minFilter == GL_LINEAR_MIPMAP_LINEAR || minFilter == GL_LINEAR_MIPMAP_NEAREST)
 	{
 		// Automatyczne zbudowanie mipmap i wys³anie tekstury do pamiêci karty graficznej
-		gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, texture->bmWidth, texture->bmHeight, GL_RGB, GL_UNSIGNED_BYTE, texture->data);
+		gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, texture->bmWidth, texture->bmHeight, \
+			GL_BGR, GL_UNSIGNED_BYTE, texture->data);
 	}
 	else
 	{
 		// Wys³anie tekstury do pamiêci karty graficznej 
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->bmWidth, texture->bmHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, texture->data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture->bmWidth, texture->bmHeight, \
+			0, GL_BGR, GL_UNSIGNED_BYTE, texture->data);
 	}
 
 	// Zwolnienie pamiêci, usuniêcie bitmapy z pamiêci - bitmapa jest ju¿ w pamiêci karty graficznej
-	delete texture;
+	texture->unloadBitmap();
 
 	t.stop();
 	std::cout << "texture: " << file << " " << t.getElapsedMilliseconds() << "ms" << std::endl;

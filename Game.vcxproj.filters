@@ -50,9 +50,6 @@
     <ClCompile Include="src\tools\texture.cpp">
       <Filter>Tools\Loaders</Filter>
     </ClCompile>
-    <ClCompile Include="src\tools\bmp.cpp">
-      <Filter>Tools\Loaders</Filter>
-    </ClCompile>
     <ClCompile Include="src\renderer\object.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
@@ -73,6 +70,9 @@
     </ClCompile>
     <ClCompile Include="src\logic\logic.cpp">
       <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\bitmap.cpp">
+      <Filter>Tools\Loaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -102,9 +102,6 @@
     <ClInclude Include="src\tools\texture.hpp">
       <Filter>Tools\Loaders</Filter>
     </ClInclude>
-    <ClInclude Include="src\tools\bmp.hpp">
-      <Filter>Tools\Loaders</Filter>
-    </ClInclude>
     <ClInclude Include="src\renderer\object.hpp">
       <Filter>Renderer</Filter>
     </ClInclude>
@@ -128,6 +125,9 @@
     </ClInclude>
     <ClInclude Include="src\logic\logic.hpp">
       <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\bitmap.hpp">
+      <Filter>Tools\Loaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

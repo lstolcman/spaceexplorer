@@ -48,7 +48,7 @@ public:
 	~CRenderer();
 
 	bool			loadData(void);
-	void            drawScene();
+	void            drawScene(void);
 
 
 };

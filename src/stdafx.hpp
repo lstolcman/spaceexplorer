@@ -15,27 +15,24 @@
 
 
 #ifndef _DEBUG
-
-#define FREEGLUT_STATIC
-
-#define GLEW_STATIC
-#pragma comment(lib,"glew32s.lib")
-#pragma comment(lib,"audiere.lib")
-
+	#define FREEGLUT_STATIC
+	#define GLEW_STATIC
+	#pragma comment(lib,"glew32s.lib")
 #else
-
-#pragma comment(lib,"glew32.lib")
-#pragma comment(lib,"audiere.lib")
-
+	#pragma comment(lib,"glew32.lib")
 #endif
+
+	#pragma comment(lib,"audiere.lib")
+	#pragma comment(lib,"FreeImage.lib")
+
+
 
 
 #include <GL/glew.h>
 #include <GL/freeglut.h>
-
 #include <glm/glm.hpp>
-
 #include <audiere.h>
+#include <FreeImage.h>
 
 
 #include <iostream>
