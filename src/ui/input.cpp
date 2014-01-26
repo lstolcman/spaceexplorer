@@ -500,7 +500,15 @@ bool CInput::checkInput()
 		if (data->debugMode)
 		{
 			data->camera->velRY = -mouseSensitivity * (glutGet(GLUT_WINDOW_WIDTH) / 2 - data->inputState->mouse.x);
+			if (data->camera->velRY > 1.0f)
+				data->camera->velRY = 1.0f;
+			if (data->camera->velRY < -1.0f)
+				data->camera->velRY = -1.0f;
 			data->camera->velRX = mouseSensitivity *0.5* (glutGet(GLUT_WINDOW_HEIGHT) / 2 - data->inputState->mouse.y);
+			if (data->camera->velRX > 1.0f)
+				data->camera->velRX = 1.0f;
+			if (data->camera->velRX < -1.0f)
+				data->camera->velRX = -1.0f;
 		}
 		else
 		{

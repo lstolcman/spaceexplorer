@@ -14,6 +14,7 @@ private:
 	SData			*data;
 	unsigned		textLines;
 	CTexture		*win, *loose;
+	unsigned		width, height;
 
 public:
 

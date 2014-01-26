@@ -42,7 +42,7 @@ CGame::CGame(void)
 
 	///
 
-	data->drawDebug = false;
+	data->drawDebug = true;
 	data->debugInsertAsteroid = false;
 	data->debugCollision = false;
 	data->drawFPS = true;
@@ -72,7 +72,7 @@ CGame::CGame(void)
 	data->vehicleNearestAsteroidScale = 1.0f;
 
 	data->writeMap = false;
-	data->endGame = 0;
+	data->gameState = PLAYING;
 }
 
 
@@ -178,7 +178,9 @@ void CGame::Update(void)
 
 void CGame::Render(void)
 {
-	handlers.renderer->drawScene();
+	if (data->gameState == PLAYING)
+		handlers.renderer->drawScene();
+
 	handlers.ui->drawUI();
 
 	// Zamien front-buffer z back-bufferem (double buffering).

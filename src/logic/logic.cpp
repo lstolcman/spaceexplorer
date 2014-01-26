@@ -17,6 +17,8 @@ CLogic::CLogic(SData *data)
 	win = false;
 	amb = false;
 	ambSoundVol = 0.9;
+
+	soundsLoaded = false;
 }
 
 
@@ -110,7 +112,7 @@ void CLogic::detectCollision(void)
 	distanceVec = (data->camera->pos + data->camera->view) - glm::vec3(1500, -128, -18);
 
 	if (sqrt(distanceVec.x*distanceVec.x + distanceVec.y*distanceVec.y + distanceVec.z*distanceVec.z) < 400 && !data->debugMode)
-		data->endGame = 2;
+		data->gameState = WIN;
 
 
 
@@ -144,7 +146,7 @@ void CLogic::detectCollision(void)
 			i->collision = true;
 
 			if (!data->debugMode)  
-				data->endGame = 1;
+				data->gameState = LOOSE;
 
 			i->radiusLOD = radiusLOD;
 			data->debugCollision = true;
@@ -184,10 +186,14 @@ void CLogic::loadSounds(void)
 	explSound->setVolume(0.5);
 	std::cout << "sound: resources/sounds/explosion.mp3 " << t.getElapsedMilliseconds() << "ms" << std::endl;
 	t.stop();
+	soundsLoaded = true;
 }
 
 void CLogic::playSounds(void)
 {
+	if (soundsLoaded == false)
+		return;
+
 	unsigned playMs;
 
 	if (data->vehicleNearestAsteroidDistance < 30 * data->vehicleNearestAsteroidScale)
@@ -202,7 +208,7 @@ void CLogic::playSounds(void)
 		playMs = 3000;
 
 
-	if ((unsigned)timer.getElapsedMilliseconds() > playMs && data->endGame == 0)
+	if ((unsigned)timer.getElapsedMilliseconds() > playMs && data->gameState == PLAYING)
 	{
 		distSound->play();
 		timer.reset();
@@ -214,19 +220,19 @@ void CLogic::playSounds(void)
 		amb = true;
 	}
 
-	if (data->endGame != 0)
+	if (data->gameState != PLAYING)
 	{
 		ambSound->stop();
 	}
 
-	if (data->endGame == 1 && loose == false) //loose
+	if (data->gameState == LOOSE && loose == false)
 	{
 		distSound->setVolume(0.0);
 		explSound->play();
 		looseSound->play();
 		loose = true;
 	}
-	if (data->endGame == 2 && win == false) //win
+	if (data->gameState == WIN && win == false)
 	{
 		distSound->setVolume(0.0);
 		winSound->play();

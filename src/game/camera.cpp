@@ -29,10 +29,12 @@ CCamera::CCamera(SData *data)
 	data->camera->velRZ = 0.0f;
 	data->camera->velS = 0.0f;
 
-
 	data->camera->angleX = 0.0f;
 	data->camera->angleY = 0.0f;
 	data->camera->angleZ = 0.0f;
+
+	data->camera->rotX = 0.0f;
+	data->camera->rotY= 0.0f;
 
 }
 
@@ -90,14 +92,60 @@ void CCamera::cameraMove(void)
 	data->camera->pos.z += per.z * 	data->camera->velS * .1f;
 
 	// Inercja:
-	data->camera->velRX /= 1.1f;
-	data->camera->velRY /= 1.1f;
-	data->camera->velRZ /= 1.1f;
+	data->camera->velRX /= 1.05f;
+	data->camera->velRY /= 1.05f;
+	data->camera->velRZ /= 1.05f;
 	if (data->debugMode)
 	{
 		data->camera->velM /= 1.1f;
 		data->camera->velS /= 1.1f;
 	}
+
+
+
+	
+	// rotate vehicle in X axis when move
+	if (data->camera->velRX > 0.0f)
+	{
+		if (data->camera->rotX < 0.1f)
+			data->camera->rotX = 0.1f;
+
+		if (data->camera->rotX < 10.0f)
+			data->camera->rotX *= 1.1f;
+	}
+	else if (data->camera->velRX < 0.0f)
+	{
+
+		if (data->camera->rotX > -0.1f)
+			data->camera->rotX = -0.1f;
+
+		if (data->camera->rotX > -10.0f)
+			data->camera->rotX *= 1.1f;
+	}
+	else
+	{
+		data->camera->rotX /= 1.05f;
+	}
+
+
+	// rotate vehicle in Y axis when move
+	/*if (abs(data->camera->velRY) == 0.0f)
+	{
+		//if (abs(data->camera->rotY) > 0.1f)
+			data->camera->rotY /= 1.05f;
+	}
+	else if (data->camera->velRY > 0.0f)
+	{
+
+		if (data->camera->rotY < 10.0f)
+			data->camera->rotY *= 1.2f;
+	}
+	else if (data->camera->velRY < 0.0f)
+	{
+
+		if (data->camera->rotY > -10.0f)
+			data->camera->rotY *= 1.2f;
+	}*/
 
 }
 

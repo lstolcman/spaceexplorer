@@ -23,13 +23,25 @@ CUI::~CUI()
 
 void CUI::drawUI(void)
 {
-#ifdef _DEBUG
-	float color[4] = { 1.0f, 0.0f, 0.0f, 1.0f };
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, color);
-#else
-	float color[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, color);
-#endif
+	if (data->debugMode)
+	{
+		float color[4] = { 1.0f, 0.0f, 0.0f, 1.0f };
+		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, color);
+	}
+	else
+	{
+		float color[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, color);
+	}
+
+	//reset light
+	float amb[] = { 1.0f, 1.0f, 1.0f };
+	float dif[] = { 0.0f, 0.0f, 0.0f };
+	float spe[] = { 0.0f, 0.0f, 0.0f };
+	glMaterialfv(GL_FRONT, GL_AMBIENT, amb);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, dif);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, spe);
+
 
 	glDisable(GL_DEPTH_TEST);
 	glMatrixMode(GL_PROJECTION);
@@ -88,13 +100,11 @@ void CUI::printOnScreen(int x, int y, std::string &text)
 
 void CUI::displayHUD(void)
 {
-	if (data->drawHUD)
+	width = glutGet(GLUT_WINDOW_WIDTH);
+	height = glutGet(GLUT_WINDOW_HEIGHT);
+	glEnable(GL_TEXTURE_2D);
+	if (data->drawHUD && data->gameState == PLAYING)
 	{
-		unsigned width = glutGet(GLUT_WINDOW_WIDTH);
-		unsigned height = glutGet(GLUT_WINDOW_HEIGHT);
-
-		glDisable(GL_DEPTH_TEST);
-		glEnable(GL_TEXTURE_2D);
 		glBegin(GL_QUADS);
 		glColor3f(1.0f, 1.0f, 0.1f);
 		//glBindTexture(GL_TEXTURE_2D, texture());
@@ -107,14 +117,9 @@ void CUI::displayHUD(void)
 		glTexCoord2f(1, 0);
 		glVertex2f(200, 100);
 		glEnd();
-		glDisable(GL_TEXTURE_2D);
 	}
-	if (data->endGame == 1 ) //loose
+	if (data->gameState == LOOSE)
 	{
-		unsigned width = glutGet(GLUT_WINDOW_WIDTH);
-		unsigned height = glutGet(GLUT_WINDOW_HEIGHT);
-
-		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, (*loose)());
 		glBegin(GL_QUADS);
 		glColor3f(1.0f, 1.0f, 1.0f);
@@ -127,15 +132,10 @@ void CUI::displayHUD(void)
 		glTexCoord2f(0, 1);
 		glVertex2f(width, 0);
 		glEnd();
-		glDisable(GL_TEXTURE_2D);
 
 	}
-	if (data->endGame == 2 ) //win
+	if (data->gameState == WIN)
 	{
-		unsigned width = glutGet(GLUT_WINDOW_WIDTH);
-		unsigned height = glutGet(GLUT_WINDOW_HEIGHT);
-
-		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, (*win)());
 		glBegin(GL_QUADS);
 		glColor3f(1.0f, 1.0f, 1.0f);
@@ -148,9 +148,9 @@ void CUI::displayHUD(void)
 		glTexCoord2f(0, 1);
 		glVertex2f(width, 0);
 		glEnd();
-		glDisable(GL_TEXTURE_2D);
 
 	}
+	glDisable(GL_TEXTURE_2D);
 }
 
 
@@ -173,7 +173,7 @@ void CUI::displayDebug(void)
 					<< " near:" << data->vehicleNearestAsteroidDistance << "scale:" << data->vehicleNearestAsteroidScale;
 				if (i->collision)
 					s << "\tCollision";
-				printOnScreen(500, 20+asti*16, s.str());
+				printOnScreen(500, 20 + asti * 16, s.str());
 
 				++asti;
 			}

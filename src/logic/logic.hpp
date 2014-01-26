@@ -40,8 +40,11 @@ private:
 
 	CTimer					timer;
 
+	bool					soundsLoaded;
 
-	bool loose, win, amb;
+	bool					loose;
+	bool					win;
+	bool					amb;
 
 public:
 

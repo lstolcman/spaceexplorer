@@ -19,6 +19,13 @@ enum SMouseKey
 	RIGHT_BUTTON = GLUT_RIGHT_BUTTON,
 };
 
+enum SGameState
+{
+	PLAYING,
+	WIN,
+	LOOSE
+};
+
 struct SMouseState
 {
 	SMouseKey button;
@@ -60,6 +67,9 @@ struct SCamera
 	float angleX;
 	float angleY;
 	float angleZ;
+
+	float rotX;
+	float rotY;
 };
 
 
@@ -110,7 +120,7 @@ struct SData
 	SWindow *window;
 
 
-	unsigned endGame;
+	SGameState gameState;
 
 
 	audiere::AudioDevicePtr		audioDevice;
