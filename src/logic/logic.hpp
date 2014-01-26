@@ -35,9 +35,6 @@ private:
 	audiere::SoundEffectPtr ambSound;
 	audiere::SoundEffectPtr explSound;
 
-	float ambSoundVol;
-
-
 	CTimer					timer;
 
 	bool					soundsLoaded;

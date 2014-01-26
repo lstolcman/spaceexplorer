@@ -16,7 +16,6 @@ CLogic::CLogic(SData *data)
 	loose = false;
 	win = false;
 	amb = false;
-	ambSoundVol = 0.9;
 
 	soundsLoaded = false;
 }
@@ -112,7 +111,10 @@ void CLogic::detectCollision(void)
 	distanceVec = (data->camera->pos + data->camera->view) - glm::vec3(1500, -128, -18);
 
 	if (sqrt(distanceVec.x*distanceVec.x + distanceVec.y*distanceVec.y + distanceVec.z*distanceVec.z) < 400 && !data->debugMode)
+	{
 		data->gameState = WIN;
+		data->camera->speed = 0.0f;
+	}
 
 
 
@@ -145,8 +147,11 @@ void CLogic::detectCollision(void)
 		{
 			i->collision = true;
 
-			if (!data->debugMode)  
+			if (!data->debugMode)
+			{
 				data->gameState = LOOSE;
+				data->camera->speed = 0.0f;
+			}
 
 			i->radiusLOD = radiusLOD;
 			data->debugCollision = true;
@@ -179,7 +184,7 @@ void CLogic::loadSounds(void)
 	std::cout << "sound: resources/sounds/win.mp3 " << t.getElapsedMilliseconds() << "ms" << std::endl;
 	t.reset();
 	ambSound = audiere::OpenSoundEffect(data->audioDevice, "resources/sounds/tokyo.mp3", audiere::MULTIPLE);
-	ambSound->setVolume(ambSoundVol);
+	ambSound->setVolume(0.9);
 	std::cout << "sound: resources/sounds/tokyo.mp3 " << t.getElapsedMilliseconds() << "ms" << std::endl;
 	t.reset();
 	explSound = audiere::OpenSoundEffect(data->audioDevice, "resources/sounds/explosion.mp3", audiere::MULTIPLE);

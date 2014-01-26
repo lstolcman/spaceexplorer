@@ -46,7 +46,7 @@ CGame::CGame(void)
 	data->debugInsertAsteroid = false;
 	data->debugCollision = false;
 	data->drawFPS = true;
-	data->drawHUD = false;
+	data->drawHUD = true;
 	data->drawEdges = false;
 	data->drawCollisionEdges = false;
 #ifdef _DEBUG

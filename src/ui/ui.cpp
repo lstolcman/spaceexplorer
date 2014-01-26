@@ -9,15 +9,12 @@ CUI::CUI(SData *data)
 	this->data = data;
 	font = GLUT_BITMAP_HELVETICA_12;
 	textLines = 0;
-	win = new CTexture;
-	loose = new CTexture;
 }
 
 
 CUI::~CUI()
 {
-	delete win;
-	delete loose;
+
 }
 
 
@@ -100,27 +97,36 @@ void CUI::printOnScreen(int x, int y, std::string &text)
 
 void CUI::displayHUD(void)
 {
-	width = glutGet(GLUT_WINDOW_WIDTH);
-	height = glutGet(GLUT_WINDOW_HEIGHT);
+	width = (GLfloat)glutGet(GLUT_WINDOW_WIDTH);
+	height = (GLfloat)glutGet(GLUT_WINDOW_HEIGHT);
 	glEnable(GL_TEXTURE_2D);
 	if (data->drawHUD && data->gameState == PLAYING)
 	{
+		if (data->camera->speed >= 8.0f)
+			glBindTexture(GL_TEXTURE_2D, speed8());
+		else if (data->camera->speed >= 6.0f)
+			glBindTexture(GL_TEXTURE_2D, speed6());
+		else if (data->camera->speed >= 4.0f)
+			glBindTexture(GL_TEXTURE_2D, speed4());
+		else if (data->camera->speed >= 2.0f)
+			glBindTexture(GL_TEXTURE_2D, speed2());
+		else
+			glBindTexture(GL_TEXTURE_2D, speed0());
+
 		glBegin(GL_QUADS);
-		glColor3f(1.0f, 1.0f, 0.1f);
-		//glBindTexture(GL_TEXTURE_2D, texture());
 		glTexCoord2f(0, 0);
-		glVertex2f(100, 100);
-		glTexCoord2f(0, 1);
-		glVertex2f(100, 200);
-		glTexCoord2f(1, 1);
-		glVertex2f(200, 200);
+		glVertex2f(10, height-10);
 		glTexCoord2f(1, 0);
-		glVertex2f(200, 100);
+		glVertex2f(40, height-10);
+		glTexCoord2f(1, 1);
+		glVertex2f(40, height-110);
+		glTexCoord2f(0, 1);
+		glVertex2f(10, height-110);
 		glEnd();
 	}
 	if (data->gameState == LOOSE)
 	{
-		glBindTexture(GL_TEXTURE_2D, (*loose)());
+		glBindTexture(GL_TEXTURE_2D, loose());
 		glBegin(GL_QUADS);
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glTexCoord2f(1, 1);
@@ -136,7 +142,7 @@ void CUI::displayHUD(void)
 	}
 	if (data->gameState == WIN)
 	{
-		glBindTexture(GL_TEXTURE_2D, (*win)());
+		glBindTexture(GL_TEXTURE_2D, win());
 		glBegin(GL_QUADS);
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glTexCoord2f(1, 1);
@@ -244,8 +250,13 @@ void CUI::displayFPS(void)
 
 void CUI::loadUIData(void)
 {
-	win->Load("resources/win.bmp");
-	loose->Load("resources/loose.bmp");
+	win.Load("resources/win.jpg");
+	loose.Load("resources/loose.jpg");
+	speed8.Load("resources/speed8.jpg");
+	speed6.Load("resources/speed6.jpg");
+	speed4.Load("resources/speed4.jpg");
+	speed2.Load("resources/speed2.jpg");
+	speed0.Load("resources/speed0.jpg");
 }
 
 

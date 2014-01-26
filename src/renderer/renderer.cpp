@@ -250,8 +250,8 @@ void CRenderer::drawScene(void)
 	//glTranslatef(Z, Y, -X) 
 	//glTranslatef(0.6, 0.0, 0.0);
 	glRotated(0, 1, 0, 0); //rotate +left z-axis
-	glRotated(0 - (data->camera->rotY), 0, 1, 0);	//rotate +left y-axis
-	glRotated(-10 - (data->camera->rotX), 0, 0, 1); //rotate -left x-axis
+	glRotated(0 /*- (data->camera->rotY)*/, 0, 1, 0);	//rotate +left y-axis
+	glRotated(-10 /*- (data->camera->rotX)*/, 0, 0, 1); //rotate -left x-axis
 	//glutWireCube(0.2);
 	glScaled(0.03, 0.03, 0.03);
 	vehicle->draw();

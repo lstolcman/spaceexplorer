@@ -13,9 +13,14 @@ private:
 	void*			font;
 	SData			*data;
 	unsigned		textLines;
-	CTexture		*win, *loose;
-	unsigned		width, height;
+	GLfloat			width, height;
 
+	CTexture		win, loose;
+	CTexture		speed8;
+	CTexture		speed6;
+	CTexture		speed4;
+	CTexture		speed2;
+	CTexture		speed0;
 public:
 
 
