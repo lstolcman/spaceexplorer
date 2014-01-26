@@ -20,6 +20,13 @@ private:
 	CTexture	bottom;
 	std::string	size;
 	std::string version;
+
+	GLuint		frontHandle;
+	GLuint		backHandle;
+	GLuint		rightHandle;
+	GLuint		leftHandle;
+	GLuint		topHandle;
+	GLuint		bottomHandle;
 public:
 
 
