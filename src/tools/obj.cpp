@@ -131,55 +131,9 @@ bool CLoaderOBJ::loadObj(std::string file)
 	}
 	t.stop();
 	std::cout << "model: " << file << " " << t.getElapsedMilliseconds() << "ms" << std::endl;
-	/*
-	tex.Load("resources/models/"+std::string(map_Kd));// , GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR);// GL_NEAREST);
-
-	handle = glGenLists(1);
-	glPushMatrix();
-
-
-	float o_amb[] = { amb.x, amb.y, amb.z, 1.0f };
-	float o_dif[] = { dif.x, dif.y, dif.z, 1.0f };
-	float o_spe[] = { spe.x, spe.y, spe.z, 1.0f };
-	glMaterialfv(GL_FRONT, GL_AMBIENT, o_amb);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, o_dif);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, o_spe);
-
-
-	glNewList(handle, GL_COMPILE);
-	glEnable(GL_TEXTURE_2D);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, tex());
-	glBegin(GL_TRIANGLES);
-	for (int i = 0; i < f->size(); ++i)
-	{
-	for (int j = 0; j < 3; ++j)
-	{
-	glm::vec3 *cv = &(*v)[((*f)[i].v[j] - 1)];
-	glm::vec2 *ct = &(*t)[((*f)[i].t[j] - 1)];
-	glm::vec3 *cn = &(*n)[((*f)[i].n[j] - 1)];
-	glTexCoord2f(ct->x, ct->y);
-	glNormal3f(cn->x, cn->y, cn->z);
-	glVertex3f(cv->x, cv->y, cv->z);
-	}
-	}
-	glEnd();
-	glDisable(GL_TEXTURE_2D);
-	glEndList();
-	glPopMatrix();
-
-	delete v;
-	delete n;
-	delete t;
-	delete f;
-
-	*/
-
 
 	delete map_Kd;
-
 	return true;
-
 }
 
 

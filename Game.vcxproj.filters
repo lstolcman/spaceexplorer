@@ -19,9 +19,6 @@
     <Filter Include="Tools\Loaders">
       <UniqueIdentifier>{b8bd1463-85a6-4c0b-8256-e1d66db1ee45}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shaders">
-      <UniqueIdentifier>{afcfea69-5721-4e6a-ac3f-4da6d1bdaef2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Logic">
       <UniqueIdentifier>{88c98082-3c0f-48e7-a1a8-93811bfc3d7b}</UniqueIdentifier>
     </Filter>
@@ -149,13 +146,5 @@
     <Image Include="resources\1_top3.bmp">
       <Filter>Resources</Filter>
     </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="src\shaders\phong.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="src\shaders\phong.vert">
-      <Filter>Shaders</Filter>
-    </None>
   </ItemGroup>
 </Project>

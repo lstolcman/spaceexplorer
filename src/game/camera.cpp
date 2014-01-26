@@ -69,12 +69,6 @@ void CCamera::cameraMove(void)
 	data->camera->up.y = cos(data->camera->angleZ);
 	data->camera->up.x = sin(data->camera->angleZ);
 
-	/*std::cout << std::fixed << std::setprecision(4)// << "B" << angleX << " " << angleY << " "
-		<< data->camera->pos.x << "x" << data->camera->pos.y << "x" << data->camera->pos.z << " "
-		<< data->camera->view.x << "x" << data->camera->view.y << "x" << data->camera->view.z
-		<< "velRX:" << data->camera->velRX << "velRY:" << data->camera->velRY << "\t\r";*/
-
-
 	// Wektor prostopad³y:
 	glm::vec3 per;
 	per.x = -data->camera->view.z;
@@ -102,74 +96,5 @@ void CCamera::cameraMove(void)
 	}
 
 
-
-	
-	// rotate vehicle in X axis when move
-	if (data->camera->velRX > 0.0f)
-	{
-		if (data->camera->rotX < 0.1f)
-			data->camera->rotX = 0.1f;
-
-		if (data->camera->rotX < 10.0f)
-			data->camera->rotX *= 1.1f;
-	}
-	else if (data->camera->velRX < 0.0f)
-	{
-
-		if (data->camera->rotX > -0.1f)
-			data->camera->rotX = -0.1f;
-
-		if (data->camera->rotX > -10.0f)
-			data->camera->rotX *= 1.1f;
-	}
-	else
-	{
-		data->camera->rotX /= 1.05f;
-	}
-
-
-	// rotate vehicle in Y axis when move
-	/*if (abs(data->camera->velRY) == 0.0f)
-	{
-		//if (abs(data->camera->rotY) > 0.1f)
-			data->camera->rotY /= 1.05f;
-	}
-	else if (data->camera->velRY > 0.0f)
-	{
-
-		if (data->camera->rotY < 10.0f)
-			data->camera->rotY *= 1.2f;
-	}
-	else if (data->camera->velRY < 0.0f)
-	{
-
-		if (data->camera->rotY > -10.0f)
-			data->camera->rotY *= 1.2f;
-	}*/
-
 }
-
-
-
-void rotX(float)
-{
-
-}
-
-
-void rotY(float)
-{
-
-}
-
-
-void rotZ(float)
-{
-
-}
-
-
-
-
-
 

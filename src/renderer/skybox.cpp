@@ -16,15 +16,10 @@ CSkybox::CSkybox(void)
 }
 
 
-
 CSkybox::~CSkybox()
 {
 
-
 }
-
-
-
 
 
 void CSkybox::load(void)

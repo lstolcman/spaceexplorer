@@ -16,7 +16,4 @@ public:
 	~CCamera();
 
 	void cameraMove(void);
-	void rotX(float);
-	void rotY(float);
-	void rotZ(float);
 };

@@ -2,16 +2,6 @@
 #include "bitmap.hpp"
 
 
-/*
-CLoaderBitmap::CLoaderBitmap(std::string file)
-{
-data = NULL;
-bmHandle.open(file, std::ios::in | std::ios::binary);
-}
-*/
-
-
-
 CLoaderBitmap::CLoaderBitmap(void)
 {
 	bmWidth = 0;
@@ -21,13 +11,10 @@ CLoaderBitmap::CLoaderBitmap(void)
 	data = NULL;
 }
 
-
 CLoaderBitmap::~CLoaderBitmap()
 {
 	delete data;
 }
-
-
 
 bool CLoaderBitmap::loadBitmap(std::string file)
 {

@@ -23,8 +23,6 @@ public:
 	//Members:
 private:
 
-
-
 public:
 	CLoaderOBJ(SObjFile*, std::string);
 	CLoaderOBJ(SObjFile*);
@@ -32,7 +30,6 @@ public:
 
 	bool				loadObj(std::string);
 	void				disp(void);
-
 
 };
 

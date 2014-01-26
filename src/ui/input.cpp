@@ -499,21 +499,21 @@ bool CInput::checkInput()
 	{
 		if (data->debugMode)
 		{
-			data->camera->velRY = -mouseSensitivity * (glutGet(GLUT_WINDOW_WIDTH) / 2 - data->inputState->mouse.x);
-			if (data->camera->velRY > 1.0f)
-				data->camera->velRY = 1.0f;
-			if (data->camera->velRY < -1.0f)
-				data->camera->velRY = -1.0f;
-			data->camera->velRX = mouseSensitivity *0.5* (glutGet(GLUT_WINDOW_HEIGHT) / 2 - data->inputState->mouse.y);
-			if (data->camera->velRX > 1.0f)
-				data->camera->velRX = 1.0f;
-			if (data->camera->velRX < -1.0f)
-				data->camera->velRX = -1.0f;
+			data->camera->velRY = -mouseSensitivity *2* (glutGet(GLUT_WINDOW_WIDTH) / 2 - data->inputState->mouse.x);
+			data->camera->velRX = mouseSensitivity *0.5*2* (glutGet(GLUT_WINDOW_HEIGHT) / 2 - data->inputState->mouse.y);
 		}
 		else
 		{
 			data->camera->velRY = -mouseSensitivity *0.3* (glutGet(GLUT_WINDOW_WIDTH) / 2 - data->inputState->mouse.x);
+			if (data->camera->velRY > 1.0f)
+				data->camera->velRY = 1.0f;
+			if (data->camera->velRY < -1.0f)
+				data->camera->velRY = -1.0f;
 			data->camera->velRX = mouseSensitivity *0.3*0.5* (glutGet(GLUT_WINDOW_HEIGHT) / 2 - data->inputState->mouse.y);
+			if (data->camera->velRX > 1.0f)
+				data->camera->velRX = 1.0f;
+			if (data->camera->velRX < -1.0f)
+				data->camera->velRX = -1.0f;
 		}
 		/*if (data->inputState->keys['a'] == KEYDOWN)
 		{

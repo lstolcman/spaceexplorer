@@ -122,8 +122,6 @@ void CGame::Init(int argc, char **argv)
 	GLenum err = glewInit();
 	if (GLEW_OK != err)
 	{
-		// Problem: glewInit failed, something is seriously wrong.
-		//std::cerr << "Error: " << glewGetErrorString(err) << std::endl;
 		MessageBox(0, (LPCSTR)glewGetErrorString(err), "GLEW Error", MB_ICONERROR | MB_OK);
 		exit(1);
 	}
@@ -139,21 +137,12 @@ void CGame::Init(int argc, char **argv)
 	data->audioDevice = audiere::OpenDevice();
 
 
-
-	//if (data->fullscreen)
-
-
-
-
 	//glutTimerFunc(1000, callbackDrawFPS, 0);
 	//glutTimerFunc(15, callbackRedisplay, 0);
 	//glutRedisplayFunc(callbackRedisplay);
 
-
-
 	setMouse();
 	loadData();
-
 
 	setGlutCallbacks();
 
@@ -208,7 +197,7 @@ void CGame::Reshape(int width, int height)
 
 	// Chcemy uzyc kamery perspektywicznej o kacie widzenia 60 stopni
 	// i zasiegu renderowania 0.01-100.0 jednostek.
-	gluPerspective(60.0f, (float)width / height, data->zNear, data->zFar/*0.01f, 5000.0f*/);
+	gluPerspective(60.0f, (float)width / height, data->zNear, data->zFar);
 }
 
 

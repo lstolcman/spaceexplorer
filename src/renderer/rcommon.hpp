@@ -1,9 +1,6 @@
 #pragma once
 
 
-
-
-
 struct SFace {
 	unsigned v[3];
 	unsigned t[3];
